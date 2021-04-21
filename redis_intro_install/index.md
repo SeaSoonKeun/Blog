@@ -23,7 +23,7 @@ https://db-engines.com/en/
 ### 编译：源码变为可执行程序
 
 ## 3. 安装
-```
+```shell
 1,yum install wget
 2,cd ~
 3,mkdir soft
@@ -55,7 +55,7 @@ https://db-engines.com/en/
 
 ```
 ### centos7编译报错
-```
+```shell
 server.c:5307:31: 错误:‘struct redisServer’没有名为‘server_xxx’的成员
  
 

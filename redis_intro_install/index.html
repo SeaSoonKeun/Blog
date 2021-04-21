@@ -206,7 +206,7 @@
 </span><span class="lnt">29
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">1,yum install wget
+<pre class="chroma"><code class="language-shell" data-lang="shell">1,yum install wget
 2,cd ~
 3,mkdir soft
 4,cd soft
@@ -219,19 +219,19 @@
 ....  make distclean
 10,make
 11,cd src   ....生成了可执行程序
-12, cd ..
-13,make install PREFIX=/opt/mashibing/redis5
+12, <span class="nb">cd</span> ..
+13,make install <span class="nv">PREFIX</span><span class="o">=</span>/opt/mashibing/redis5
 14,vi /etc/profile
-...   export  REDIS_HOME=/opt/mashibing/redis5
-...   export PATH=$PATH:$REDIS_HOME/bin
+...   <span class="nb">export</span>  <span class="nv">REDIS_HOME</span><span class="o">=</span>/opt/mashibing/redis5
+...   <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$REDIS_HOME</span>/bin
 ..source /etc/profile
 15,cd utils
 16,./install_server.sh  （可以执行一次或多次）
-    a)  一个物理机中可以有多个redis实例（进程），通过port区分
-    b)  可执行程序就一份在目录，但是内存中未来的多个实例需要各自的配置文件，持久化目录等资源
-    c)  service   redis_6379  start/stop/stauts     &gt;   linux   /etc/init.d/**** 
-    d)脚本还会帮你启动！
-17,ps -fe |  grep redis  
+    a<span class="o">)</span>  一个物理机中可以有多个redis实例（进程），通过port区分
+    b<span class="o">)</span>  可执行程序就一份在目录，但是内存中未来的多个实例需要各自的配置文件，持久化目录等资源
+    c<span class="o">)</span>  service   redis_6379  start/stop/stauts     &gt;   linux   /etc/init.d/**** 
+    d<span class="o">)</span>脚本还会帮你启动！
+17,ps -fe <span class="p">|</span>  grep redis  
 
 
 
@@ -272,7 +272,7 @@
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">server.c:5307:31: 错误:‘struct redisServer’没有名为‘server_xxx’的成员
+<pre class="chroma"><code class="language-shell" data-lang="shell">server.c:5307:31: 错误:‘struct redisServer’没有名为‘server_xxx’的成员
  
 
 redis编译报上面错误，一般是环境问题，执行下面操作可以解决
@@ -294,11 +294,11 @@ yum -y install centos-release-scl
 
 yum -y install devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils
 
-scl enable devtoolset-9 bash
+scl <span class="nb">enable</span> devtoolset-9 bash
 
 3、设置永久升级：
 
-echo &#34;source /opt/rh/devtoolset-9/enable&#34; &gt;&gt;/etc/profile
+<span class="nb">echo</span> <span class="s2">&#34;source /opt/rh/devtoolset-9/enable&#34;</span> &gt;&gt;/etc/profile
 
 4、安装redis：
 
