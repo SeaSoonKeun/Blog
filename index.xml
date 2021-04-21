@@ -41,5 +41,12 @@
     <author>作者</author>
     <guid>https://github.com/emoji-support/</guid>
     <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
+</item><item>
+    <title>Redis介绍和安装</title>
+    <link>https://github.com/redis_intro_install/</link>
+    <pubDate>Wed, 21 Apr 2021 17:30:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/redis_intro_install/</guid>
+    <description><![CDATA[Redis介绍和安装]]></description>
 </item></channel>
 </rss>

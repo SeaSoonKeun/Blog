@@ -7,10 +7,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/theme-documentation-basics/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/theme-documentation-basics/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/theme-documentation-basics/"
@@ -19,10 +15,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/theme-documentation-content/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/theme-documentation-content/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -33,10 +25,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/theme-documentation-extended-shortcodes/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/theme-documentation-extended-shortcodes/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/theme-documentation-extended-shortcodes/"
@@ -45,10 +33,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/basic-markdown-syntax/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/basic-markdown-syntax/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -59,10 +43,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/emoji-support/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/emoji-support/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/emoji-support/"
@@ -71,10 +51,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/categories/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/categories/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -85,10 +61,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/tags/configuration/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/configuration/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/tags/configuration/"
@@ -97,10 +69,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/categories/documentation/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/categories/documentation/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -111,10 +79,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/tags/installation/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/installation/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/tags/installation/"
@@ -123,10 +87,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/posts/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/posts/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -137,10 +97,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/tags/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/tags/"
@@ -149,10 +105,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -163,10 +115,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/tags/content/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/content/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/tags/content/"
@@ -175,10 +123,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/tags/markdown/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/markdown/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -189,10 +133,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/tags/shortcodes/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/shortcodes/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/tags/shortcodes/"
@@ -201,10 +141,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/tags/html/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/html/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
@@ -215,10 +151,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/categories/markdown/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/categories/markdown/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/categories/markdown/"
@@ -228,10 +160,6 @@
                         hreflang="zh-cn"
                         href="https://github.com/tags/emoji/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/emoji/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="en"
                     href="https://github.com/en/tags/emoji/"
@@ -240,10 +168,6 @@
                         rel="alternate"
                         hreflang="zh-cn"
                         href="https://github.com/about/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/about/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"

@@ -7,10 +7,6 @@
                         hreflang="en"
                         href="https://github.com/en/theme-documentation-basics/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/theme-documentation-basics/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/theme-documentation-basics/"
@@ -19,10 +15,6 @@
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/theme-documentation-content/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/theme-documentation-content/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -33,10 +25,6 @@
                         hreflang="en"
                         href="https://github.com/en/theme-documentation-extended-shortcodes/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/theme-documentation-extended-shortcodes/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/theme-documentation-extended-shortcodes/"
@@ -45,10 +33,6 @@
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/basic-markdown-syntax/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/basic-markdown-syntax/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -59,10 +43,6 @@
                         hreflang="en"
                         href="https://github.com/en/emoji-support/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/emoji-support/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/emoji-support/"
@@ -72,25 +52,25 @@
                         hreflang="en"
                         href="https://github.com/en/categories/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/categories/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/categories/"
                     /></url><url>
-            <loc>https://github.com/content/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/posts/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="en"
+                        href="https://github.com/en/posts/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="zh-cn"
+                    href="https://github.com/posts/"
+                    /></url><url>
             <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/content/posts/database/redis_intro_install/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis_intro_install/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -101,36 +81,15 @@
                         hreflang="en"
                         href="https://github.com/en/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/"
                     /></url><url>
             <loc>https://github.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/posts/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="en"
-                        href="https://github.com/en/posts/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/posts/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="zh-cn"
-                    href="https://github.com/posts/"
-                    /></url><url>
             <loc>https://github.com/tags/installation/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/installation/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/installation/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -141,10 +100,6 @@
                         hreflang="en"
                         href="https://github.com/en/categories/documentation/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/categories/documentation/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/categories/documentation/"
@@ -153,10 +108,6 @@
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/configuration/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/configuration/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -167,10 +118,6 @@
                         hreflang="en"
                         href="https://github.com/en/tags/markdown/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/markdown/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/tags/markdown/"
@@ -179,10 +126,6 @@
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/content/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/content/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -193,10 +136,6 @@
                         hreflang="en"
                         href="https://github.com/en/tags/shortcodes/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/shortcodes/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/tags/shortcodes/"
@@ -205,10 +144,6 @@
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/html/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/html/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
@@ -219,10 +154,6 @@
                         hreflang="en"
                         href="https://github.com/en/categories/markdown/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/categories/markdown/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/categories/markdown/"
@@ -232,10 +163,6 @@
                         hreflang="en"
                         href="https://github.com/en/tags/emoji/"
                         /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/tags/emoji/"
-                        /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/tags/emoji/"
@@ -244,10 +171,6 @@
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/about/"
-                        /><xhtml:link
-                        rel="alternate"
-                        hreflang="fr"
-                        href="https://github.com/fr/about/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
