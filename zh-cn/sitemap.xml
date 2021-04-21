@@ -56,6 +56,8 @@
                     hreflang="zh-cn"
                     href="https://github.com/categories/"
                     /></url><url>
+            <loc>https://github.com/tags/github/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/posts/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
@@ -85,7 +87,10 @@
                     hreflang="zh-cn"
                     href="https://github.com/"
                     /></url><url>
+            <loc>https://github.com/tags/%E5%9B%BE%E5%BA%8A/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/categories/%E5%B7%A5%E5%85%B7/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/github-picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/installation/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"

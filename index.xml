@@ -48,5 +48,12 @@
     <author>作者</author>
     <guid>https://github.com/redis_intro_install/</guid>
     <description><![CDATA[Redis介绍和安装]]></description>
+</item><item>
+    <title>配置 GIhub &#43; PicGo 图床</title>
+    <link>https://github.com/github-picgo/</link>
+    <pubDate>Wed, 21 Apr 2021 17:30:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/github-picgo/</guid>
+    <description><![CDATA[配置 GIhub + PicGo 图床 1. 新建 github repositry ，并生成账号令牌key 2. macos 安装picgo 1 brew install picgo --cask 3. 配置 picGO与 GitHub 进行关联 1. 配置github图床 2. 添加插件，每次]]></description>
 </item></channel>
 </rss>
