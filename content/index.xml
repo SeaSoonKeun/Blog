@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Contents on The Record &amp; Share by SeaSoonKeun</title>
+    <link>https://github.com/content/</link>
+    <description>Recent content in Contents on The Record &amp; Share by SeaSoonKeun</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>xucg0912@gmail.com (SeaSoonKeun)</managingEditor>
+    <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 21 Apr 2021 17:30:02 +0800</lastBuildDate><atom:link href="https://github.com/content/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis介绍和安装</title>
+      <link>https://github.com/content/posts/database/redis_intro_install/</link>
+      <pubDate>Wed, 21 Apr 2021 17:30:02 +0800</pubDate>
+      <author>xucg0912@gmail.com (SeaSoonKeun)</author>
+      <guid>https://github.com/content/posts/database/redis_intro_install/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
