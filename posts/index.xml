@@ -4,7 +4,7 @@
         <link>https://github.com/posts/</link>
         <description>所有文章 | The Record &amp; Share by SeaSoonKeun</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xucg0912@gmail.com (SeaSoonKeun)</managingEditor>
-            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 21 Apr 2021 17:30:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 23 Apr 2021 01:30:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
     <title>主题文档 - 基本概念</title>
     <link>https://github.com/theme-documentation-basics/</link>
     <pubDate>Fri, 06 Mar 2020 21:40:32 &#43;0800</pubDate>
@@ -40,6 +40,20 @@
     <guid>https://github.com/emoji-support/</guid>
     <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
 </item><item>
+    <title>Redis的使用</title>
+    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Fri, 23 Apr 2021 01:30:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[Redis的使用 redis-cli 进入客户端 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56]]></description>
+</item><item>
+    <title>修改macOS Mysql的 root用户密码</title>
+    <link>https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/</link>
+    <pubDate>Thu, 22 Apr 2021 23:30:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/</guid>
+    <description><![CDATA[修改macOS Mysql的 root用户密码 1. 关闭mysql服务 2. 禁止mysql验证功能 1 2 3 4 5 6 7 8 9 mbp:~ mr.x$ cd /usr/local/mysql # 输入苹果密码进入root用]]></description>
+</item><item>
     <title>Redis介绍和安装</title>
     <link>https://github.com/redis_intro_install/</link>
     <pubDate>Wed, 21 Apr 2021 17:30:02 &#43;0800</pubDate>
@@ -53,5 +67,12 @@
     <author>作者</author>
     <guid>https://github.com/github-picgo/</guid>
     <description><![CDATA[配置 GIhub + PicGo 图床 1. 新建 github repositry ，并生成账号令牌key 2. macos 安装picgo 1 brew install picgo --cask 3. 配置 picGO与 GitHub 进行关联 1. 配置github图床 2. 添加插件，每次]]></description>
+</item><item>
+    <title></title>
+    <link>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</guid>
+    <description><![CDATA[Algolia 端 注册algolia免费账号 创建索引 记录API Keys]]></description>
 </item></channel>
 </rss>

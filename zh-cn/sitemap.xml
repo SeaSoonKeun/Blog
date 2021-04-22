@@ -47,7 +47,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/emoji-support/"
                     /></url><url>
-            <loc>https://github.com/categories/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/categories/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/categories/"
@@ -56,9 +56,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/categories/"
                     /></url><url>
-            <loc>https://github.com/tags/github/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/tags/picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/posts/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/posts/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/posts/"
@@ -67,9 +65,10 @@
                     hreflang="zh-cn"
                     href="https://github.com/posts/"
                     /></url><url>
-            <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/redis_intro_install/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/tags/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/categories/redis/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/"
@@ -78,7 +77,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/tags/"
                     /></url><url>
-            <loc>https://github.com/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/"
@@ -87,9 +86,15 @@
                     hreflang="zh-cn"
                     href="https://github.com/"
                     /></url><url>
+            <loc>https://github.com/tags/macos/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/mysql/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/categories/mysql/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/github/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis_intro_install/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/%E5%9B%BE%E5%BA%8A/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/%E5%B7%A5%E5%85%B7/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/github-picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/installation/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
@@ -180,4 +185,6 @@
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://github.com/about/"
-                    /></url></urlset>
+                    /></url><url>
+            <loc>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://github.com/%E6%A3%80%E8%AE%A8%E4%B9%A6/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>
