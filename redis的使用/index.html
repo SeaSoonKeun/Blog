@@ -34,7 +34,7 @@
                             "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "Redis","wordcount":  1536 ,
+                        }],"genre": "posts","keywords": "Redis","wordcount":  3418 ,
         "url": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8\/","datePublished": "2021-04-23T01:30:02+08:00","dateModified": "2021-04-23T01:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -120,8 +120,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis的使用</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1536 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8/" class="leancloud_visitors" data-flag-title="Redis的使用">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3418 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8/" class="leancloud_visitors" data-flag-title="Redis的使用">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -134,12 +134,15 @@
     <li><a href="#库表结构">库表结构</a></li>
     <li><a href="#help使用">help使用</a></li>
     <li><a href="#help-命令组">help @命令组</a></li>
-    <li><a href="#5种基本类型">5种基本类型</a>
+    <li><a href="#value--5种基本类型">Value- 5种基本类型</a>
       <ul>
-        <li><a href="#1-help-string"><code>1. help @string</code></a>
+        <li><a href="#1-字符串">1. 字符串</a>
           <ul>
             <li><a href="#set">Set</a></li>
             <li><a href="#设置值">设置值</a></li>
+            <li><a href="#del">del</a></li>
+            <li><a href="#flushdb">flushdb</a></li>
+            <li><a href="#flushall">flushall</a></li>
             <li><a href="#msetmget">mset/mget</a></li>
             <li><a href="#批量设置读取">批量设置，读取</a></li>
             <li><a href="#append">append</a></li>
@@ -151,6 +154,25 @@
             <li><a href="#strlen">strlen</a></li>
             <li><a href="#返回字符串长度">返回字符串长度</a></li>
             <li><a href="#type">type</a></li>
+            <li><a href="#object">object</a></li>
+            <li><a href="#object-encoding-key"><strong>object encoding key</strong></a></li>
+            <li><a href="#引申-二进制安全---字节流">引申： 二进制安全 -&gt; 字节流</a></li>
+            <li><a href="#getset">getset</a></li>
+            <li><a href="#引申原子性操作">引申：原子性操作。</a></li>
+            <li><a href="#引申内存">引申：内存</a></li>
+            <li><a href="#bitmap-">bitmap ：</a>
+              <ul>
+                <li><a href="#bitmap-的-offset-值上限">BitMap 的 offset 值上限</a></li>
+                <li><a href="#bitmap-占用的空间">BitMap 占用的空间，</a></li>
+                <li><a href="#因为字符串内存只能以字节分配所以上面的单位是字节">因为字符串内存只能以字节分配，所以上面的单位是字节。</a></li>
+                <li><a href="#setbit">SETBIT</a></li>
+                <li><a href="#bitcount">BITCOUNT</a></li>
+                <li><a href="#bitfield">BITFIELD</a></li>
+                <li><a href="#bitop">BITOP</a></li>
+                <li><a href="#bitpos">BITPOS</a></li>
+                <li><a href="#位图的场景">位图的场景</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -348,9 +370,14 @@ and settings.
 </code></pre></td></tr></table>
 </div>
 </div><p>常用：</p>
-<p><code>-h</code></p>
-<p><code>-b</code></p>
-<p><code>-n</code></p>
+<ul>
+<li><code>-h</code> 不加参数 显示help内容</li>
+<li><code>-h x.x.x.x</code>连接指定ip参数</li>
+<li><code>-p xxx</code>指定端口</li>
+<li><code>-a</code>使用密码</li>
+<li><code>-n</code>选择库名</li>
+<li><code>—raw</code> 触发当前编码集，进行格式化</li>
+</ul>
 <h2 id="库表结构">库表结构</h2>
 <ul>
 <li>库：Redis 默认16个库
@@ -509,8 +536,11 @@ OK
 </div>
 </div></li>
 </ul>
-<h2 id="5种基本类型">5种基本类型</h2>
-<h3 id="1-help-string"><code>1. help @string</code></h3>
+<h2 id="value--5种基本类型">Value- 5种基本类型</h2>
+<h3 id="1-字符串">1. 字符串</h3>
+<blockquote>
+<p>help @<code>string</code>命令组</p>
+</blockquote>
 <h4 id="set">Set</h4>
 <blockquote>
 <h4 id="设置值">设置值</h4>
@@ -589,7 +619,63 @@ OK
 </ul>
 </li>
 </ul>
-<h4 id="msetmget">mset/mget</h4>
+<h4 id="del">del</h4>
+<blockquote>
+<p>该命令用于在 key 存在是删除 key。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; del k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; get k1
+<span class="o">(</span>nil<span class="o">)</span>
+127.0.0.1:6379&gt; keys *
+1<span class="o">)</span> <span class="s2">&#34;k2&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;orkey&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;andkey&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="flushdb">flushdb</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  FLUSHDB [ASYNC]
+  summary: Remove all keys from the current database
+  since: 1.0.0
+  group: server
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="flushall">flushall</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  FLUSHALL [ASYNC]
+  summary: Remove all keys from all databases
+  since: 1.0.0
+  group: server
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="msetmget">mset/mget</h4>
 <blockquote>
 <h4 id="批量设置读取">批量设置，读取</h4>
 </blockquote>
@@ -717,6 +803,9 @@ OK
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="type">type</h4>
+<blockquote>
+<p>查看key类型</p>
+</blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -775,6 +864,480 @@ string
 </div>
 </div></li>
 </ul>
+<h4 id="object">object</h4>
+<blockquote>
+<p>子命令列表</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; object <span class="nb">help</span>
+1<span class="o">)</span> OBJECT &lt;subcommand&gt; arg arg ... arg. Subcommands are:
+2<span class="o">)</span> ENCODING &lt;key&gt; -- Return the kind of internal representation used in order to store the value associated with a key.
+3<span class="o">)</span> FREQ &lt;key&gt; -- Return the access frequency index of the key. The returned integer is proportional to the logarithm of the recent access frequency of the key.
+4<span class="o">)</span> IDLETIME &lt;key&gt; -- Return the idle <span class="nb">time</span> of the key, that is the approximated number of seconds elapsed since the last access to the key.
+5<span class="o">)</span> REFCOUNT &lt;key&gt; -- Return the number of references of the value associated with the specified key.
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<h4 id="object-encoding-key"><strong>object encoding key</strong></h4>
+<blockquote>
+<p>显示key编码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; mget k1 k3 k4
+1<span class="o">)</span> <span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;999&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">type</span> k1
+string
+127.0.0.1:6379&gt; <span class="nb">type</span> k3
+string
+127.0.0.1:6379&gt; <span class="nb">type</span> k4
+string
+127.0.0.1:6379&gt; object encoding k1
+<span class="s2">&#34;raw&#34;</span>
+127.0.0.1:6379&gt; object encoding k3
+<span class="s2">&#34;embstr&#34;</span>
+127.0.0.1:6379&gt; object encoding k4
+<span class="s2">&#34;int&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>虽然key的type都是string类型，但是有不同的编码。redis这种<code>预埋</code>设计，方便后面更加快速调用对应类型的方法进行计算，很大程度上提升了速度。</p>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423104356.png" style="zoom:50%;" /></p>
+<p>在此基础上，针对encoding是int类型的有下列方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  <span class="c1"># 加一</span>
+  INCR key
+  summary: Increment the integer value of a key by one
+  since: 1.0.0
+  
+  
+  INCRBY key increment
+  summary: Increment the integer value of a key by the given amount
+  since: 1.0.0
+  
+  INCRBYFLOAT key increment
+  summary: Increment the float value of a key by the given amount
+  since: 2.6.0
+    
+  DECR key
+  summary: Decrement the integer value of a key by one
+  since: 1.0.0
+  
+  DECRBY key decrement
+  summary: Decrement the integer value of a key by the given number
+  since: 1.0.0
+</code></pre></td></tr></table>
+</div>
+</div><p>eg</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; get k4
+&#34;999&#34;
+127.0.0.1:6379&gt;
+127.0.0.1:6379&gt; INCR k4
+(integer) 1000
+127.0.0.1:6379&gt; INCRBY k4 100
+(integer) 1100
+127.0.0.1:6379&gt; DECR k4
+(integer) 1099
+127.0.0.1:6379&gt; DECRBY k4 100
+(integer) 999
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>一些方法会变掉key的类型，一些方法会提前固定编码</p>
+<h4 id="引申-二进制安全---字节流">引申： 二进制安全 -&gt; 字节流</h4>
+<p>编码并不会影响数据存储，因为是<strong>首先是按字节流完成的数据存储</strong>，然后redis<strong>为了自身方法更快速的计算，在key上加了encoding类型</strong>数据，也会随着<strong>方法的调用</strong>发生encoding编码的改变。</p>
+<p>eg</p>
+<ul>
+<li>macos默认使用utf-8 编码集</li>
+</ul>
+<ol>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png" /></li>
+<li>在此编码集下，添加一个key。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; flushdb
+OK
+127.0.0.1:6379&gt;
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 我
+OK
+127.0.0.1:6379&gt; STRLEN k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xe6\x88\x91&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>修改编码集为GBK</li>
+</ul>
+<ol>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png" /></li>
+<li>在此编码集下，添加一个相同的key。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; flushdb
+OK
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 我
+OK
+127.0.0.1:6379&gt; strlen k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xce\xd2&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>结论</strong>：redis是<strong>按传递进来的字节进行存储</strong>，utf-8中占用三个字节，GBK占用二个字节。</p>
+<p><strong>redis是没有数据类型的，必须在用户端沟通好数据的编码和解码</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># redis utf-8编码下，格式化gbk编码的字节，出现乱码</span>
+127.0.0.1:6379&gt; keys *
+1<span class="o">)</span> <span class="s2">&#34;k1&#34;</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xce\xd2&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">exit</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli --raw</span>
+127.0.0.1:6379&gt; get k1
+��
+
+
+<span class="c1"># redis gbk编码下，格式化gbk编码的字节，显示正常</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xce\xd2&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">exit</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli --raw</span>
+127.0.0.1:6379&gt; get k1
+我
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="getset">getset</h4>
+<blockquote>
+<p>获取老值，赋值新值</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; <span class="nb">help</span> GETSET
+
+  GETSET key value
+  summary: Set the string value of a key and <span class="k">return</span> its old value
+  since: 1.0.0
+  group: string
+  
+127.0.0.1:6379&gt; getset k1 hi
+<span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hi&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>减少成本</strong>，避免两次请求造成不必要的通讯浪费。</p>
+<h4 id="引申原子性操作">引申：原子性操作。</h4>
+<blockquote>
+<p>触发原子，单线程不涉及肯定是原子的， 只有多笔操作的时候才会有原子的概念。</p>
+</blockquote>
+<h4 id="引申内存">引申：内存</h4>
+<blockquote>
+<p>线性地址空间，</p>
+</blockquote>
+<h4 id="bitmap-">bitmap ：</h4>
+<blockquote>
+<p>位图。BitMap 原本的含义是用<strong>一个比特位来映射某个元素的状态</strong>。由于一个比特位只能表示 0 和 1 两种状态，所以 BitMap 能映射的状态有限，但是使用比特位的优势是能<strong>大量的节省内存空间</strong>。</p>
+<p>Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，<strong>BitMap 底层是基于 Redis 的字符串类型实现的</strong>。</p>
+</blockquote>
+<p>字节Byte = 8bit</p>
+<h5 id="bitmap-的-offset-值上限">BitMap 的 offset 值上限</h5>
+<p>​	但是需要注意，Redis 中字符串的最大长度是 512M，所以 BitMap 的 offset 值也是有上限的，其最大值是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">8 * 1024 * 1024 * 512  =  2^32
+</code></pre></td></tr></table>
+</div>
+</div><p>​	由于 C语言中字符串的末尾都要存储一位分隔符，所以实际上 BitMap 的 offset 值上限是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">(8 * 1024 * 1024 * 512) -1  =  2^32 - 1
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitmap-占用的空间">BitMap 占用的空间，</h5>
+<p>​	就是底层字符串占用的空间。假如 BitMap 偏移量的最大值是 OFFSET_MAX，那么它底层占用的空间就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">(OFFSET_MAX/8)+1 = 占用字节数
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="因为字符串内存只能以字节分配所以上面的单位是字节">因为字符串内存只能以字节分配，所以上面的单位是字节。</h5>
+<h5 id="setbit">SETBIT</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	SETBIT key offset value
+  summary: Sets or clears the bit at offset in the string value stored at key
+  since: 2.2.0
+  group: string
+
+</code></pre></td></tr></table>
+</div>
+</div><p>​	offset 代表二进制位 不是偏移量</p>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423172856.png" style="zoom:50%;" /></p>
+<blockquote>
+<p><code>man ascii</code> 验证ascii码的值</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423170557.png" style="zoom:30%;" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; SETBIT k4 <span class="m">1</span> <span class="m">1</span>
+<span class="m">0</span>
+127.0.0.1:6379&gt; get k4
+@
+<span class="m">01000000</span>
+
+127.0.0.1:6379&gt; SETBIT k4 <span class="m">9</span> <span class="m">1</span>
+<span class="m">0</span>
+127.0.0.1:6379&gt; get k4
+@@
+<span class="m">01000000</span> <span class="m">01000000</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitcount">BITCOUNT</h5>
+<blockquote>
+<p><em># 获取指定范围内值为 1 的个数</em> <em># start 和 end 以字节为单位</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">BITCOUNT key <span class="o">[</span>start end<span class="o">]</span> 
+summary: Count <span class="nb">set</span> bits in a string
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitfield">BITFIELD</h5>
+<blockquote>
+<p>高级命令</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	BITFIELD key <span class="o">[</span>GET <span class="nb">type</span> offset<span class="o">]</span> <span class="o">[</span>SET <span class="nb">type</span> offset value<span class="o">]</span> <span class="o">[</span>INCRBY <span class="nb">type</span> offset increment<span class="o">]</span> <span class="o">[</span>OVERFLOW WRAP<span class="p">|</span>SAT<span class="p">|</span>FAIL<span class="o">]</span>
+  summary: Perform arbitrary bitfield integer operations on strings
+  since: 3.2.0
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitop">BITOP</h5>
+<blockquote>
+<p><em># result 计算的结果，会存储在该key中</em></p>
+<p><em># key1 … keyn 参与运算的key，可以有多个，空格分割，not运算只能一个key</em></p>
+<p><em># 当 BITOP 处理不同长度的字符串时，较短的那个字符串所缺少的部分会被看作 0。返回值是保存到 destkey 的字符串的长度（以字节byte为单位），和输入 key 中最长的字符串长度相等。</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">BITOP operation destkey key <span class="o">[</span>key ...<span class="o">]</span>
+  summary: Perform bitwise operations between strings
+  since: 2.6.0
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitpos">BITPOS</h5>
+<blockquote>
+<p><em># 返回指定key中第一次出现指定value(0/1)的位置</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  BITPOS key bit <span class="o">[</span>start<span class="o">]</span> <span class="o">[</span>end<span class="o">]</span>
+  summary: Find first bit <span class="nb">set</span> or clear in a string
+  since: 2.8.7
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="位图的场景">位图的场景</h5>
+<ol>
+<li>
+<p>公司用户，统计用户的登录天数，且窗口随机</p>
+<p>bitcount</p>
+</li>
+<li></li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

@@ -98,11 +98,12 @@ and settings.
 
 常用：
 
-`-h`
-
-`-b`
-
-`-n`
+- `-h` 不加参数 显示help内容 
+- `-h x.x.x.x`连接指定ip参数
+- `-p xxx`指定端口
+- `-a`使用密码
+- `-n`选择库名
+- `—raw` 触发当前编码集，进行格式化
 
 ## 库表结构
 
@@ -191,9 +192,11 @@ Set your preferences in ~/.redisclirc
   127.0.0.1:6379>
   ```
 
-## 5种基本类型
+## Value- 5种基本类型
 
-### `1. help @string`
+### 1. 字符串
+
+ > help @`string`命令组
 
 #### Set 
 
@@ -232,6 +235,41 @@ Set your preferences in ~/.redisclirc
     127.0.0.1:6379> get k2
     (nil)
     ```
+
+#### del
+
+> 该命令用于在 key 存在是删除 key。
+
+```bash
+127.0.0.1:6379> del k1
+(integer) 1
+127.0.0.1:6379> get k1
+(nil)
+127.0.0.1:6379> keys *
+1) "k2"
+2) "orkey"
+3) "andkey"
+```
+
+#### flushdb
+
+```
+  FLUSHDB [ASYNC]
+  summary: Remove all keys from the current database
+  since: 1.0.0
+  group: server
+```
+
+#### flushall
+
+```
+  FLUSHALL [ASYNC]
+  summary: Remove all keys from all databases
+  since: 1.0.0
+  group: server
+```
+
+
 
 #### mset/mget 
 
@@ -307,6 +345,8 @@ OK
 
 #### type 
 
+> 查看key类型
+
 ```bash
 127.0.0.1:6379> type k1
 string
@@ -336,6 +376,294 @@ string
     group: string
   ```
 
+#### object
+
+> 子命令列表
+
+```bash
+127.0.0.1:6379> object help
+1) OBJECT <subcommand> arg arg ... arg. Subcommands are:
+2) ENCODING <key> -- Return the kind of internal representation used in order to store the value associated with a key.
+3) FREQ <key> -- Return the access frequency index of the key. The returned integer is proportional to the logarithm of the recent access frequency of the key.
+4) IDLETIME <key> -- Return the idle time of the key, that is the approximated number of seconds elapsed since the last access to the key.
+5) REFCOUNT <key> -- Return the number of references of the value associated with the specified key.
+```
+
+- #### **object encoding key**
+
+  > 显示key编码
+
+  ```bash
+  127.0.0.1:6379> mget k1 k3 k4
+  1) "hello SeaSoonKeun"
+  2) "a"
+  3) "999"
+  127.0.0.1:6379> type k1
+  string
+  127.0.0.1:6379> type k3
+  string
+  127.0.0.1:6379> type k4
+  string
+  127.0.0.1:6379> object encoding k1
+  "raw"
+  127.0.0.1:6379> object encoding k3
+  "embstr"
+  127.0.0.1:6379> object encoding k4
+  "int"
+  ```
+
+  虽然key的type都是string类型，但是有不同的编码。redis这种`预埋`设计，方便后面更加快速调用对应类型的方法进行计算，很大程度上提升了速度。
+
+  <img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423104356.png" style="zoom:50%;" />
+
+  在此基础上，针对encoding是int类型的有下列方法：
+
+  ```bash
+    # 加一
+    INCR key
+    summary: Increment the integer value of a key by one
+    since: 1.0.0
   
+  
+    INCRBY key increment
+    summary: Increment the integer value of a key by the given amount
+    since: 1.0.0
+  
+    INCRBYFLOAT key increment
+    summary: Increment the float value of a key by the given amount
+    since: 2.6.0
+    
+    DECR key
+    summary: Decrement the integer value of a key by one
+    since: 1.0.0
+  
+    DECRBY key decrement
+    summary: Decrement the integer value of a key by the given number
+    since: 1.0.0
+  ```
+
+  eg
+
+  ```bah
+  127.0.0.1:6379> get k4
+  "999"
+  127.0.0.1:6379>
+  127.0.0.1:6379> INCR k4
+  (integer) 1000
+  127.0.0.1:6379> INCRBY k4 100
+  (integer) 1100
+  127.0.0.1:6379> DECR k4
+  (integer) 1099
+  127.0.0.1:6379> DECRBY k4 100
+  (integer) 999
+  ```
+
+一些方法会变掉key的类型，一些方法会提前固定编码
+
+#### 引申： 二进制安全 -> 字节流
+
+编码并不会影响数据存储，因为是**首先是按字节流完成的数据存储**，然后redis**为了自身方法更快速的计算，在key上加了encoding类型**数据，也会随着**方法的调用**发生encoding编码的改变。
+
+eg
+
+- macos默认使用utf-8 编码集
+1. ![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png)
+2. 在此编码集下，添加一个key。
+```shell
+127.0.0.1:6379> flushdb
+OK
+127.0.0.1:6379>
+127.0.0.1:6379> set k1 我
+OK
+127.0.0.1:6379> STRLEN k1
+(integer) 3
+127.0.0.1:6379> get k1
+"\xe6\x88\x91"
+```
+- 修改编码集为GBK
+1. ![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png)
+2.  在此编码集下，添加一个相同的key。
+```bash
+[root@localhost ~]# redis-cli
+127.0.0.1:6379> flushdb
+OK
+127.0.0.1:6379> set k1 我
+OK
+127.0.0.1:6379> strlen k1
+(integer) 2
+127.0.0.1:6379> get k1
+"\xce\xd2"
+```
+
+**结论**：redis是**按传递进来的字节进行存储**，utf-8中占用三个字节，GBK占用二个字节。
+
+**redis是没有数据类型的，必须在用户端沟通好数据的编码和解码**。
+
+```bash
+# redis utf-8编码下，格式化gbk编码的字节，出现乱码
+127.0.0.1:6379> keys *
+1) "k1"
+127.0.0.1:6379> get k1
+"\xce\xd2"
+127.0.0.1:6379> exit
+[root@localhost ~]# redis-cli --raw
+127.0.0.1:6379> get k1
+��
+
+
+# redis gbk编码下，格式化gbk编码的字节，显示正常
+[root@localhost ~]# redis-cli
+127.0.0.1:6379> get k1
+"\xce\xd2"
+127.0.0.1:6379> exit
+[root@localhost ~]# redis-cli --raw
+127.0.0.1:6379> get k1
+我
+```
+
+
+
+#### getset
+
+> 获取老值，赋值新值
+
+```shell
+127.0.0.1:6379> help GETSET
+
+  GETSET key value
+  summary: Set the string value of a key and return its old value
+  since: 1.0.0
+  group: string
+  
+127.0.0.1:6379> getset k1 hi
+"hello SeaSoonKeun"
+127.0.0.1:6379> get k1
+"hi"
+```
+
+**减少成本**，避免两次请求造成不必要的通讯浪费。
+
+#### 引申：原子性操作。
+
+> 触发原子，单线程不涉及肯定是原子的， 只有多笔操作的时候才会有原子的概念。
+
+#### 引申：内存
+
+> 线性地址空间，
+
+#### bitmap ：
+
+> 位图。BitMap 原本的含义是用**一个比特位来映射某个元素的状态**。由于一个比特位只能表示 0 和 1 两种状态，所以 BitMap 能映射的状态有限，但是使用比特位的优势是能**大量的节省内存空间**。
+>
+> Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，**BitMap 底层是基于 Redis 的字符串类型实现的**。
+
+字节Byte = 8bit
+
+##### BitMap 的 offset 值上限
+
+​	但是需要注意，Redis 中字符串的最大长度是 512M，所以 BitMap 的 offset 值也是有上限的，其最大值是:
+
+```
+8 * 1024 * 1024 * 512  =  2^32
+```
+
+​	由于 C语言中字符串的末尾都要存储一位分隔符，所以实际上 BitMap 的 offset 值上限是：
+
+```
+(8 * 1024 * 1024 * 512) -1  =  2^32 - 1
+```
+
+##### BitMap 占用的空间，
+
+​	就是底层字符串占用的空间。假如 BitMap 偏移量的最大值是 OFFSET_MAX，那么它底层占用的空间就是：
+
+```
+(OFFSET_MAX/8)+1 = 占用字节数
+```
+
+##### 	因为字符串内存只能以字节分配，所以上面的单位是字节。
+
+##### SETBIT
+
+```bash
+	SETBIT key offset value
+  summary: Sets or clears the bit at offset in the string value stored at key
+  since: 2.2.0
+  group: string
+
+```
+
+​	offset 代表二进制位 不是偏移量
+
+<img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423172856.png" style="zoom:50%;" />
+
+> `man ascii` 验证ascii码的值
+
+<img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423170557.png" style="zoom:30%;" />
+
+```shell
+127.0.0.1:6379> SETBIT k4 1 1
+0
+127.0.0.1:6379> get k4
+@
+01000000
+
+127.0.0.1:6379> SETBIT k4 9 1
+0
+127.0.0.1:6379> get k4
+@@
+01000000 01000000
+```
+
+#####   BITCOUNT 
+
+> *# 获取指定范围内值为 1 的个数* *# start 和 end 以字节为单位*
+
+```bash 
+BITCOUNT key [start end] 
+summary: Count set bits in a string
+```
+
+##### BITFIELD
+
+> 高级命令
+
+```bash
+	BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OVERFLOW WRAP|SAT|FAIL]
+  summary: Perform arbitrary bitfield integer operations on strings
+  since: 3.2.0
+```
+
+##### BITOP
+
+>*# result 计算的结果，会存储在该key中* 
+>
+>*# key1 … keyn 参与运算的key，可以有多个，空格分割，not运算只能一个key* 
+>
+>*# 当 BITOP 处理不同长度的字符串时，较短的那个字符串所缺少的部分会被看作 0。返回值是保存到 destkey 的字符串的长度（以字节byte为单位），和输入 key 中最长的字符串长度相等。* 
+
+```bash
+BITOP operation destkey key [key ...]
+  summary: Perform bitwise operations between strings
+  since: 2.6.0
+```
+
+##### BITPOS
+
+>*# 返回指定key中第一次出现指定value(0/1)的位置*
+
+```bash
+  BITPOS key bit [start] [end]
+  summary: Find first bit set or clear in a string
+  since: 2.8.7
+```
+
+##### 位图的场景
+
+1. 公司用户，统计用户的登录天数，且窗口随机
+
+   bitcount
+
+2. 
 
 
