@@ -4,7 +4,7 @@
         <link>https://github.com/posts/</link>
         <description>所有文章 | The Record &amp; Share by SeaSoonKeun</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xucg0912@gmail.com (SeaSoonKeun)</managingEditor>
-            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 23 Apr 2021 01:30:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
     <title>主题文档 - 基本概念</title>
     <link>https://github.com/theme-documentation-basics/</link>
     <pubDate>Fri, 06 Mar 2020 21:40:32 &#43;0800</pubDate>
@@ -40,39 +40,39 @@
     <guid>https://github.com/emoji-support/</guid>
     <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
 </item><item>
-    <title>Redis的使用</title>
-    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
-    <pubDate>Fri, 23 Apr 2021 01:30:02 &#43;0800</pubDate>
+    <title>Redis-Value-Hash类型</title>
+    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/</link>
+    <pubDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
-    <description><![CDATA[Redis的使用 redis-cli 进入客户端 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56]]></description>
+    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/</guid>
+    <description><![CDATA[Redis-Value-Hash类型 1. Why（设计的必要性） 场景： 1 2 3 4 5 6 7 8 9 10 11 127.0.0.1:6379&gt; set sean:name xcg OK 127.0.0.1:6379&gt; set sean:age 18 OK 127.0.0.1:6379&gt; keys sean* 1) &#34;sean:name&#34; 2) &#34;sean:age&#34; 127.0.0.1:6379&gt; mget sean:name 1) &#34;xcg&#34; 127.0.0.1:6379&gt; mget sean:age 1)]]></description>
 </item><item>
-    <title>修改macOS Mysql的 root用户密码</title>
-    <link>https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/</link>
-    <pubDate>Thu, 22 Apr 2021 23:30:02 &#43;0800</pubDate>
+    <title>Redis-Value-Set集合类型</title>
+    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-set%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/</link>
+    <pubDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/</guid>
-    <description><![CDATA[修改macOS Mysql的 root用户密码 1. 关闭mysql服务 2. 禁止mysql验证功能 1 2 3 4 5 6 7 8 9 mbp:~ mr.x$ cd /usr/local/mysql # 输入苹果密码进入root用]]></description>
+    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-set%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/</guid>
+    <description><![CDATA[Redis-Value-Set集合类型 1. Why 特点 无序 去重 应用场景 集合操作。求交、并集和差集 随机事件。 解决抽奖问题：10个奖品 用户&lt;10，]]></description>
 </item><item>
-    <title>Redis介绍和安装</title>
-    <link>https://github.com/redis_intro_install/</link>
-    <pubDate>Wed, 21 Apr 2021 17:30:02 &#43;0800</pubDate>
+    <title>redis-Value-sorted-set类型</title>
+    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/</link>
+    <pubDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://github.com/redis_intro_install/</guid>
-    <description><![CDATA[Redis介绍和安装]]></description>
+    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/</guid>
+    <description><![CDATA[redis-Value-sorted-set类型 1. Why 特点 有序 分数 scores 进行排序 2. What 1. Help @sorted_set 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]]></description>
 </item><item>
-    <title>配置 GIhub &#43; PicGo 图床</title>
-    <link>https://github.com/github-picgo/</link>
-    <pubDate>Wed, 21 Apr 2021 17:30:02 &#43;0800</pubDate>
+    <title>redis面试题</title>
+    <link>https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://github.com/github-picgo/</guid>
-    <description><![CDATA[配置 GIhub + PicGo 图床 1. 新建 github repositry ，并生成账号令牌key 2. macos 安装picgo 1 brew install picgo --cask 3. 配置 picGO与 GitHub 进行关联 1. 配置github图床 2. 添加插件，每次]]></description>
+    <guid>https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[redis面试题 Redis 常见面试问题总结和答案。 什么是Redis？ Redis(Remote Dictionary Server) Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、支持网络、可基于内存亦可持久化]]></description>
 </item><item>
-    <title></title>
-    <link>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</link>
-    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <title>Redis-value-List类型</title>
+    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/</link>
+    <pubDate>Fri, 23 Apr 2021 17:30:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</guid>
-    <description><![CDATA[Algolia 端 注册algolia免费账号 创建索引 记录API Keys]]></description>
+    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/</guid>
+    <description><![CDATA[Redis-value-List类型 1. 框架图： 2. help @LIST 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44]]></description>
 </item></channel>
 </rss>

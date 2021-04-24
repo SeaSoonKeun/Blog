@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Redis的使用&amp;redis-Value-string类型 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="Redis的使用&amp;redis-Value-string类型"><meta property="og:title" content="Redis的使用&amp;redis-Value-string类型" />
+<meta property="og:description" content="Redis的使用&amp;redis-Value-string类型" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-23T01:30:02&#43;08:00" />
+<meta property="article:modified_time" content="2021-04-23T01:30:02&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/logo.png"/>
+
+<meta name="twitter:title" content="Redis的使用&amp;redis-Value-string类型"/>
+<meta name="twitter:description" content="Redis的使用&amp;redis-Value-string类型"/>
+<meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
+<meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" /><link rel="prev" href="https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/" /><link rel="next" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis的使用\u0026redis-Value-string类型",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "Redis","wordcount":  3578 ,
+        "url": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B\/","datePublished": "2021-04-23T01:30:02+08:00","dateModified": "2021-04-23T01:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/github.com\/images\/avatar.png",
+                    "width":  790 ,
+                    "height":  792 
+                }},"author": {
+                "@type": "Person",
+                "name": "SeaSoonKeun"
+            },"description": "Redis的使用\u0026redis-Value-string类型"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 分类 </a><a class="menu-item" href="/categories/documentation/">📋 文档 </a><a class="menu-item" href="/about/">🤙 关于 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚分类</a><a class="menu-item" href="/categories/documentation/" title="">📋文档</a><a class="menu-item" href="/about/" title="">🤙关于</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis的使用&amp;redis-Value-string类型</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3578 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" class="leancloud_visitors" data-flag-title="Redis的使用&amp;redis-Value-string类型">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#库表结构">库表结构</a></li>
+    <li><a href="#help使用">help使用</a></li>
+    <li><a href="#help-命令组">help @命令组</a></li>
+    <li><a href="#value--5种基本类型之字符串">Value- 5种基本类型之字符串</a>
+      <ul>
+        <li><a href="#1-字符串">1. 字符串</a>
+          <ul>
+            <li><a href="#set">Set</a></li>
+            <li><a href="#设置值">设置值</a></li>
+            <li><a href="#del">del</a></li>
+            <li><a href="#flushdb">flushdb</a></li>
+            <li><a href="#flushall">flushall</a></li>
+            <li><a href="#msetmget">mset/mget</a></li>
+            <li><a href="#批量设置读取">批量设置，读取</a></li>
+            <li><a href="#append">append</a></li>
+            <li><a href="#追加字符串的值">追加字符串的值</a></li>
+            <li><a href="#getrange">getrange</a></li>
+            <li><a href="#获取范围内的字符串">获取范围内的字符串</a></li>
+            <li><a href="#setrange">setrange</a></li>
+            <li><a href="#从指定位置开始set-string值">从指定位置开始set string值</a></li>
+            <li><a href="#strlen">strlen</a></li>
+            <li><a href="#返回字符串长度">返回字符串长度</a></li>
+            <li><a href="#type">type</a></li>
+            <li><a href="#object">object</a></li>
+            <li><a href="#object-encoding-key"><strong>object encoding key</strong></a></li>
+            <li><a href="#引申-二进制安全---字节流">引申： 二进制安全 -&gt; 字节流</a></li>
+            <li><a href="#getset">getset</a></li>
+            <li><a href="#引申原子性操作">引申：原子性操作。</a></li>
+            <li><a href="#引申内存">引申：内存</a></li>
+            <li><a href="#bitmap-">bitmap ：</a>
+              <ul>
+                <li><a href="#bitmap-的-offset-值上限">BitMap 的 offset 值上限</a></li>
+                <li><a href="#bitmap-占用的空间">BitMap 占用的空间，</a></li>
+                <li><a href="#因为字符串内存只能以字节分配所以上面的单位是字节">因为字符串内存只能以字节分配，所以上面的单位是字节。</a></li>
+                <li><a href="#setbit">SETBIT</a></li>
+                <li><a href="#bitcount">BITCOUNT</a></li>
+                <li><a href="#bitfield">BITFIELD</a></li>
+                <li><a href="#bitop">BITOP</a></li>
+                <li><a href="#bitpos">BITPOS</a></li>
+                <li><a href="#位图的应用场景">位图的应用场景</a>
+                  <ul>
+                    <li><a href="#公司用户统计用户的登录天数且窗口随机">公司用户，统计用户的登录天数，且窗口随机</a></li>
+                    <li><a href="#京东秒杀统计某一时间段的活跃用户">京东秒杀，统计某一时间段的活跃用户。</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis的使用redis-value-string类型">Redis的使用&amp;redis-Value-string类型</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_String%E7%B1%BB%E5%9E%8B%E6%95%B4%E4%BD%93%E5%9B%BE.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_String%E7%B1%BB%E5%9E%8B%E6%95%B4%E4%BD%93%E5%9B%BE.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_String%E7%B1%BB%E5%9E%8B%E6%95%B4%E4%BD%93%E5%9B%BE.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_String%E7%B1%BB%E5%9E%8B%E6%95%B4%E4%BD%93%E5%9B%BE.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_String%E7%B1%BB%E5%9E%8B%E6%95%B4%E4%BD%93%E5%9B%BE.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_String%E7%B1%BB%E5%9E%8B%E6%95%B4%E4%BD%93%E5%9B%BE.jpg" /></p>
+<p><code>redis-cli</code> 进入客户端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli --help &amp; redis-cli -h</span>
+redis-cli 6.0.6
+
+Usage: redis-cli <span class="o">[</span>OPTIONS<span class="o">]</span> <span class="o">[</span>cmd <span class="o">[</span>arg <span class="o">[</span>arg ...<span class="o">]]]</span>
+  -h &lt;hostname&gt;      Server hostname <span class="o">(</span>default: 127.0.0.1<span class="o">)</span>.
+  -p &lt;port&gt;          Server port <span class="o">(</span>default: 6379<span class="o">)</span>.
+  -s &lt;socket&gt;        Server socket <span class="o">(</span>overrides hostname and port<span class="o">)</span>.
+  -a &lt;password&gt;      Password to use when connecting to the server.
+                     You can also use the REDISCLI_AUTH environment
+                     variable to pass this password more safely
+                     <span class="o">(</span><span class="k">if</span> both are used, this argument takes predecence<span class="o">)</span>.
+  --user &lt;username&gt;  Used to send ACL style <span class="s1">&#39;AUTH username pass&#39;</span>. Needs -a.
+  --pass &lt;password&gt;  Alias of -a <span class="k">for</span> consistency with the new --user option.
+  --askpass          Force user to input password with mask from STDIN.
+                     If this argument is used, <span class="s1">&#39;-a&#39;</span> and REDISCLI_AUTH
+                     environment variable will be ignored.
+  -u &lt;uri&gt;           Server URI.
+  -r &lt;repeat&gt;        Execute specified <span class="nb">command</span> N times.
+  -i &lt;interval&gt;      When -r is used, waits &lt;interval&gt; seconds per command.
+                     It is possible to specify sub-second <span class="nb">times</span> like -i 0.1.
+  -n &lt;db&gt;            Database number.
+  -3                 Start session in RESP3 protocol mode.
+  -x                 Read last argument from STDIN.
+  -d &lt;delimiter&gt;     Multi-bulk delimiter in <span class="k">for</span> raw formatting <span class="o">(</span>default: <span class="se">\n</span><span class="o">)</span>.
+  -c                 Enable cluster mode <span class="o">(</span>follow -ASK and -MOVED redirections<span class="o">)</span>.
+  --raw              Use raw formatting <span class="k">for</span> replies <span class="o">(</span>default when STDOUT is
+                     not a tty<span class="o">)</span>.
+  --no-raw           Force formatted output even when STDOUT is not a tty.
+  --csv              Output in CSV format.
+  --stat             Print rolling stats about server: mem, clients, ...
+  --latency          Enter a special mode continuously sampling latency.
+                     If you use this mode in an interactive session it runs
+                     forever displaying real-time stats. Otherwise <span class="k">if</span> --raw or
+                     --csv is specified, or <span class="k">if</span> you redirect the output to a non
+                     TTY, it samples the latency <span class="k">for</span> <span class="m">1</span> second <span class="o">(</span>you can use
+                     -i to change the interval<span class="o">)</span>, <span class="k">then</span> produces a single output
+                     and exits.
+  --latency-history  Like --latency but tracking latency changes over time.
+                     Default <span class="nb">time</span> interval is <span class="m">15</span> sec. Change it using -i.
+  --latency-dist     Shows latency as a spectrum, requires xterm <span class="m">256</span> colors.
+                     Default <span class="nb">time</span> interval is <span class="m">1</span> sec. Change it using -i.
+  --lru-test &lt;keys&gt;  Simulate a cache workload with an 80-20 distribution.
+  --replica          Simulate a replica showing commands received from the master.
+  --rdb &lt;filename&gt;   Transfer an RDB dump from remote server to <span class="nb">local</span> file.
+  --pipe             Transfer raw Redis protocol from stdin to server.
+  --pipe-timeout &lt;n&gt; In --pipe mode, abort with error <span class="k">if</span> after sending all data.
+                     no reply is received within &lt;n&gt; seconds.
+                     Default timeout: 30. Use <span class="m">0</span> to <span class="nb">wait</span> forever.
+  --bigkeys          Sample Redis keys looking <span class="k">for</span> keys with many elements <span class="o">(</span>complexity<span class="o">)</span>.
+  --memkeys          Sample Redis keys looking <span class="k">for</span> keys consuming a lot of memory.
+  --memkeys-samples &lt;n&gt; Sample Redis keys looking <span class="k">for</span> keys consuming a lot of memory.
+                     And define number of key elements to sample
+  --hotkeys          Sample Redis keys looking <span class="k">for</span> hot keys.
+                     only works when maxmemory-policy is *lfu.
+  --scan             List all keys using the SCAN command.
+  --pattern &lt;pat&gt;    Useful with --scan to specify a SCAN pattern.
+  --intrinsic-latency &lt;sec&gt; Run a <span class="nb">test</span> to measure intrinsic system latency.
+                     The <span class="nb">test</span> will run <span class="k">for</span> the specified amount of seconds.
+  --eval &lt;file&gt;      Send an EVAL <span class="nb">command</span> using the Lua script at &lt;file&gt;.
+  --ldb              Used with --eval <span class="nb">enable</span> the Redis Lua debugger.
+  --ldb-sync-mode    Like --ldb but uses the synchronous Lua debugger, in
+                     this mode the server is blocked and script changes are
+                     not rolled back from the server memory.
+  --cluster &lt;command&gt; <span class="o">[</span>args...<span class="o">]</span> <span class="o">[</span>opts...<span class="o">]</span>
+                     Cluster Manager <span class="nb">command</span> and arguments <span class="o">(</span>see below<span class="o">)</span>.
+  --verbose          Verbose mode.
+  --no-auth-warning  Don<span class="s1">&#39;t show warning message when using password on command
+</span><span class="s1">                     line interface.
+</span><span class="s1">  --help             Output this help and exit.
+</span><span class="s1">  --version          Output version and exit.
+</span><span class="s1">
+</span><span class="s1">Cluster Manager Commands:
+</span><span class="s1">  Use --cluster help to list all available cluster manager commands.
+</span><span class="s1">
+</span><span class="s1">Examples:
+</span><span class="s1">  cat /etc/passwd | redis-cli -x set mypasswd
+</span><span class="s1">  redis-cli get mypasswd
+</span><span class="s1">  redis-cli -r 100 lpush mylist x
+</span><span class="s1">  redis-cli -r 100 -i 1 info | grep used_memory_human:
+</span><span class="s1">  redis-cli --eval myscript.lua key1 key2 , arg1 arg2 arg3
+</span><span class="s1">  redis-cli --scan --pattern &#39;</span>*:12345*<span class="err">&#39;</span>
+
+  <span class="o">(</span>Note: when using --eval the comma separates KEYS<span class="o">[]</span> from ARGV<span class="o">[]</span> items<span class="o">)</span>
+
+When no <span class="nb">command</span> is given, redis-cli starts in interactive mode.
+Type <span class="s2">&#34;help&#34;</span> in interactive mode <span class="k">for</span> information on available commands
+and settings.
+</code></pre></td></tr></table>
+</div>
+</div><p>常用：</p>
+<ul>
+<li><code>-h</code> 不加参数 显示help内容</li>
+<li><code>-h x.x.x.x</code>连接指定ip参数</li>
+<li><code>-p xxx</code>指定端口</li>
+<li><code>-a</code>使用密码</li>
+<li><code>-n</code>选择库名</li>
+<li><code>—raw</code> 触发当前编码集，进行格式化</li>
+</ul>
+<h2 id="库表结构">库表结构</h2>
+<ul>
+<li>库：Redis 默认16个库
+<ul>
+<li><code>-n</code>指定连接的库</li>
+<li>默认为<code>0</code>号库</li>
+<li>select x 进行切换库</li>
+</ul>
+</li>
+</ul>
+<h2 id="help使用">help使用</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; <span class="nb">help</span>
+redis-cli 6.0.6
+To get <span class="nb">help</span> about Redis commands type:
+      <span class="s2">&#34;help @&lt;group&gt;&#34;</span> to get a list of commands in &lt;group&gt;
+      <span class="s2">&#34;help &lt;command&gt;&#34;</span> <span class="k">for</span> <span class="nb">help</span> on &lt;command&gt;
+      <span class="s2">&#34;help &lt;tab&gt;&#34;</span> to get a list of possible <span class="nb">help</span> topics
+      <span class="s2">&#34;quit&#34;</span> to <span class="nb">exit</span>
+
+To <span class="nb">set</span> redis-cli preferences:
+      <span class="s2">&#34;:set hints&#34;</span> <span class="nb">enable</span> online hints
+      <span class="s2">&#34;:set nohints&#34;</span> disable online hints
+Set your preferences in ~/.redisclirc
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="help-命令组">help @命令组</h2>
+<ul>
+<li>
+<p>例如help @generic</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">help</span> @generic
+  
+  DEL key <span class="o">[</span>key ...<span class="o">]</span>
+  summary: Delete a key
+  since: 1.0.0
+  
+  DUMP key
+  summary: Return a serialized version of the value stored at the specified key.
+  since: 2.6.0
+  
+  EXISTS key <span class="o">[</span>key ...<span class="o">]</span>
+  summary: Determine <span class="k">if</span> a key exists
+  since: 1.0.0
+  
+  EXPIRE key seconds
+  summary: Set a key<span class="err">&#39;</span>s <span class="nb">time</span> to live in seconds
+  since: 1.0.0
+  
+  EXPIREAT key timestamp
+  summary: Set the expiration <span class="k">for</span> a key as a UNIX timestamp
+  since: 1.2.0
+  
+  KEYS pattern
+  summary: Find all keys matching the given pattern
+  since: 1.0.0
+  
+  MIGRATE host port key<span class="p">|</span> destination-db timeout <span class="o">[</span>COPY<span class="o">]</span> <span class="o">[</span>REPLACE<span class="o">]</span> <span class="o">[</span>AUTH password<span class="o">]</span> <span class="o">[</span>KEYS key<span class="o">]</span>
+  summary: Atomically transfer a key from a Redis instance to another one.
+  since: 2.6.0
+  
+  MOVE key db
+  summary: Move a key to another database
+  since: 1.0.0
+  
+  OBJECT subcommand <span class="o">[</span>arguments <span class="o">[</span>arguments ...<span class="o">]]</span>
+  summary: Inspect the internals of Redis objects
+  since: 2.2.3
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>help tab可以补全</p>
+</li>
+<li>
+<p>keys * 显示所有key</p>
+</li>
+<li>
+<p>FLUSHDB 清库，测试环境下使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt;  keys *
+1<span class="o">)</span> <span class="s2">&#34;k380&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;k380:1&#34;</span>
+127.0.0.1:6379&gt; FlushDB
+OK
+127.0.0.1:6379&gt;  keys *
+<span class="o">(</span>empty array<span class="o">)</span>
+127.0.0.1:6379&gt;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="value--5种基本类型之字符串">Value- 5种基本类型之字符串</h2>
+<h3 id="1-字符串">1. 字符串</h3>
+<blockquote>
+<p>help @<code>string</code>命令组</p>
+</blockquote>
+<h4 id="set">Set</h4>
+<blockquote>
+<h4 id="设置值">设置值</h4>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 查看set帮助</span>
+127.0.0.1:6379&gt; <span class="nb">help</span> <span class="nb">set</span>
+
+  SET key value <span class="o">[</span>EX seconds<span class="p">|</span>PX milliseconds<span class="o">]</span> <span class="o">[</span>NX<span class="p">|</span>XX<span class="o">]</span> <span class="o">[</span>KEEPTTL<span class="o">]</span>
+  summary: Set the string value of a key
+  since: 1.0.0
+  group: string
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>NX -&gt; not x -&gt; not exist 不存在的时候才去设置</p>
+<ul>
+<li>
+<p>使用场景：分布式锁。谁先成功谁就拿到锁了</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; set k1 hello nx
+OK
+127.0.0.1:6379&gt; set k1 world nx
+(nil)
+127.0.0.1:6379&gt; get k1
+&#34;hello&#34;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>只有k1无值的时候才会生效</p>
+</li>
+</ul>
+</li>
+<li>
+<p>XX -&gt; exist 只能更新,无法赋值</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; <span class="nb">set</span> k2 redis xx
+<span class="o">(</span>nil<span class="o">)</span>
+127.0.0.1:6379&gt; get k2
+<span class="o">(</span>nil<span class="o">)</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+<h4 id="del">del</h4>
+<blockquote>
+<p>该命令用于在 key 存在是删除 key。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; del k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; get k1
+<span class="o">(</span>nil<span class="o">)</span>
+127.0.0.1:6379&gt; keys *
+1<span class="o">)</span> <span class="s2">&#34;k2&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;orkey&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;andkey&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="flushdb">flushdb</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  FLUSHDB [ASYNC]
+  summary: Remove all keys from the current database
+  since: 1.0.0
+  group: server
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="flushall">flushall</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  FLUSHALL [ASYNC]
+  summary: Remove all keys from all databases
+  since: 1.0.0
+  group: server
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="msetmget">mset/mget</h4>
+<blockquote>
+<h4 id="批量设置读取">批量设置，读取</h4>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; mset k3 a k4 b
+OK
+127.0.0.1:6379&gt; mget k3 k4
+1<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;b&#34;</span>
+127.0.0.1:6379&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="append">append</h4>
+<blockquote>
+<h4 id="追加字符串的值">追加字符串的值</h4>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hello&#34;</span>
+127.0.0.1:6379&gt; append k1 <span class="s2">&#34; world&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">11</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hello world&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="getrange">getrange</h4>
+<blockquote>
+<h4 id="获取范围内的字符串">获取范围内的字符串</h4>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hello world&#34;</span>
+127.0.0.1:6379&gt; getrange k1 <span class="m">6</span> <span class="m">10</span>
+<span class="s2">&#34;world&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>位置从<code>0</code>开始</p>
+</li>
+<li>
+<p><strong>反方向</strong>索引</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; getrange k1 -5 -1
+<span class="s2">&#34;world&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423001040.png" style="zoom:50%;" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="setrange">setrange</h4>
+<blockquote>
+<h4 id="从指定位置开始set-string值">从指定位置开始set string值</h4>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; setrange k1 <span class="m">6</span> SeaSoonKeun
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">17</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="strlen">strlen</h4>
+<blockquote>
+<h4 id="返回字符串长度">返回字符串长度</h4>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; setrange k1 <span class="m">6</span> SeaSoonKeun
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">17</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+127.0.0.1:6379&gt; strlen k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">17</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="type">type</h4>
+<blockquote>
+<p>查看key类型</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">type</span> k1
+string
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>Key  中的 type 包含value 类型</p>
+</li>
+<li>
+<p>Set 命令是 string 分组的，所以产生的数据都是 string类型的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; set k4 999
+OK
+127.0.0.1:6379&gt; get k4
+&#34;999&#34;
+127.0.0.1:6379&gt; type k4
+string
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">help</span> <span class="nb">set</span>
+  
+  SET key value <span class="o">[</span>EX seconds<span class="p">|</span>PX milliseconds<span class="o">]</span> <span class="o">[</span>NX<span class="p">|</span>XX<span class="o">]</span> <span class="o">[</span>KEEPTTL<span class="o">]</span>
+  summary: Set the string value of a key
+  since: 1.0.0
+  group: string
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="object">object</h4>
+<blockquote>
+<p>子命令列表</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; object <span class="nb">help</span>
+1<span class="o">)</span> OBJECT &lt;subcommand&gt; arg arg ... arg. Subcommands are:
+2<span class="o">)</span> ENCODING &lt;key&gt; -- Return the kind of internal representation used in order to store the value associated with a key.
+3<span class="o">)</span> FREQ &lt;key&gt; -- Return the access frequency index of the key. The returned integer is proportional to the logarithm of the recent access frequency of the key.
+4<span class="o">)</span> IDLETIME &lt;key&gt; -- Return the idle <span class="nb">time</span> of the key, that is the approximated number of seconds elapsed since the last access to the key.
+5<span class="o">)</span> REFCOUNT &lt;key&gt; -- Return the number of references of the value associated with the specified key.
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<h4 id="object-encoding-key"><strong>object encoding key</strong></h4>
+<blockquote>
+<p>显示key编码</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; mget k1 k3 k4
+1<span class="o">)</span> <span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;a&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;999&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">type</span> k1
+string
+127.0.0.1:6379&gt; <span class="nb">type</span> k3
+string
+127.0.0.1:6379&gt; <span class="nb">type</span> k4
+string
+127.0.0.1:6379&gt; object encoding k1
+<span class="s2">&#34;raw&#34;</span>
+127.0.0.1:6379&gt; object encoding k3
+<span class="s2">&#34;embstr&#34;</span>
+127.0.0.1:6379&gt; object encoding k4
+<span class="s2">&#34;int&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>虽然key的type都是string类型，但是有不同的编码。redis这种<code>预埋</code>设计，方便后面更加快速调用对应类型的方法进行计算，很大程度上提升了速度。</p>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423104356.png" style="zoom:50%;" /></p>
+<p>在此基础上，针对encoding是int类型的有下列方法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  <span class="c1"># 加一</span>
+  INCR key
+  summary: Increment the integer value of a key by one
+  since: 1.0.0
+  
+  
+  INCRBY key increment
+  summary: Increment the integer value of a key by the given amount
+  since: 1.0.0
+  
+  INCRBYFLOAT key increment
+  summary: Increment the float value of a key by the given amount
+  since: 2.6.0
+    
+  DECR key
+  summary: Decrement the integer value of a key by one
+  since: 1.0.0
+  
+  DECRBY key decrement
+  summary: Decrement the integer value of a key by the given number
+  since: 1.0.0
+</code></pre></td></tr></table>
+</div>
+</div><p>eg</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; get k4
+&#34;999&#34;
+127.0.0.1:6379&gt;
+127.0.0.1:6379&gt; INCR k4
+(integer) 1000
+127.0.0.1:6379&gt; INCRBY k4 100
+(integer) 1100
+127.0.0.1:6379&gt; DECR k4
+(integer) 1099
+127.0.0.1:6379&gt; DECRBY k4 100
+(integer) 999
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<p>一些方法会变掉key的类型，一些方法会提前固定编码</p>
+<h4 id="引申-二进制安全---字节流">引申： 二进制安全 -&gt; 字节流</h4>
+<p>编码并不会影响数据存储，因为是<strong>首先是按字节流完成的数据存储</strong>，然后redis<strong>为了自身方法更快速的计算，在key上加了encoding类型</strong>数据，也会随着<strong>方法的调用</strong>发生encoding编码的改变。</p>
+<p>eg</p>
+<ul>
+<li>macos默认使用utf-8 编码集</li>
+</ul>
+<ol>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423144728.png" /></li>
+<li>在此编码集下，添加一个key。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; flushdb
+OK
+127.0.0.1:6379&gt;
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 我
+OK
+127.0.0.1:6379&gt; STRLEN k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xe6\x88\x91&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>修改编码集为GBK</li>
+</ul>
+<ol>
+<li><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423150311.png" /></li>
+<li>在此编码集下，添加一个相同的key。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; flushdb
+OK
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 我
+OK
+127.0.0.1:6379&gt; strlen k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xce\xd2&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>结论</strong>：redis是<strong>按传递进来的字节进行存储</strong>，utf-8中占用三个字节，GBK占用二个字节。</p>
+<p><strong>redis是没有数据类型的，必须在用户端沟通好数据的编码和解码</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># redis utf-8编码下，格式化gbk编码的字节，出现乱码</span>
+127.0.0.1:6379&gt; keys *
+1<span class="o">)</span> <span class="s2">&#34;k1&#34;</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xce\xd2&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">exit</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli --raw</span>
+127.0.0.1:6379&gt; get k1
+��
+
+
+<span class="c1"># redis gbk编码下，格式化gbk编码的字节，显示正常</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;\xce\xd2&#34;</span>
+127.0.0.1:6379&gt; <span class="nb">exit</span>
+<span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli --raw</span>
+127.0.0.1:6379&gt; get k1
+我
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="getset">getset</h4>
+<blockquote>
+<p>获取老值，赋值新值</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; <span class="nb">help</span> GETSET
+
+  GETSET key value
+  summary: Set the string value of a key and <span class="k">return</span> its old value
+  since: 1.0.0
+  group: string
+  
+127.0.0.1:6379&gt; getset k1 hi
+<span class="s2">&#34;hello SeaSoonKeun&#34;</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;hi&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>减少成本</strong>，避免两次请求造成不必要的通讯浪费。</p>
+<h4 id="引申原子性操作">引申：原子性操作。</h4>
+<blockquote>
+<p>触发原子，单线程不涉及肯定是原子的， 只有多笔操作的时候才会有原子的概念。</p>
+</blockquote>
+<h4 id="引申内存">引申：内存</h4>
+<blockquote>
+<p>线性地址空间，</p>
+</blockquote>
+<h4 id="bitmap-">bitmap ：</h4>
+<blockquote>
+<p>位图。BitMap 原本的含义是用<strong>一个比特位来映射某个元素的状态</strong>。由于一个比特位只能表示 0 和 1 两种状态，所以 BitMap 能映射的状态有限，但是使用比特位的优势是能<strong>大量的节省内存空间</strong>。</p>
+<p>Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，<strong>BitMap 底层是基于 Redis 的字符串类型实现的</strong>。</p>
+</blockquote>
+<p>字节Byte = 8bit</p>
+<h5 id="bitmap-的-offset-值上限">BitMap 的 offset 值上限</h5>
+<p>​	但是需要注意，Redis 中字符串的最大长度是 512M，所以 BitMap 的 offset 值也是有上限的，其最大值是:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">8 * 1024 * 1024 * 512  =  2^32
+</code></pre></td></tr></table>
+</div>
+</div><p>​	由于 C语言中字符串的末尾都要存储一位分隔符，所以实际上 BitMap 的 offset 值上限是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">(8 * 1024 * 1024 * 512) -1  =  2^32 - 1
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitmap-占用的空间">BitMap 占用的空间，</h5>
+<p>​	就是底层字符串占用的空间。假如 BitMap 偏移量的最大值是 OFFSET_MAX，那么它底层占用的空间就是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">(OFFSET_MAX/8)+1 = 占用字节数
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="因为字符串内存只能以字节分配所以上面的单位是字节">因为字符串内存只能以字节分配，所以上面的单位是字节。</h5>
+<h5 id="setbit">SETBIT</h5>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	SETBIT key offset value
+  summary: Sets or clears the bit at offset in the string value stored at key
+  since: 2.2.0
+  group: string
+
+</code></pre></td></tr></table>
+</div>
+</div><p>​	offset 代表二进制位 不是偏移量</p>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423172856.png" style="zoom:50%;" /></p>
+<blockquote>
+<p><code>man ascii</code> 验证ascii码的值</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210423170557.png" style="zoom:30%;" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">127.0.0.1:6379&gt; SETBIT k4 <span class="m">1</span> <span class="m">1</span>
+<span class="m">0</span>
+127.0.0.1:6379&gt; get k4
+@
+<span class="m">01000000</span>
+
+127.0.0.1:6379&gt; SETBIT k4 <span class="m">9</span> <span class="m">1</span>
+<span class="m">0</span>
+127.0.0.1:6379&gt; get k4
+@@
+<span class="m">01000000</span> <span class="m">01000000</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitcount">BITCOUNT</h5>
+<blockquote>
+<p><em># 获取指定范围内值为 1 的个数</em> <em># start 和 end 以字节为单位</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">BITCOUNT key <span class="o">[</span>start end<span class="o">]</span> 
+summary: Count <span class="nb">set</span> bits in a string
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitfield">BITFIELD</h5>
+<blockquote>
+<p>高级命令</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	BITFIELD key <span class="o">[</span>GET <span class="nb">type</span> offset<span class="o">]</span> <span class="o">[</span>SET <span class="nb">type</span> offset value<span class="o">]</span> <span class="o">[</span>INCRBY <span class="nb">type</span> offset increment<span class="o">]</span> <span class="o">[</span>OVERFLOW WRAP<span class="p">|</span>SAT<span class="p">|</span>FAIL<span class="o">]</span>
+  summary: Perform arbitrary bitfield integer operations on strings
+  since: 3.2.0
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitop">BITOP</h5>
+<blockquote>
+<p><em># result 计算的结果，会存储在该key中</em></p>
+<p><em># key1 … keyn 参与运算的key，可以有多个，空格分割，not运算只能一个key</em></p>
+<p><em># 当 BITOP 处理不同长度的字符串时，较短的那个字符串所缺少的部分会被看作 0。返回值是保存到 destkey 的字符串的长度（以字节byte为单位），和输入 key 中最长的字符串长度相等。</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">BITOP operation destkey key <span class="o">[</span>key ...<span class="o">]</span>
+  summary: Perform bitwise operations between strings
+  since: 2.6.0
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="bitpos">BITPOS</h5>
+<blockquote>
+<p><em># 返回指定key中第一次出现指定value(0/1)的位置</em></p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  BITPOS key bit <span class="o">[</span>start<span class="o">]</span> <span class="o">[</span>end<span class="o">]</span>
+  summary: Find first bit <span class="nb">set</span> or clear in a string
+  since: 2.8.7
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="位图的应用场景">位图的应用场景</h5>
+<ol>
+<li>
+<h6 id="公司用户统计用户的登录天数且窗口随机">公司用户，统计用户的登录天数，且窗口随机</h6>
+<p><code>bitcount</code></p>
+<p>设计一个矩阵，以用户为行，日期为列，每天登录一次，该列设置成1，最后计算每行的列的<code>bitcount</code>值</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg" /></p>
+</li>
+<li>
+<h6 id="京东秒杀统计某一时间段的活跃用户">京东秒杀，统计某一时间段的活跃用户。</h6>
+<p><code>bitop</code></p>
+<blockquote>
+<p>大库备货多少礼物</p>
+<p>假设京东有2E用户</p>
+<p>分为：僵尸用户，冷热用户/忠诚用户</p>
+<p>活跃用户统计！随即窗口</p>
+<p>比如说 1号~3号 连续登录要   去重</p>
+</blockquote>
+</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" data-title="Redis的使用&amp;redis-Value-string类型" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" data-title="Redis的使用&amp;redis-Value-string类型"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" data-title="Redis的使用&amp;redis-Value-string类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" data-title="Redis的使用&amp;redis-Value-string类型" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/" class="prev" rel="prev" title="修改macOS Mysql的 root用户密码"><i class="fas fa-angle-left fa-fw"></i>修改macOS Mysql的 root用户密码</a>
+            <a href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" class="next" rel="next" title="Redis-value-List类型">Redis-value-List类型<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">SeaSoonKeun</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

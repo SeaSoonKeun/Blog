@@ -47,7 +47,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/emoji-support/"
                     /></url><url>
-            <loc>https://github.com/categories/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/categories/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/categories/"
@@ -56,7 +56,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/categories/"
                     /></url><url>
-            <loc>https://github.com/posts/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/posts/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/posts/"
@@ -65,10 +65,13 @@
                     hreflang="zh-cn"
                     href="https://github.com/posts/"
                     /></url><url>
-            <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/categories/redis/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/tags/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/categories/redis/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-set%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/"
@@ -77,7 +80,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/tags/"
                     /></url><url>
-            <loc>https://github.com/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/"
@@ -86,6 +89,8 @@
                     hreflang="zh-cn"
                     href="https://github.com/"
                     /></url><url>
+            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-23T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/macos/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/mysql/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/mysql/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -186,5 +191,6 @@
                     hreflang="zh-cn"
                     href="https://github.com/about/"
                     /></url><url>
+            <loc>https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/%E6%A3%80%E8%AE%A8%E4%B9%A6/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url></urlset>

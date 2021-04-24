@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>redis-Value-sorted-set类型 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="redis-Value-sorted-set类型"><meta property="og:title" content="redis-Value-sorted-set类型" />
+<meta property="og:description" content="redis-Value-sorted-set类型" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-24T17:30:02&#43;08:00" />
+<meta property="article:modified_time" content="2021-04-24T17:30:02&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/logo.png"/>
+
+<meta name="twitter:title" content="redis-Value-sorted-set类型"/>
+<meta name="twitter:description" content="redis-Value-sorted-set类型"/>
+<meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
+<meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" /><link rel="prev" href="https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="next" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-set%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "redis-Value-sorted-set类型",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "Redis","wordcount":  1503 ,
+        "url": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B\/","datePublished": "2021-04-24T17:30:02+08:00","dateModified": "2021-04-24T17:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/github.com\/images\/avatar.png",
+                    "width":  790 ,
+                    "height":  792 
+                }},"author": {
+                "@type": "Person",
+                "name": "SeaSoonKeun"
+            },"description": "redis-Value-sorted-set类型"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 分类 </a><a class="menu-item" href="/categories/documentation/">📋 文档 </a><a class="menu-item" href="/about/">🤙 关于 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚分类</a><a class="menu-item" href="/categories/documentation/" title="">📋文档</a><a class="menu-item" href="/about/" title="">🤙关于</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">redis-Value-sorted-set类型</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-24">2021-04-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1503 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" class="leancloud_visitors" data-flag-title="redis-Value-sorted-set类型">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-why">1. Why</a>
+      <ul>
+        <li><a href="#特点">特点</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-what">2. What</a>
+      <ul>
+        <li><a href="#1-help-sorted_set">1. Help @sorted_set</a></li>
+        <li><a href="#2-redis-有序集合sorted-set-命令">2. Redis 有序集合(sorted set) 命令</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-how">3. How</a>
+      <ul>
+        <li><a href="#1-跳表">1. 跳表</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-where">4. Where</a>
+      <ul>
+        <li><a href="#1-排行榜">1. 排行榜</a></li>
+        <li><a href="#2-sorted-set类型还可用于构建索引数据">2. Sorted-Set类型还可用于构建索引数据。</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis-value-sorted-set类型">redis-Value-sorted-set类型</h1>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/sorted_set.jpg" style="zoom:50%;" /></p>
+<h2 id="1-why">1. Why</h2>
+<h3 id="特点">特点</h3>
+<ul>
+<li>有序</li>
+<li>分数 scores 进行排序</li>
+</ul>
+<h2 id="2-what">2. What</h2>
+<h3 id="1-help-sorted_set">1. Help @sorted_set</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">help</span> @sorted_set
+
+  BZPOPMAX key <span class="o">[</span>key ...<span class="o">]</span> timeout
+  summary: Remove and <span class="k">return</span> the member with the highest score from one or more sorted sets, or block <span class="k">until</span> one is available
+  since: 5.0.0
+
+  BZPOPMIN key <span class="o">[</span>key ...<span class="o">]</span> timeout
+  summary: Remove and <span class="k">return</span> the member with the lowest score from one or more sorted sets, or block <span class="k">until</span> one is available
+  since: 5.0.0
+
+  ZADD key <span class="o">[</span>NX<span class="p">|</span>XX<span class="o">]</span> <span class="o">[</span>CH<span class="o">]</span> <span class="o">[</span>INCR<span class="o">]</span> score member <span class="o">[</span>score member ...<span class="o">]</span>
+  summary: Add one or more members to a sorted set, or update its score <span class="k">if</span> it already exists
+  since: 1.2.0
+
+  ZCARD key
+  summary: Get the number of members in a sorted <span class="nb">set</span>
+  since: 1.2.0
+
+  ZCOUNT key min max
+  summary: Count the members in a sorted <span class="nb">set</span> with scores within the given values
+  since: 2.0.0
+
+  ZINCRBY key increment member
+  summary: Increment the score of a member in a sorted <span class="nb">set</span>
+  since: 1.2.0
+
+  ZINTERSTORE destination numkeys key <span class="o">[</span>key ...<span class="o">]</span> <span class="o">[</span>WEIGHTS weight<span class="o">]</span> <span class="o">[</span>AGGREGATE SUM<span class="p">|</span>MIN<span class="p">|</span>MAX<span class="o">]</span>
+  summary: Intersect multiple sorted sets and store the resulting sorted <span class="nb">set</span> in a new key
+  since: 2.0.0
+
+  ZLEXCOUNT key min max
+  summary: Count the number of members in a sorted <span class="nb">set</span> between a given lexicographical range
+  since: 2.8.9
+
+  ZPOPMAX key <span class="o">[</span>count<span class="o">]</span>
+  summary: Remove and <span class="k">return</span> members with the highest scores in a sorted <span class="nb">set</span>
+  since: 5.0.0
+
+  ZPOPMIN key <span class="o">[</span>count<span class="o">]</span>
+  summary: Remove and <span class="k">return</span> members with the lowest scores in a sorted <span class="nb">set</span>
+  since: 5.0.0
+
+  ZRANGE key start stop <span class="o">[</span>WITHSCORES<span class="o">]</span>
+  summary: Return a range of members in a sorted set, by index
+  since: 1.2.0
+
+  ZRANGEBYLEX key min max <span class="o">[</span>LIMIT offset count<span class="o">]</span>
+  summary: Return a range of members in a sorted set, by lexicographical range
+  since: 2.8.9
+
+  ZRANGEBYSCORE key min max <span class="o">[</span>WITHSCORES<span class="o">]</span> <span class="o">[</span>LIMIT offset count<span class="o">]</span>
+  summary: Return a range of members in a sorted set, by score
+  since: 1.0.5
+
+  ZRANK key member
+  summary: Determine the index of a member in a sorted <span class="nb">set</span>
+  since: 2.0.0
+
+  ZREM key member <span class="o">[</span>member ...<span class="o">]</span>
+  summary: Remove one or more members from a sorted <span class="nb">set</span>
+  since: 1.2.0
+
+  ZREMRANGEBYLEX key min max
+  summary: Remove all members in a sorted <span class="nb">set</span> between the given lexicographical range
+  since: 2.8.9
+
+  ZREMRANGEBYRANK key start stop
+  summary: Remove all members in a sorted <span class="nb">set</span> within the given indexes
+  since: 2.0.0
+
+  ZREMRANGEBYSCORE key min max
+  summary: Remove all members in a sorted <span class="nb">set</span> within the given scores
+  since: 1.2.0
+
+  ZREVRANGE key start stop <span class="o">[</span>WITHSCORES<span class="o">]</span>
+  summary: Return a range of members in a sorted set, by index, with scores ordered from high to low
+  since: 1.2.0
+
+  ZREVRANGEBYLEX key max min <span class="o">[</span>LIMIT offset count<span class="o">]</span>
+  summary: Return a range of members in a sorted set, by lexicographical range, ordered from higher to lower strings.
+  since: 2.8.9
+
+  ZREVRANGEBYSCORE key max min <span class="o">[</span>WITHSCORES<span class="o">]</span> <span class="o">[</span>LIMIT offset count<span class="o">]</span>
+  summary: Return a range of members in a sorted set, by score, with scores ordered from high to low
+  since: 2.2.0
+
+  ZREVRANK key member
+  summary: Determine the index of a member in a sorted set, with scores ordered from high to low
+  since: 2.0.0
+
+  ZSCAN key cursor <span class="o">[</span>MATCH pattern<span class="o">]</span> <span class="o">[</span>COUNT count<span class="o">]</span>
+  summary: Incrementally iterate sorted sets elements and associated scores
+  since: 2.8.0
+
+  ZSCORE key member
+  summary: Get the score associated with the given member in a sorted <span class="nb">set</span>
+  since: 1.2.0
+
+  ZUNIONSTORE destination numkeys key <span class="o">[</span>key ...<span class="o">]</span> <span class="o">[</span>WEIGHTS weight<span class="o">]</span> <span class="o">[</span>AGGREGATE SUM<span class="p">|</span>MIN<span class="p">|</span>MAX<span class="o">]</span>
+  summary: Add multiple sorted sets and store the resulting sorted <span class="nb">set</span> in a new key
+  since: 2.0.0
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-redis-有序集合sorted-set-命令">2. Redis 有序集合(sorted set) 命令</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3625.html" target="_blank" rel="noopener noreffer">Redis Zrevrank 命令</a></td>
+<td style="text-align:left">返回有序集合中指定成员的排名，有序集成员按分数值递减(从大到小)排序</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3614.html" target="_blank" rel="noopener noreffer">Redis Zlexcount 命令</a></td>
+<td style="text-align:left">在有序集合中计算指定字典区间内成员数量</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3627.html" target="_blank" rel="noopener noreffer">Redis Zunionstore 命令</a></td>
+<td style="text-align:left">计算给定的一个或多个有序集的并集，并存储在新的 key 中</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3621.html" target="_blank" rel="noopener noreffer">Redis Zremrangebyrank 命令</a></td>
+<td style="text-align:left">移除有序集合中给定的排名区间的所有成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3610.html" target="_blank" rel="noopener noreffer">Redis Zcard 命令</a></td>
+<td style="text-align:left">获取有序集合的成员数</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3619.html" target="_blank" rel="noopener noreffer">Redis Zrem 命令</a></td>
+<td style="text-align:left">移除有序集合中的一个或多个成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3613.html" target="_blank" rel="noopener noreffer">Redis Zinterstore 命令</a></td>
+<td style="text-align:left">计算给定的一个或多个有序集的交集并将结果集存储在新的有序集合 key 中</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3618.html" target="_blank" rel="noopener noreffer">Redis Zrank 命令</a></td>
+<td style="text-align:left">返回有序集合中指定成员的索引</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3612.html" target="_blank" rel="noopener noreffer">Redis Zincrby 命令</a></td>
+<td style="text-align:left">有序集合中对指定成员的分数加上增量 increment</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3617.html" target="_blank" rel="noopener noreffer">Redis Zrangebyscore 命令</a></td>
+<td style="text-align:left">通过分数返回有序集合指定区间内的成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3616.html" target="_blank" rel="noopener noreffer">Redis Zrangebylex 命令</a></td>
+<td style="text-align:left">通过字典区间返回有序集合的成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3626.html" target="_blank" rel="noopener noreffer">Redis Zscore 命令</a></td>
+<td style="text-align:left">返回有序集中，成员的分数值</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3622.html" target="_blank" rel="noopener noreffer">Redis Zremrangebyscore 命令</a></td>
+<td style="text-align:left">移除有序集合中给定的分数区间的所有成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3628.html" target="_blank" rel="noopener noreffer">Redis Zscan 命令</a></td>
+<td style="text-align:left">迭代有序集合中的元素（包括元素成员和元素分值）</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3624.html" target="_blank" rel="noopener noreffer">Redis Zrevrangebyscore 命令</a></td>
+<td style="text-align:left">返回有序集中指定分数区间内的成员，分数从高到低排序</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3620.html" target="_blank" rel="noopener noreffer">Redis Zremrangebylex 命令</a></td>
+<td style="text-align:left">移除有序集合中给定的字典区间的所有成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3623.html" target="_blank" rel="noopener noreffer">Redis Zrevrange 命令</a></td>
+<td style="text-align:left">返回有序集中指定区间内的成员，通过索引，分数从高到底</td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://www.redis.net.cn/order/3615.html" target="_blank" rel="noopener noreffer">Redis Zrange 命令</a></td>
+<td style="text-align:left">通过索引区间返回有序集合成指定区间内的成员</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><a href="https://www.redis.net.cn/order/3611.html" target="_blank" rel="noopener noreffer">Redis Zcount 命令</a></strong></td>
+<td style="text-align:left">计算在有序集合中指定区间分数的成员数</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><a href="https://www.redis.net.cn/order/3609.html" target="_blank" rel="noopener noreffer">Redis Zadd 命令</a></strong></td>
+<td style="text-align:left">向有序集合添加一个或多个成员，或者更新已存在成员的分数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-how">3. How</h2>
+<p>在Sorted-Set中添加、删除或更新一个成员都是<strong>非常快速</strong>的操作，其时间复杂度为集合中成员数量的对数。由于Sorted-Set中的成员在集合中的位置是有序的，因此，即便是访问位于集合中部的成员也仍然是非常高效的。</p>
+<h3 id="1-跳表">1. 跳表</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E8%B7%B3%E8%A1%A8%E5%90%AF%E8%92%99.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E8%B7%B3%E8%A1%A8%E5%90%AF%E8%92%99.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E8%B7%B3%E8%A1%A8%E5%90%AF%E8%92%99.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E8%B7%B3%E8%A1%A8%E5%90%AF%E8%92%99.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E8%B7%B3%E8%A1%A8%E5%90%AF%E8%92%99.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E8%B7%B3%E8%A1%A8%E5%90%AF%E8%92%99.jpg" /></p>
+<h2 id="4-where">4. Where</h2>
+<h3 id="1-排行榜">1. 排行榜</h3>
+<p>可以用于一个大型在线游戏的积分<strong>排行榜</strong>。每当玩家的分数发生变化时，可以执行ZADD命令更新玩家的分数，此后再通过ZRANGE命令获取积分TOPTEN的用户信息。当然我们也可以利用<code>ZRANK</code>命令通过username来获取玩家的排行信息。<strong>最后我们将组合使用ZRANGE和ZRANK命令快速的获取和某个玩家积分相近的其他用户的信息。</strong></p>
+<h3 id="2-sorted-set类型还可用于构建索引数据">2. Sorted-Set类型还可用于构建索引数据。</h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" data-title="redis-Value-sorted-set类型" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" data-title="redis-Value-sorted-set类型"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" data-title="redis-Value-sorted-set类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/" data-title="redis-Value-sorted-set类型" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" class="prev" rel="prev" title="redis面试题"><i class="fas fa-angle-left fa-fw"></i>redis面试题</a>
+            <a href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-set%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/" class="next" rel="next" title="Redis-Value-Set集合类型">Redis-Value-Set集合类型<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">SeaSoonKeun</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

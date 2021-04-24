@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title> - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="个人学习心得"><meta property="og:title" content="" />
+<meta property="og:description" content="redis 命令手册 命令目录(使用 CTRL &#43; F 快速查找)： Key（键） DEL DUMP EXISTS EXPIRE EXPIREAT KEYS MIGRATE MOVE OBJECT PERSIST PEXPIRE PEXPIREAT PTTL RANDOMKEY RENAME RENAMENX RESTORE SORT TTL TYPE SCAN String（字符串） APPEND BITCOUNT BITOP DECR DECRBY GET GETBIT GETRANGE GETSET INCR INCRBY" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/logo.png"/>
+
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="redis 命令手册 命令目录(使用 CTRL &#43; F 快速查找)： Key（键） DEL DUMP EXISTS EXPIRE EXPIREAT KEYS MIGRATE MOVE OBJECT PERSIST PEXPIRE PEXPIREAT PTTL RANDOMKEY RENAME RENAMENX RESTORE SORT TTL TYPE SCAN String（字符串） APPEND BITCOUNT BITOP DECR DECRBY GET GETBIT GETRANGE GETSET INCR INCRBY"/>
+<meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
+<meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" /><link rel="prev" href="https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" /><link rel="next" href="https://github.com/github-picgo/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/github.com\/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","wordcount":  1091 ,
+        "url": "https:\/\/github.com\/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C\/","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/github.com\/images\/avatar.png",
+                    "width":  790 ,
+                    "height":  792 
+                }},"author": {
+                "@type": "Person",
+                "name": "SeaSoonKeun"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 分类 </a><a class="menu-item" href="/categories/documentation/">📋 文档 </a><a class="menu-item" href="/about/">🤙 关于 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚分类</a><a class="menu-item" href="/categories/documentation/" title="">📋文档</a><a class="menu-item" href="/about/" title="">🤙关于</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1091 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id="/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" class="leancloud_visitors" data-flag-title="">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#命令目录使用-ctrl--f-快速查找">命令目录(使用 CTRL + F 快速查找)：</a></li>
+    <li><a href="#文档">文档</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis-命令手册">redis 命令手册</h1>
+<h2 id="命令目录使用-ctrl--f-快速查找">命令目录(使用 CTRL + F 快速查找)：</h2>
+<ul>
+<li>
+<p>Key（键）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/del.html" target="_blank" rel="noopener noreffer">DEL</a></li>
+<li><a href="https://www.redis.com.cn/commands/dump.html" target="_blank" rel="noopener noreffer">DUMP</a></li>
+<li><a href="https://www.redis.com.cn/commands/exists.html" target="_blank" rel="noopener noreffer">EXISTS</a></li>
+<li><a href="https://www.redis.com.cn/commands/expire.html" target="_blank" rel="noopener noreffer">EXPIRE</a></li>
+<li><a href="https://www.redis.com.cn/commands/expireat.html" target="_blank" rel="noopener noreffer">EXPIREAT</a></li>
+<li><a href="https://www.redis.com.cn/commands/keys.html" target="_blank" rel="noopener noreffer">KEYS</a></li>
+<li><a href="https://www.redis.com.cn/commands/migrate.html" target="_blank" rel="noopener noreffer">MIGRATE</a></li>
+<li><a href="https://www.redis.com.cn/commands/move.html" target="_blank" rel="noopener noreffer">MOVE</a></li>
+<li><a href="https://www.redis.com.cn/commands/object.html" target="_blank" rel="noopener noreffer">OBJECT</a></li>
+<li><a href="https://www.redis.com.cn/commands/persist.html" target="_blank" rel="noopener noreffer">PERSIST</a></li>
+<li><a href="https://www.redis.com.cn/commands/pexpire.html" target="_blank" rel="noopener noreffer">PEXPIRE</a></li>
+<li><a href="https://www.redis.com.cn/commands/pexpireat.html" target="_blank" rel="noopener noreffer">PEXPIREAT</a></li>
+<li><a href="https://www.redis.com.cn/commands/pttl.html" target="_blank" rel="noopener noreffer">PTTL</a></li>
+<li><a href="https://www.redis.com.cn/commands/randomkey.html" target="_blank" rel="noopener noreffer">RANDOMKEY</a></li>
+<li><a href="https://www.redis.com.cn/commands/rename.html" target="_blank" rel="noopener noreffer">RENAME</a></li>
+<li><a href="https://www.redis.com.cn/commands/renamenx.html" target="_blank" rel="noopener noreffer">RENAMENX</a></li>
+<li><a href="https://www.redis.com.cn/commands/restore.html" target="_blank" rel="noopener noreffer">RESTORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/sort.html" target="_blank" rel="noopener noreffer">SORT</a></li>
+<li><a href="https://www.redis.com.cn/commands/ttl.html" target="_blank" rel="noopener noreffer">TTL</a></li>
+<li><a href="https://www.redis.com.cn/commands/type.html" target="_blank" rel="noopener noreffer">TYPE</a></li>
+<li><a href="https://www.redis.com.cn/commands/scan.html" target="_blank" rel="noopener noreffer">SCAN</a></li>
+</ul>
+</li>
+<li>
+<p>String（字符串）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/append.html" target="_blank" rel="noopener noreffer">APPEND</a></li>
+<li><a href="https://www.redis.com.cn/commands/bitcount.html" target="_blank" rel="noopener noreffer">BITCOUNT</a></li>
+<li><a href="https://www.redis.com.cn/commands/bitop.html" target="_blank" rel="noopener noreffer">BITOP</a></li>
+<li><a href="https://www.redis.com.cn/commands/decr.html" target="_blank" rel="noopener noreffer">DECR</a></li>
+<li><a href="https://www.redis.com.cn/commands/decrby.html" target="_blank" rel="noopener noreffer">DECRBY</a></li>
+<li><a href="https://www.redis.com.cn/commands/get.html" target="_blank" rel="noopener noreffer">GET</a></li>
+<li><a href="https://www.redis.com.cn/commands/getbit.html" target="_blank" rel="noopener noreffer">GETBIT</a></li>
+<li><a href="https://www.redis.com.cn/commands/getrange.html" target="_blank" rel="noopener noreffer">GETRANGE</a></li>
+<li><a href="https://www.redis.com.cn/commands/getset.html" target="_blank" rel="noopener noreffer">GETSET</a></li>
+<li><a href="https://www.redis.com.cn/commands/incr.html" target="_blank" rel="noopener noreffer">INCR</a></li>
+<li><a href="https://www.redis.com.cn/commands/incrby.html" target="_blank" rel="noopener noreffer">INCRBY</a></li>
+<li><a href="https://www.redis.com.cn/commands/incrbyfloat.html" target="_blank" rel="noopener noreffer">INCRBYFLOAT</a></li>
+<li><a href="https://www.redis.com.cn/commands/mget.html" target="_blank" rel="noopener noreffer">MGET</a></li>
+<li><a href="https://www.redis.com.cn/commands/mset.html" target="_blank" rel="noopener noreffer">MSET</a></li>
+<li><a href="https://www.redis.com.cn/commands/msetnx.html" target="_blank" rel="noopener noreffer">MSETNX</a></li>
+<li><a href="https://www.redis.com.cn/commands/psetex.html" target="_blank" rel="noopener noreffer">PSETEX</a></li>
+<li><a href="https://www.redis.com.cn/commands/set.html" target="_blank" rel="noopener noreffer">SET</a></li>
+<li><a href="https://www.redis.com.cn/commands/setbit.html" target="_blank" rel="noopener noreffer">SETBIT</a></li>
+<li><a href="https://www.redis.com.cn/commands/setex.html" target="_blank" rel="noopener noreffer">SETEX</a></li>
+<li><a href="https://www.redis.com.cn/commands/setnx.html" target="_blank" rel="noopener noreffer">SETNX</a></li>
+<li><a href="https://www.redis.com.cn/commands/setrange.html" target="_blank" rel="noopener noreffer">SETRANGE</a></li>
+<li><a href="https://www.redis.com.cn/commands/strlen.html" target="_blank" rel="noopener noreffer">STRLEN</a></li>
+</ul>
+</li>
+<li>
+<p>Hash（哈希表）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/hdel.html" target="_blank" rel="noopener noreffer">HDEL</a></li>
+<li><a href="https://www.redis.com.cn/commands/hexists.html" target="_blank" rel="noopener noreffer">HEXISTS</a></li>
+<li><a href="https://www.redis.com.cn/commands/hget.html" target="_blank" rel="noopener noreffer">HGET</a></li>
+<li><a href="https://www.redis.com.cn/commands/hgetall.html" target="_blank" rel="noopener noreffer">HGETALL</a></li>
+<li><a href="https://www.redis.com.cn/commands/hincrby.html" target="_blank" rel="noopener noreffer">HINCRBY</a></li>
+<li><a href="https://www.redis.com.cn/commands/hincrbyfloat.html" target="_blank" rel="noopener noreffer">HINCRBYFLOAT</a></li>
+<li><a href="https://www.redis.com.cn/commands/hkeys.html" target="_blank" rel="noopener noreffer">HKEYS</a></li>
+<li><a href="https://www.redis.com.cn/commands/hlen.html" target="_blank" rel="noopener noreffer">HLEN</a></li>
+<li><a href="https://www.redis.com.cn/commands/hmget.html" target="_blank" rel="noopener noreffer">HMGET</a></li>
+<li><a href="https://www.redis.com.cn/commands/hmset.html" target="_blank" rel="noopener noreffer">HMSET</a></li>
+<li><a href="https://www.redis.com.cn/commands/hset.html" target="_blank" rel="noopener noreffer">HSET</a></li>
+<li><a href="https://www.redis.com.cn/commands/hsetnx.html" target="_blank" rel="noopener noreffer">HSETNX</a></li>
+<li><a href="https://www.redis.com.cn/commands/hvals.html" target="_blank" rel="noopener noreffer">HVALS</a></li>
+<li><a href="https://www.redis.com.cn/commands/hscan.html" target="_blank" rel="noopener noreffer">HSCAN</a></li>
+</ul>
+</li>
+<li>
+<p>List（列表）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/blpop.html" target="_blank" rel="noopener noreffer">BLPOP</a></li>
+<li><a href="https://www.redis.com.cn/commands/brpop.html" target="_blank" rel="noopener noreffer">BRPOP</a></li>
+<li><a href="https://www.redis.com.cn/commands/brpoplpush.html" target="_blank" rel="noopener noreffer">BRPOPLPUSH</a></li>
+<li><a href="https://www.redis.com.cn/commands/lindex.html" target="_blank" rel="noopener noreffer">LINDEX</a></li>
+<li><a href="https://www.redis.com.cn/commands/linsert.html" target="_blank" rel="noopener noreffer">LINSERT</a></li>
+<li><a href="https://www.redis.com.cn/commands/llen.html" target="_blank" rel="noopener noreffer">LLEN</a></li>
+<li><a href="https://www.redis.com.cn/commands/lpop.html" target="_blank" rel="noopener noreffer">LPOP</a></li>
+<li><a href="https://www.redis.com.cn/commands/lpush.html" target="_blank" rel="noopener noreffer">LPUSH</a></li>
+<li><a href="https://www.redis.com.cn/commands/lpushx.html" target="_blank" rel="noopener noreffer">LPUSHX</a></li>
+<li><a href="https://www.redis.com.cn/commands/lrange.html" target="_blank" rel="noopener noreffer">LRANGE</a></li>
+<li><a href="https://www.redis.com.cn/commands/lrem.html" target="_blank" rel="noopener noreffer">LREM</a></li>
+<li><a href="https://www.redis.com.cn/commands/lset.html" target="_blank" rel="noopener noreffer">LSET</a></li>
+<li><a href="https://www.redis.com.cn/commands/ltrim.html" target="_blank" rel="noopener noreffer">LTRIM</a></li>
+<li><a href="https://www.redis.com.cn/commands/rpop.html" target="_blank" rel="noopener noreffer">RPOP</a></li>
+<li><a href="https://www.redis.com.cn/commands/rpoplpush.html" target="_blank" rel="noopener noreffer">RPOPLPUSH</a></li>
+<li><a href="https://www.redis.com.cn/commands/rpush.html" target="_blank" rel="noopener noreffer">RPUSH</a></li>
+<li><a href="https://www.redis.com.cn/commands/rpushx.html" target="_blank" rel="noopener noreffer">RPUSHX</a></li>
+</ul>
+</li>
+<li>
+<p>Set（集合）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/sadd.html" target="_blank" rel="noopener noreffer">SADD</a></li>
+<li><a href="https://www.redis.com.cn/commands/scard.html" target="_blank" rel="noopener noreffer">SCARD</a></li>
+<li><a href="https://www.redis.com.cn/commands/sdiff.html" target="_blank" rel="noopener noreffer">SDIFF</a></li>
+<li><a href="https://www.redis.com.cn/commands/sdiffstore.html" target="_blank" rel="noopener noreffer">SDIFFSTORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/sinter.html" target="_blank" rel="noopener noreffer">SINTER</a></li>
+<li><a href="https://www.redis.com.cn/commands/sinterstore.html" target="_blank" rel="noopener noreffer">SINTERSTORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/sismember.html" target="_blank" rel="noopener noreffer">SISMEMBER</a></li>
+<li><a href="https://www.redis.com.cn/commands/smembers.html" target="_blank" rel="noopener noreffer">SMEMBERS</a></li>
+<li><a href="https://www.redis.com.cn/commands/smove.html" target="_blank" rel="noopener noreffer">SMOVE</a></li>
+<li><a href="https://www.redis.com.cn/commands/spop.html" target="_blank" rel="noopener noreffer">SPOP</a></li>
+<li><a href="https://www.redis.com.cn/commands/srandmember.html" target="_blank" rel="noopener noreffer">SRANDMEMBER</a></li>
+<li><a href="https://www.redis.com.cn/commands/srem.html" target="_blank" rel="noopener noreffer">SREM</a></li>
+<li><a href="https://www.redis.com.cn/commands/sunion.html" target="_blank" rel="noopener noreffer">SUNION</a></li>
+<li><a href="https://www.redis.com.cn/commands/sunionstore.html" target="_blank" rel="noopener noreffer">SUNIONSTORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/sscan.html" target="_blank" rel="noopener noreffer">SSCAN</a></li>
+</ul>
+</li>
+<li>
+<p>SortedSet（有序集合）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/zadd.html" target="_blank" rel="noopener noreffer">ZADD</a></li>
+<li><a href="https://www.redis.com.cn/commands/zcard.html" target="_blank" rel="noopener noreffer">ZCARD</a></li>
+<li><a href="https://www.redis.com.cn/commands/zcount.html" target="_blank" rel="noopener noreffer">ZCOUNT</a></li>
+<li><a href="https://www.redis.com.cn/commands/zincrby.html" target="_blank" rel="noopener noreffer">ZINCRBY</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrange.html" target="_blank" rel="noopener noreffer">ZRANGE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrangebyscore.html" target="_blank" rel="noopener noreffer">ZRANGEBYSCORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrank.html" target="_blank" rel="noopener noreffer">ZRANK</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrem.html" target="_blank" rel="noopener noreffer">ZREM</a></li>
+<li><a href="https://www.redis.com.cn/commands/zremrangebyrank.html" target="_blank" rel="noopener noreffer">ZREMRANGEBYRANK</a></li>
+<li><a href="https://www.redis.com.cn/commands/zremrangebyscore.html" target="_blank" rel="noopener noreffer">ZREMRANGEBYSCORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrevrange.html" target="_blank" rel="noopener noreffer">ZREVRANGE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrevrangebyscore.html" target="_blank" rel="noopener noreffer">ZREVRANGEBYSCORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zrevrank.html" target="_blank" rel="noopener noreffer">ZREVRANK</a></li>
+<li><a href="https://www.redis.com.cn/commands/zscore.html" target="_blank" rel="noopener noreffer">ZSCORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zunionstore.html" target="_blank" rel="noopener noreffer">ZUNIONSTORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zinterstore.html" target="_blank" rel="noopener noreffer">ZINTERSTORE</a></li>
+<li><a href="https://www.redis.com.cn/commands/zscan.html" target="_blank" rel="noopener noreffer">ZSCAN</a></li>
+</ul>
+</li>
+<li>
+<p>Pub/Sub（发布/订阅）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/psubscribe.html" target="_blank" rel="noopener noreffer">PSUBSCRIBE</a></li>
+<li><a href="https://www.redis.com.cn/commands/publish.html" target="_blank" rel="noopener noreffer">PUBLISH</a></li>
+<li><a href="https://www.redis.com.cn/commands/pubsub.html" target="_blank" rel="noopener noreffer">PUBSUB</a></li>
+<li><a href="https://www.redis.com.cn/commands/punsubscribe.html" target="_blank" rel="noopener noreffer">PUNSUBSCRIBE</a></li>
+<li><a href="https://www.redis.com.cn/commands/subscribe.html" target="_blank" rel="noopener noreffer">SUBSCRIBE</a></li>
+<li><a href="https://www.redis.com.cn/commands/unsubscribe.html" target="_blank" rel="noopener noreffer">UNSUBSCRIBE</a></li>
+</ul>
+</li>
+<li>
+<p>Transaction（事务）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/discard.html" target="_blank" rel="noopener noreffer">DISCARD</a></li>
+<li><a href="https://www.redis.com.cn/commands/exec.html" target="_blank" rel="noopener noreffer">EXEC</a></li>
+<li><a href="https://www.redis.com.cn/commands/multi.html" target="_blank" rel="noopener noreffer">MULTI</a></li>
+<li><a href="https://www.redis.com.cn/commands/unwatch.html" target="_blank" rel="noopener noreffer">UNWATCH</a></li>
+<li><a href="https://www.redis.com.cn/commands/watch.html" target="_blank" rel="noopener noreffer">WATCH</a></li>
+</ul>
+</li>
+<li>
+<p>Script（脚本）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/eval.html" target="_blank" rel="noopener noreffer">EVAL</a></li>
+<li><a href="https://www.redis.com.cn/commands/evalsha.html" target="_blank" rel="noopener noreffer">EVALSHA</a></li>
+<li><a href="https://www.redis.com.cn/commands/script-exists.html" target="_blank" rel="noopener noreffer">SCRIPT EXISTS</a></li>
+<li><a href="https://www.redis.com.cn/commands/script-flush.html" target="_blank" rel="noopener noreffer">SCRIPT FLUSH</a></li>
+<li><a href="https://www.redis.com.cn/commands/script-kill.html" target="_blank" rel="noopener noreffer">SCRIPT KILL</a></li>
+<li><a href="https://www.redis.com.cn/commands/script-load.html" target="_blank" rel="noopener noreffer">SCRIPT LOAD</a></li>
+</ul>
+</li>
+<li>
+<p>Connection（连接）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/auth.html" target="_blank" rel="noopener noreffer">AUTH</a></li>
+<li><a href="https://www.redis.com.cn/commands/echo.html" target="_blank" rel="noopener noreffer">ECHO</a></li>
+<li><a href="https://www.redis.com.cn/commands/ping.html" target="_blank" rel="noopener noreffer">PING</a></li>
+<li><a href="https://www.redis.com.cn/commands/quit.html" target="_blank" rel="noopener noreffer">QUIT</a></li>
+<li><a href="https://www.redis.com.cn/commands/select.html" target="_blank" rel="noopener noreffer">SELECT</a></li>
+</ul>
+</li>
+<li>
+<p>Server（服务器）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/commands/bgrewriteaof.html" target="_blank" rel="noopener noreffer">BGREWRITEAOF</a></li>
+<li><a href="https://www.redis.com.cn/commands/bgsave.html" target="_blank" rel="noopener noreffer">BGSAVE</a></li>
+<li><a href="https://www.redis.com.cn/commands/client-getname.html" target="_blank" rel="noopener noreffer">CLIENT GETNAME</a></li>
+<li><a href="https://www.redis.com.cn/commands/client-kill.html" target="_blank" rel="noopener noreffer">CLIENT KILL</a></li>
+<li><a href="https://www.redis.com.cn/commands/client-list.html" target="_blank" rel="noopener noreffer">CLIENT LIST</a></li>
+<li><a href="https://www.redis.com.cn/commands/client-setname.html" target="_blank" rel="noopener noreffer">CLIENT SETNAME</a></li>
+<li><a href="https://www.redis.com.cn/commands/config-get.html" target="_blank" rel="noopener noreffer">CONFIG GET</a></li>
+<li><a href="https://www.redis.com.cn/commands/config-resetstat.html" target="_blank" rel="noopener noreffer">CONFIG RESETSTAT</a></li>
+<li><a href="https://www.redis.com.cn/commands/config-rewrite.html" target="_blank" rel="noopener noreffer">CONFIG REWRITE</a></li>
+<li><a href="https://www.redis.com.cn/commands/config-set.html" target="_blank" rel="noopener noreffer">CONFIG SET</a></li>
+<li><a href="https://www.redis.com.cn/commands/dbsize.html" target="_blank" rel="noopener noreffer">DBSIZE</a></li>
+<li><a href="https://www.redis.com.cn/commands/debug-object.html" target="_blank" rel="noopener noreffer">DEBUG OBJECT</a></li>
+<li><a href="https://www.redis.com.cn/commands/debug-segfault.html" target="_blank" rel="noopener noreffer">DEBUG SEGFAULT</a></li>
+<li><a href="https://www.redis.com.cn/commands/flushall.html" target="_blank" rel="noopener noreffer">FLUSHALL</a></li>
+<li><a href="https://www.redis.com.cn/commands/flushdb.html" target="_blank" rel="noopener noreffer">FLUSHDB</a></li>
+<li><a href="https://www.redis.com.cn/commands/info.html" target="_blank" rel="noopener noreffer">INFO</a></li>
+<li><a href="https://www.redis.com.cn/commands/lastsave.html" target="_blank" rel="noopener noreffer">LASTSAVE</a></li>
+<li><a href="https://www.redis.com.cn/commands/monitor.html" target="_blank" rel="noopener noreffer">MONITOR</a></li>
+<li><a href="https://www.redis.com.cn/commands/psync.html" target="_blank" rel="noopener noreffer">PSYNC</a></li>
+<li><a href="https://www.redis.com.cn/commands/save.html" target="_blank" rel="noopener noreffer">SAVE</a></li>
+<li><a href="https://www.redis.com.cn/commands/shutdown.html" target="_blank" rel="noopener noreffer">SHUTDOWN</a></li>
+<li><a href="https://www.redis.com.cn/commands/slaveof.html" target="_blank" rel="noopener noreffer">SLAVEOF</a></li>
+<li><a href="https://www.redis.com.cn/commands/slowlog.html" target="_blank" rel="noopener noreffer">SLOWLOG</a></li>
+<li><a href="https://www.redis.com.cn/commands/sync.html" target="_blank" rel="noopener noreffer">SYNC</a></li>
+<li><a href="https://www.redis.com.cn/commands/time.html" target="_blank" rel="noopener noreffer">TIME</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="文档">文档</h2>
+<ul>
+<li>
+<p>键空间通知（keyspace notification）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/notifications.html#id1" target="_blank" rel="noopener noreffer">功能概览</a></li>
+<li><a href="https://www.redis.com.cn/topics/notifications.html#id2" target="_blank" rel="noopener noreffer">事件的类型</a></li>
+<li><a href="https://www.redis.com.cn/topics/notifications.html#id3" target="_blank" rel="noopener noreffer">配置</a></li>
+<li><a href="https://www.redis.com.cn/topics/notifications.html#id4" target="_blank" rel="noopener noreffer">命令产生的通知</a></li>
+<li><a href="https://www.redis.com.cn/topics/notifications.html#id5" target="_blank" rel="noopener noreffer">过期通知的发送时间</a></li>
+</ul>
+</li>
+<li>
+<p>事务（transaction）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#id1" target="_blank" rel="noopener noreffer">用法</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#id2" target="_blank" rel="noopener noreffer">事务中的错误</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#redis-roll-back" target="_blank" rel="noopener noreffer">为什么 Redis 不支持回滚（roll back）</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#id3" target="_blank" rel="noopener noreffer">放弃事务</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#check-and-set" target="_blank" rel="noopener noreffer">使用 check-and-set 操作实现乐观锁</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#watch" target="_blank" rel="noopener noreffer">了解 WATCH</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#watch-zpop" target="_blank" rel="noopener noreffer">使用 WATCH 实现 ZPOP</a></li>
+<li><a href="https://www.redis.com.cn/topics/transaction.html#redis" target="_blank" rel="noopener noreffer">Redis 脚本和事务</a></li>
+</ul>
+</li>
+<li>
+<p>发布与订阅（pub/sub）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/pubsub.html#id2" target="_blank" rel="noopener noreffer">信息的格式</a></li>
+<li><a href="https://www.redis.com.cn/topics/pubsub.html#id3" target="_blank" rel="noopener noreffer">订阅模式</a></li>
+<li><a href="https://www.redis.com.cn/topics/pubsub.html#id4" target="_blank" rel="noopener noreffer">通过频道和模式接收同一条信息</a></li>
+<li><a href="https://www.redis.com.cn/topics/pubsub.html#id5" target="_blank" rel="noopener noreffer">订阅总数</a></li>
+<li><a href="https://www.redis.com.cn/topics/pubsub.html#id6" target="_blank" rel="noopener noreffer">编程示例</a></li>
+<li><a href="https://www.redis.com.cn/topics/pubsub.html#id8" target="_blank" rel="noopener noreffer">客户端库实现提示</a></li>
+</ul>
+</li>
+<li>
+<p>复制（Replication）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/replication.html#id1" target="_blank" rel="noopener noreffer">复制功能的运作原理</a></li>
+<li><a href="https://www.redis.com.cn/topics/replication.html#id2" target="_blank" rel="noopener noreffer">部分重同步</a></li>
+<li><a href="https://www.redis.com.cn/topics/replication.html#id3" target="_blank" rel="noopener noreffer">配置</a></li>
+<li><a href="https://www.redis.com.cn/topics/replication.html#id4" target="_blank" rel="noopener noreffer">只读从服务器</a></li>
+<li><a href="https://www.redis.com.cn/topics/replication.html#id5" target="_blank" rel="noopener noreffer">从服务器相关配置</a></li>
+<li><a href="https://www.redis.com.cn/topics/replication.html#n" target="_blank" rel="noopener noreffer">主服务器只在有至少 N 个从服务器的情况下，才执行写操作</a></li>
+</ul>
+</li>
+<li>
+<p>通信协议（protocol）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id1" target="_blank" rel="noopener noreffer">网络层</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id2" target="_blank" rel="noopener noreffer">请求</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id3" target="_blank" rel="noopener noreffer">新版统一请求协议</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id4" target="_blank" rel="noopener noreffer">回复</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id5" target="_blank" rel="noopener noreffer">状态回复</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id6" target="_blank" rel="noopener noreffer">错误回复</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id7" target="_blank" rel="noopener noreffer">整数回复</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id8" target="_blank" rel="noopener noreffer">批量回复</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id9" target="_blank" rel="noopener noreffer">多条批量回复</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id10" target="_blank" rel="noopener noreffer">多条批量回复中的空元素</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id11" target="_blank" rel="noopener noreffer">多命令和流水线</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#id12" target="_blank" rel="noopener noreffer">内联命令</a></li>
+<li><a href="https://www.redis.com.cn/topics/protocol.html#redis" target="_blank" rel="noopener noreffer">高性能 Redis 协议分析器</a></li>
+</ul>
+</li>
+<li>
+<p>持久化（persistence）</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#redis" target="_blank" rel="noopener noreffer">Redis 持久化</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#rdb" target="_blank" rel="noopener noreffer">RDB 的优点</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id3" target="_blank" rel="noopener noreffer">RDB 的缺点</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#aof" target="_blank" rel="noopener noreffer">AOF 的优点</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id4" target="_blank" rel="noopener noreffer">AOF 的缺点</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#rdb-aof" target="_blank" rel="noopener noreffer">RDB 和 AOF ，我应该用哪一个？</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id5" target="_blank" rel="noopener noreffer">RDB 快照</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id6" target="_blank" rel="noopener noreffer">快照的运作方式</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#append-only-file-aof" target="_blank" rel="noopener noreffer">只进行追加操作的文件（append-only file，AOF）</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id7" target="_blank" rel="noopener noreffer">AOF 重写</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id8" target="_blank" rel="noopener noreffer">AOF 有多耐久？</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id9" target="_blank" rel="noopener noreffer">如果 AOF 文件出错了，怎么办？</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id10" target="_blank" rel="noopener noreffer">AOF 的运作方式</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id11" target="_blank" rel="noopener noreffer">怎么从 RDB 持久化切换到 AOF 持久化</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id12" target="_blank" rel="noopener noreffer">RDB 和 AOF 之间的相互作用</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id13" target="_blank" rel="noopener noreffer">备份 Redis 数据</a></li>
+<li><a href="https://www.redis.com.cn/topics/persistence.html#id14" target="_blank" rel="noopener noreffer">容灾备份</a></li>
+</ul>
+</li>
+<li>
+<p>Sentinel</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id2" target="_blank" rel="noopener noreffer">获取 Sentinel</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id3" target="_blank" rel="noopener noreffer">启动 Sentinel</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id4" target="_blank" rel="noopener noreffer">配置 Sentinel</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id5" target="_blank" rel="noopener noreffer">主观下线和客观下线</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id6" target="_blank" rel="noopener noreffer">每个 Sentinel 都需要定期执行的任务</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id7" target="_blank" rel="noopener noreffer">自动发现 Sentinel 和从服务器</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#sentinel-api" target="_blank" rel="noopener noreffer">Sentinel API</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id10" target="_blank" rel="noopener noreffer">故障转移</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#tilt" target="_blank" rel="noopener noreffer">TILT 模式</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#busy" target="_blank" rel="noopener noreffer">处理 <code>-BUSY</code> 状态</a></li>
+<li><a href="https://www.redis.com.cn/topics/sentinel.html#id14" target="_blank" rel="noopener noreffer">Sentinel 的客户端实现</a></li>
+</ul>
+</li>
+<li>
+<p>集群教程</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id2" target="_blank" rel="noopener noreffer">集群简介</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id3" target="_blank" rel="noopener noreffer">Redis 集群数据共享</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id4" target="_blank" rel="noopener noreffer">Redis 集群中的主从复制</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#redis-guarantee" target="_blank" rel="noopener noreffer">Redis 集群的一致性保证（guarantee）</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id5" target="_blank" rel="noopener noreffer">创建并使用 Redis 集群</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id7" target="_blank" rel="noopener noreffer">创建集群</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id8" target="_blank" rel="noopener noreffer">集群的客户端</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#redis-rb-cluster" target="_blank" rel="noopener noreffer">使用 <code>redis-rb-cluster</code> 编写一个示例应用</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id10" target="_blank" rel="noopener noreffer">对集群进行重新分片</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id11" target="_blank" rel="noopener noreffer">一个更有趣的示例应用</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id13" target="_blank" rel="noopener noreffer">故障转移测试</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id14" target="_blank" rel="noopener noreffer">添加新节点到集群</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-tutorial.html#id15" target="_blank" rel="noopener noreffer">移除一个节点</a></li>
+</ul>
+</li>
+<li>
+<p>Redis 集群规范</p>
+<ul>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id1" target="_blank" rel="noopener noreffer">引言</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id2" target="_blank" rel="noopener noreffer">什么是 Redis 集群？</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id3" target="_blank" rel="noopener noreffer">Redis 集群实现的功能子集</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id4" target="_blank" rel="noopener noreffer">Redis 集群协议中的客户端和服务器</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id5" target="_blank" rel="noopener noreffer">键分布模型</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id6" target="_blank" rel="noopener noreffer">集群节点属性</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id7" target="_blank" rel="noopener noreffer">节点握手（已实现）</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#moved" target="_blank" rel="noopener noreffer">MOVED 转向</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#live-reconfiguration" target="_blank" rel="noopener noreffer">集群在线重配置（live reconfiguration）</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#ask" target="_blank" rel="noopener noreffer">ASK 转向</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id8" target="_blank" rel="noopener noreffer">容错</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#id12" target="_blank" rel="noopener noreffer">发布/订阅（已实现，但仍然需要改善）</a></li>
+<li><a href="https://www.redis.com.cn/topics/cluster-spec.html#a-crc16-ansi" target="_blank" rel="noopener noreffer">附录 A： CRC16 算法的 ANSI 实现参考</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 0001-01-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" data-title=""><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" data-title=""><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/" data-title="" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw"></i></a>
+            <a href="/github-picgo/" class="next" rel="next" title="配置 GIhub &#43; PicGo 图床">配置 GIhub &#43; PicGo 图床<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">SeaSoonKeun</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

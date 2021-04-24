@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Redis-value-List类型 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="Redis-value-List类型"><meta property="og:title" content="Redis-value-List类型" />
+<meta property="og:description" content="Redis-value-List类型" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-23T17:30:02&#43;08:00" />
+<meta property="article:modified_time" content="2021-04-23T17:30:02&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/logo.png"/>
+
+<meta name="twitter:title" content="Redis-value-List类型"/>
+<meta name="twitter:description" content="Redis-value-List类型"/>
+<meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
+<meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" /><link rel="prev" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" /><link rel="next" href="https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis-value-List类型",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "Redis","wordcount":  1618 ,
+        "url": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B\/","datePublished": "2021-04-23T17:30:02+08:00","dateModified": "2021-04-23T17:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/github.com\/images\/avatar.png",
+                    "width":  790 ,
+                    "height":  792 
+                }},"author": {
+                "@type": "Person",
+                "name": "SeaSoonKeun"
+            },"description": "Redis-value-List类型"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 分类 </a><a class="menu-item" href="/categories/documentation/">📋 文档 </a><a class="menu-item" href="/about/">🤙 关于 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚分类</a><a class="menu-item" href="/categories/documentation/" title="">📋文档</a><a class="menu-item" href="/about/" title="">🤙关于</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis-value-List类型</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1618 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" class="leancloud_visitors" data-flag-title="Redis-value-List类型">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-框架图">1. 框架图：</a></li>
+    <li><a href="#httpsrawgithubusercontentcomseasoonkeunpicturemainblog_picredis_listjpg2-help-list"><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg" alt="">2. help @LIST</a></li>
+    <li><a href="#3-命令列表">3. 命令列表：</a></li>
+    <li><a href="#4-应用场景">4. 应用场景：</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis-value-list类型">Redis-value-List类型</h1>
+<h2 id="1-框架图">1. 框架图：</h2>
+<h2 id="httpsrawgithubusercontentcomseasoonkeunpicturemainblog_picredis_listjpg2-help-list"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg" />2. help @LIST</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">help</span> @list
+
+  BLPOP key <span class="o">[</span>key ...<span class="o">]</span> timeout
+  summary: Remove and get the first element in a list, or block <span class="k">until</span> one is available
+  since: 2.0.0
+
+  BRPOP key <span class="o">[</span>key ...<span class="o">]</span> timeout
+  summary: Remove and get the last element in a list, or block <span class="k">until</span> one is available
+  since: 2.0.0
+
+  BRPOPLPUSH <span class="nb">source</span> destination timeout
+  summary: Pop an element from a list, push it to another list and <span class="k">return</span> it<span class="p">;</span> or block <span class="k">until</span> one is available
+  since: 2.2.0
+
+  LINDEX key index
+  summary: Get an element from a list by its index
+  since: 1.0.0
+
+  LINSERT key BEFORE<span class="p">|</span>AFTER pivot element
+  summary: Insert an element before or after another element in a list
+  since: 2.2.0
+
+  LLEN key
+  summary: Get the length of a list
+  since: 1.0.0
+
+  LPOP key
+  summary: Remove and get the first element in a list
+  since: 1.0.0
+
+  LPOS key element <span class="o">[</span>RANK rank<span class="o">]</span> <span class="o">[</span>COUNT num-matches<span class="o">]</span> <span class="o">[</span>MAXLEN len<span class="o">]</span>
+  summary: Return the index of matching elements on a list
+  since: 6.0.6
+
+  LPUSH key element <span class="o">[</span>element ...<span class="o">]</span>
+  summary: Prepend one or multiple elements to a list
+  since: 1.0.0
+
+  LPUSHX key element <span class="o">[</span>element ...<span class="o">]</span>
+  summary: Prepend an element to a list, only <span class="k">if</span> the list exists
+  since: 2.2.0
+
+  LRANGE key start stop
+  summary: Get a range of elements from a list
+  since: 1.0.0
+
+  LREM key count element
+  summary: Remove elements from a list
+  since: 1.0.0
+
+  LSET key index element
+  summary: Set the value of an element in a list by its index
+  since: 1.0.0
+
+  LTRIM key start stop
+  summary: Trim a list to the specified range
+  since: 1.0.0
+
+  RPOP key
+  summary: Remove and get the last element in a list
+  since: 1.0.0
+
+  RPOPLPUSH <span class="nb">source</span> destination
+  summary: Remove the last element in a list, prepend it to another list and <span class="k">return</span> it
+  since: 1.2.0
+
+  RPUSH key element <span class="o">[</span>element ...<span class="o">]</span>
+  summary: Append one or multiple elements to a list
+  since: 1.0.0
+
+  RPUSHX key element <span class="o">[</span>element ...<span class="o">]</span>
+  summary: Append an element to a list, only <span class="k">if</span> the list exists
+  since: 2.2.0
+</code></pre></td></tr></table>
+</div>
+</div><p><a href="https://www.redis.net.cn/order/" target="_blank" rel="noopener noreffer">中文文档</a></p>
+<h2 id="3-命令列表">3. 命令列表：</h2>
+<ul>
+<li>
+<p>LPUSH 左入</p>
+</li>
+<li>
+<p>RPUSH 右入</p>
+</li>
+<li>
+<p>RPUSHX</p>
+<ul>
+<li><code>RPUSHX</code>将值 value 插入到列表 <code>key</code> 的表尾, 当且仅当 <code>key</code> 存在并且是一个列表。 和 <code>RPUSH</code>命令相反, 当 key 不存在时，<a href="https://www.redis.com.cn/commands/rpushx.html" target="_blank" rel="noopener noreffer">RPUSHX</a> 命令什么也不做。</li>
+</ul>
+</li>
+<li>
+<p>LPOP 左出</p>
+</li>
+<li>
+<p>RPOP 右出</p>
+</li>
+<li>
+<p>LSET</p>
+<ul>
+<li><code>LSET key index element</code></li>
+<li>根据索引进行更新值</li>
+</ul>
+</li>
+<li>
+<p><strong>LRANGE</strong> 取出范围内的值</p>
+</li>
+<li>
+<p>LREM</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">  LREM key count element
+  summary: Remove elements from a list
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>count</code>为负数表示反方向</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">127.0.0.1:6379&gt; RPUSH mylist a b c d 1 2 3 4 3 3 3
+(integer) 11
+127.0.0.1:6379&gt;
+127.0.0.1:6379&gt; LRANGE mylist 0 -1
+ 1) &#34;a&#34;
+ 2) &#34;b&#34;
+ 3) &#34;c&#34;
+ 4) &#34;d&#34;
+ 5) &#34;1&#34;
+ 6) &#34;2&#34;
+ 7) &#34;3&#34;
+ 8) &#34;4&#34;
+ 9) &#34;3&#34;
+10) &#34;3&#34;
+11) &#34;3&#34;
+127.0.0.1:6379&gt; LREM mylist 2 3
+(integer) 2
+127.0.0.1:6379&gt; LRANGE mylist 0 -1
+1) &#34;a&#34;
+2) &#34;b&#34;
+3) &#34;c&#34;
+4) &#34;d&#34;
+5) &#34;1&#34;
+6) &#34;2&#34;
+7) &#34;4&#34;
+8) &#34;3&#34;
+9) &#34;3&#34;
+127.0.0.1:6379&gt; LREM mylist -2 3
+(integer) 2
+127.0.0.1:6379&gt; LRANGE mylist 0 -1
+1) &#34;a&#34;
+2) &#34;b&#34;
+3) &#34;c&#34;
+4) &#34;d&#34;
+5) &#34;1&#34;
+6) &#34;2&#34;
+7) &#34;4&#34;
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>LTRIM</strong></p>
+<ul>
+<li>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210424125534.png" style="zoom:33%;" /></p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  LTRIM key start stop
+  summary: Trim a list to the specified range
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Redis <a href="https://www.redis.com.cn/commands/ltrim.html" target="_blank" rel="noopener noreffer">LTRIM</a> 用于修剪(trim)一个已存在的 list，这样 list 就会只包含指定范围的指定元素。<strong>start 和 stop 都是由0开始计数的，</strong> 这里的 0 是列表里的第一个元素（表头），1 是第二个元素，以此类推。</p>
+<p>例如： <code>LTRIM foobar 0 2</code> 将会对存储在 foobar 的列表进行修剪，只保留列表里的前3个元素。</p>
+<p><strong>start 和 end 也可以用负数来表示与表尾的偏移量</strong>，比如 -1 表示列表里的最后一个元素， -2 表示倒数第二个，等等。</p>
+<p>超过范围的下标并不会产生错误：如果 start 超过列表尾部，或者 start &gt; end，结果会是列表变成空表（即该 key 会被移除）。 如果 end 超过列表尾部，Redis 会将其当作列表的最后一个元素。</p>
+<p><a href="https://www.redis.com.cn/commands/ltrim.html" target="_blank" rel="noopener noreffer">LTRIM</a> 的一个常见用法是和 <a href="https://www.redis.com.cn/commands/lpush.html" target="_blank" rel="noopener noreffer">LPUSH</a> / <a href="https://www.redis.com.cn/commands/rpush.html" target="_blank" rel="noopener noreffer">RPUSH</a> 一起使用。 例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">LPUSH mylist someelement
+LTRIM mylist 0 99
+</code></pre></td></tr></table>
+</div>
+</div><p>这对命令会将一个新的元素 push 进列表里，并<strong>保证该列表不会增长到超过100个元素</strong>。</p>
+<p>这是很有用的，比如当用 Redis 来存储日志。 需要特别注意的是，当用这种方式来使用 <a href="https://www.redis.com.cn/commands/ltrim.html" target="_blank" rel="noopener noreffer">LTRIM</a> 的时候，操作的复杂度是 O(1) ， 因为平均情况下，每次只有一个元素会被移除。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>LINSERT</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  LINSERT key BEFORE<span class="p">|</span>AFTER pivot element
+  summary: Insert an element before or after another element in a list
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis&gt; RPUSH mylist <span class="s2">&#34;Hello&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+redis&gt; RPUSH mylist <span class="s2">&#34;World&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+redis&gt; LINSERT mylist BEFORE <span class="s2">&#34;World&#34;</span> <span class="s2">&#34;There&#34;</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+redis&gt; LRANGE mylist <span class="m">0</span> -1
+1<span class="o">)</span> <span class="s2">&#34;Hello&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;There&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;World&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>LLEN</p>
+<ul>
+<li>返回链表长度</li>
+</ul>
+</li>
+<li>
+<p>LINDEX</p>
+<ul>
+<li>取出指定index的值</li>
+</ul>
+</li>
+<li>
+<p>LPOS</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	LPOS key element <span class="o">[</span>RANK rank<span class="o">]</span> <span class="o">[</span>COUNT num-matches<span class="o">]</span> <span class="o">[</span>MAXLEN len<span class="o">]</span>
+  summary: Return the index of matching elements on a list
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><code>RANK</code> 选项</p>
+<blockquote>
+<p>表示返回第几个匹配的元素，即如果有列表中有多个元素匹配，那么 rank 为 1 时返回第一个匹配的元素， rank 为 2 时返回第二个匹配的元素，以此类推。</p>
+<p>负值 <code>RANK</code> 参数表示换一个搜索方向，从列表尾部想列表头部搜索。</p>
+</blockquote>
+</li>
+<li>
+<p><code>COUNT</code> 选项</p>
+<blockquote>
+<p>表示返回要匹配的总数，</p>
+</blockquote>
+<blockquote>
+<p>我们可以组合使用 <code>COUNT</code> 和<code>RANK</code>，<code>RANK</code> 表示从第几个匹配开始计算</p>
+</blockquote>
+<blockquote>
+<p><code>COUNT</code> 为 0 时表示返回所有匹配成员的索引数组。</p>
+</blockquote>
+</li>
+<li>
+<p><code>MAXLEN</code> 选项</p>
+<blockquote>
+<p>表示只查找最多 len 个成员。例如t <code>MAXLEN 1000</code> 表示之查找前 1000 个成员，这样可以提高查询效率，如果我们想在一个大的列表中，尽快找到匹配的元素，这样做效率最高。</p>
+</blockquote>
+<p>eg：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis&gt; RPUSH mylist a b c d <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span> <span class="m">3</span> <span class="m">3</span> <span class="m">3</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">11</span>
+redis&gt; LPOS mylist <span class="m">3</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
+redis&gt; LPOS mylist <span class="m">3</span> COUNT <span class="m">0</span> RANK <span class="m">2</span>
+1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">8</span>
+2<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">9</span>
+3<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">10</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+<h2 id="4-应用场景">4. 应用场景：</h2>
+<ul>
+<li>
+<p>栈</p>
+<ul>
+<li>正向命令</li>
+</ul>
+</li>
+<li>
+<p>队列</p>
+<ul>
+<li>反向命令</li>
+</ul>
+</li>
+<li>
+<p>数组</p>
+<ul>
+<li>索引操作</li>
+</ul>
+</li>
+<li>
+<p>阻塞，单播队列</p>
+<ul>
+<li>
+<p>RPOPLPUSH</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  RPOPLPUSH <span class="nb">source</span> destination
+  summary: Remove the last element in a list, prepend it to another list and <span class="k">return</span> it
+  since: 1.2.0
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>BRPOPLPUSH <code>BLOCK</code></p>
+</li>
+<li>
+<p>是 <code>RPOPLPUSH</code>的阻塞版本</p>
+</li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">BRPOPLPUSH LIST1 ANOTHER_LIST TIMEOUT 
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">summary: Pop an element from a list, push it to another list and <span class="k">return</span> it<span class="p">;</span> or block <span class="k">until</span> one is available
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>超时参数设为 <code>0</code> 表示阻塞时间可以无限期延长(block indefinitely) 。</p>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" class="prev" rel="prev" title="Redis的使用&amp;redis-Value-string类型"><i class="fas fa-angle-left fa-fw"></i>Redis的使用&amp;redis-Value-string类型</a>
+            <a href="/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" class="next" rel="next" title="redis面试题">redis面试题<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">SeaSoonKeun</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

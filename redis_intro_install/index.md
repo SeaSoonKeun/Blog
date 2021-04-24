@@ -89,5 +89,4 @@ echo "source /opt/rh/devtoolset-9/enable" >>/etc/profile
 ```
 ### centos7 执行utils/install_server.sh 因为systemctl命令报错，注释掉即可
 
-
-
+![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/centos7%E5%AE%89%E8%A3%85redis%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%991.jpg)
