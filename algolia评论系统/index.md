@@ -1,4 +1,4 @@
-# 配置 GIhub + PicGo 图床
+# Algolia评论系统
 
 
 ## Algolia 端

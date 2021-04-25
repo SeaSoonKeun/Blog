@@ -58,6 +58,8 @@
                     hreflang="zh-cn"
                     href="https://github.com/categories/"
                     /></url><url>
+            <loc>https://github.com/tags/java/</loc><lastmod>2021-04-25T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/%E4%B8%AA%E4%BA%BA%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</loc><lastmod>2021-04-25T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/linux/</loc><lastmod>2021-04-25T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/posts/</loc><lastmod>2021-04-25T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
@@ -86,11 +88,14 @@
                     hreflang="zh-cn"
                     href="https://github.com/"
                     /></url><url>
+            <loc>https://github.com/tags/%E8%B7%AF%E7%BA%BF/</loc><lastmod>2021-04-25T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/categories/route/</loc><lastmod>2021-04-25T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/redis/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-set%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-sorted-set%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</loc><lastmod>2021-04-24T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/</loc><lastmod>2021-04-23T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/</loc><lastmod>2021-04-23T01:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -99,12 +104,12 @@
             <loc>https://github.com/tags/mysql/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/mysql/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/%E4%BF%AE%E6%94%B9macos-mysql%E7%9A%84-root%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/</loc><lastmod>2021-04-22T23:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/github/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis_intro_install/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/%E5%9B%BE%E5%BA%8A/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/categories/%E5%B7%A5%E5%85%B7/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/algolia%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/github-picgo/</loc><lastmod>2021-04-21T17:30:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/installation/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
@@ -115,7 +120,15 @@
                     hreflang="zh-cn"
                     href="https://github.com/tags/installation/"
                     /></url><url>
-            <loc>https://github.com/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://github.com/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="en"
+                        href="https://github.com/en/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="zh-cn"
+                    href="https://github.com/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/"
+                    /></url><url>
             <loc>https://github.com/tags/configuration/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
@@ -170,29 +183,22 @@
                     hreflang="zh-cn"
                     href="https://github.com/tags/emoji/"
                     /></url><url>
-            <loc>https://github.com/categories/markdown/</loc><lastmod>2019-10-01T17:55:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://github.com/loveit/</loc><lastmod>2019-08-02T11:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
-                        href="https://github.com/en/categories/markdown/"
+                        href="https://github.com/en/loveit/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
-                    href="https://github.com/categories/markdown/"
+                    href="https://github.com/loveit/"
                     /></url><url>
-            <loc>https://github.com/about/</loc><lastmod>2019-08-02T11:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="en"
-                        href="https://github.com/en/about/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="zh-cn"
-                    href="https://github.com/about/"
-                    /></url><url>
-            <loc>https://github.com/redis-%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/redis-module-redisbloom/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/redis-pipe/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/redis-pubsub/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/redis-transactions/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://github.com/tags/hugo/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://github.com/about/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://github.com/hugo_blog/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/categories/documentation/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"

@@ -146,15 +146,7 @@
                     hreflang="en"
                     href="https://github.com/en/tags/html/"
                     /></url><url>
-            <loc>https://github.com/en/categories/markdown/</loc><lastmod>2020-01-01T16:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="zh-cn"
-                        href="https://github.com/categories/markdown/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="en"
-                    href="https://github.com/en/categories/markdown/"
-                    /></url><url>
+            <loc>https://github.com/en/categories/markdown/</loc><lastmod>2020-01-01T16:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/en/tags/emoji/</loc><lastmod>2019-10-01T17:55:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
@@ -164,12 +156,21 @@
                     hreflang="en"
                     href="https://github.com/en/tags/emoji/"
                     /></url><url>
-            <loc>https://github.com/en/about/</loc><lastmod>2019-08-02T11:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://github.com/en/loveit/</loc><lastmod>2019-08-02T11:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
-                        href="https://github.com/about/"
+                        href="https://github.com/loveit/"
                         /><xhtml:link
                     rel="alternate"
                     hreflang="en"
-                    href="https://github.com/en/about/"
+                    href="https://github.com/en/loveit/"
+                    /></url><url>
+            <loc>https://github.com/en/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/</loc><lastmod>2019-08-02T11:04:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="zh-cn"
+                        href="https://github.com/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="en"
+                    href="https://github.com/en/categories/%E7%BD%91%E7%AB%99%E4%BD%BF%E7%94%A8/"
                     /></url></urlset>
