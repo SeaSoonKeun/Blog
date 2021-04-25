@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Redis-value-List类型 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="Redis-value-List类型"><meta property="og:title" content="Redis-value-List类型" />
-<meta property="og:description" content="Redis-value-List类型" />
+        <title>Redis-Value-List类型 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="Redis-Value-List类型"><meta property="og:title" content="Redis-Value-List类型" />
+<meta property="og:description" content="Redis-Value-List类型" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-04-23T17:30:02&#43;08:00" />
@@ -15,16 +15,16 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://github.com/logo.png"/>
 
-<meta name="twitter:title" content="Redis-value-List类型"/>
-<meta name="twitter:description" content="Redis-value-List类型"/>
+<meta name="twitter:title" content="Redis-Value-List类型"/>
+<meta name="twitter:description" content="Redis-Value-List类型"/>
 <meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
 <meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" /><link rel="prev" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" /><link rel="next" href="https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" /><link rel="prev" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8/" /><link rel="next" href="https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Redis-value-List类型",
+        "headline": "Redis-Value-List类型",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -45,7 +45,7 @@
                 }},"author": {
                 "@type": "Person",
                 "name": "SeaSoonKeun"
-            },"description": "Redis-value-List类型"
+            },"description": "Redis-Value-List类型"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -56,7 +56,7 @@
             <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 分类 </a><a class="menu-item" href="/categories/documentation/">📋 文档 </a><a class="menu-item" href="/about/">🤙 关于 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 分类 </a><a class="menu-item" href="/categories/">📋 文档 </a><a class="menu-item" href="/about/">🤙 关于 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
                         <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
@@ -101,7 +101,7 @@
                     <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
                         取消
                     </a>
-                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚分类</a><a class="menu-item" href="/categories/documentation/" title="">📋文档</a><a class="menu-item" href="/about/" title="">🤙关于</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚分类</a><a class="menu-item" href="/categories/" title="">📋文档</a><a class="menu-item" href="/about/" title="">🤙关于</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
                     <select class="language-select" onchange="location = this.value;"><option value="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" selected>简体中文</option></select>
@@ -118,10 +118,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Redis-value-List类型</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis-Value-List类型</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1618 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" class="leancloud_visitors" data-flag-title="Redis-value-List类型">
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" class="leancloud_visitors" data-flag-title="Redis-Value-List类型">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -679,7 +679,7 @@ redis&gt; LPOS mylist <span class="m">3</span> COUNT <span class="m">0</span> RA
                             <a class="link-to-markdown" href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-value-List类型" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-Value-List类型" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-Value-List类型"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-Value-List类型"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/" data-title="Redis-Value-List类型" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -691,7 +691,7 @@ redis&gt; LPOS mylist <span class="m">3</span> COUNT <span class="m">0</span> RA
         </section>
     </div>
 
-    <div class="post-nav"><a href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" class="prev" rel="prev" title="Redis的使用&amp;redis-Value-string类型"><i class="fas fa-angle-left fa-fw"></i>Redis的使用&amp;redis-Value-string类型</a>
+    <div class="post-nav"><a href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8/" class="prev" rel="prev" title="Redis的使用"><i class="fas fa-angle-left fa-fw"></i>Redis的使用</a>
             <a href="/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" class="next" rel="next" title="redis面试题">redis面试题<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>

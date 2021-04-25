@@ -13,6 +13,8 @@
 
 ## 2. What
 
+<img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/sorted_set%E5%90%AF%E8%92%99.jpg" style="zoom:50%;" />
+
 ### 1. Help @sorted_set
 
 ```bash

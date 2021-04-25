@@ -4,7 +4,7 @@
         <link>https://github.com/posts/</link>
         <description>所有文章 | The Record &amp; Share by SeaSoonKeun</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xucg0912@gmail.com (SeaSoonKeun)</managingEditor>
-            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 25 Apr 2021 09:58:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
     <title>主题文档 - 基本概念</title>
     <link>https://github.com/theme-documentation-basics/</link>
     <pubDate>Fri, 06 Mar 2020 21:40:32 &#43;0800</pubDate>
@@ -40,6 +40,13 @@
     <guid>https://github.com/emoji-support/</guid>
     <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
 </item><item>
+    <title>awk命令</title>
+    <link>https://github.com/awk/</link>
+    <pubDate>Sun, 25 Apr 2021 09:58:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/awk/</guid>
+    <description><![CDATA[AWK awk是处理文本文件的一个应用程序，几乎所有 Linux 系统都自带这个程序。 它依次处理文件的每一行，并读取里面的每一个字段。对于日志、CSV 那样的每]]></description>
+</item><item>
     <title>Redis-Value-Hash类型</title>
     <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/</link>
     <pubDate>Sat, 24 Apr 2021 17:30:02 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://github.com/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[redis面试题 Redis 常见面试问题总结和答案。 什么是Redis？ Redis(Remote Dictionary Server) Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、支持网络、可基于内存亦可持久化]]></description>
-</item><item>
-    <title>Redis-value-List类型</title>
-    <link>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/</link>
-    <pubDate>Fri, 23 Apr 2021 17:30:02 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue-list%E7%B1%BB%E5%9E%8B/</guid>
-    <description><![CDATA[Redis-value-List类型 1. 框架图： 2. help @LIST 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44]]></description>
 </item></channel>
 </rss>

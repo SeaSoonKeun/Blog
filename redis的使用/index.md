@@ -658,12 +658,30 @@ BITOP operation destkey key [key ...]
   since: 2.8.7
 ```
 
-##### 位图的场景
+##### 位图的应用场景
 
-1. 公司用户，统计用户的登录天数，且窗口随机
+1. ###### 公司用户，统计用户的登录天数，且窗口随机
 
-   bitcount
+   `bitcount`
 
-2. 
+   设计一个矩阵，以用户为行，日期为列，每天登录一次，该列设置成1，最后计算每行的列的`bitcount`值
+
+   ![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitcount-1.jpg)
+
+2. ###### 京东秒杀，统计某一时间段的活跃用户。
+
+   `bitop`
+
+   > 大库备货多少礼物
+   >
+   > 假设京东有2E用户
+   >
+   > 分为：僵尸用户，冷热用户/忠诚用户
+   >
+   > 活跃用户统计！随即窗口
+   >
+   > 比如说 1号~3号 连续登录要   去重
+
+![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Bitop-1.jpg)
 
 
