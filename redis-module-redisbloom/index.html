@@ -5,26 +5,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title> - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="个人学习心得"><meta property="og:title" content="" />
-<meta property="og:description" content="Redis-Module 1. 布隆过滤器 注意加载模块时配置绝对路径 解决缓存穿透问题 小空间解决大量数据匹配问题" />
+        <title>Redis-Module-Bloom-白名单机制 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="Redis-Module-Bloom-白名单机制"><meta property="og:title" content="Redis-Module-Bloom-白名单机制" />
+<meta property="og:description" content="Redis-Module-Bloom-白名单机制" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://github.com/redis-module-redisbloom/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
-
-
+<meta property="article:published_time" content="2021-04-25T17:30:02&#43;08:00" />
+<meta property="article:modified_time" content="2021-04-25T17:30:02&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://github.com/logo.png"/>
 
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content="Redis-Module 1. 布隆过滤器 注意加载模块时配置绝对路径 解决缓存穿透问题 小空间解决大量数据匹配问题"/>
+<meta name="twitter:title" content="Redis-Module-Bloom-白名单机制"/>
+<meta name="twitter:description" content="Redis-Module-Bloom-白名单机制"/>
 <meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
 <meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-module-redisbloom/" /><link rel="prev" href="https://github.com/redis-pipe/" /><link rel="next" href="https://github.com/loveit/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-module-redisbloom/" /><link rel="prev" href="https://github.com/awk/" /><link rel="next" href="https://github.com/redis-linux%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93-fork-copyonwrite/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "",
+        "headline": "Redis-Module-Bloom-白名单机制",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
@@ -34,8 +34,8 @@
                             "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","wordcount":  41 ,
-        "url": "https:\/\/github.com\/redis-module-redisbloom\/","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                        }],"genre": "posts","keywords": "Redis, Bloom, 布谷鸟, 过滤器","wordcount":  2416 ,
+        "url": "https:\/\/github.com\/redis-module-redisbloom\/","datePublished": "2021-04-25T17:30:02+08:00","dateModified": "2021-04-25T17:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
                     "@type": "ImageObject",
@@ -45,7 +45,7 @@
                 }},"author": {
                 "@type": "Person",
                 "name": "SeaSoonKeun"
-            },"description": ""
+            },"description": "Redis-Module-Bloom-白名单机制"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -118,10 +118,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX"></h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 41 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/redis-module-redisbloom/" class="leancloud_visitors" data-flag-title="">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis-Module-Bloom-白名单机制</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-25">2021-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2416 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/redis-module-redisbloom/" class="leancloud_visitors" data-flag-title="Redis-Module-Bloom-白名单机制">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -131,20 +131,237 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#1-布隆过滤器">1. 布隆过滤器</a></li>
+    <li><a href="#1-why">1. Why</a></li>
+    <li><a href="#2-what">2. What</a>
+      <ul>
+        <li><a href="#原理">原理：</a></li>
+        <li><a href="#缺点">缺点：</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-how">3. How</a>
+      <ul>
+        <li><a href="#1-下载编译并加载布隆过滤器">1. 下载，编译，并加载布隆过滤器</a>
+          <ul>
+            <li><a href="#heading"></a></li>
+          </ul>
+        </li>
+        <li><a href="#2-布隆过滤器的思路小空间解决大量数据匹配问题">2. 布隆过滤器的思路：小空间解决大量数据匹配问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-补充知识点">4. 补充知识点</a></li>
+    <li><a href="#5-发展">5. 发展</a>
+      <ul>
+        <li><a href="#counting-bloom">counting bloom：</a></li>
+        <li><a href="#cuckoo-filter">Cuckoo filter:</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-缓存雪崩">6. 缓存雪崩：</a></li>
+    <li><a href="#7-黑名单">7. 黑名单</a></li>
+    <li><a href="#8-使用场景">8. 使用场景</a>
+      <ul>
+        <li><a href="#黑名单">黑名单：</a></li>
+        <li><a href="#白名单">白名单：</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h1 id="redis-module">Redis-Module</h1>
-<h2 id="1-布隆过滤器">1. 布隆过滤器</h2>
-<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8.jpg" style="zoom:33%;" /></p>
-<p>注意加载模块时配置<strong>绝对路径</strong></p>
+            </div><div class="content" id="content"><h1 id="redis-module-bloom-白名单机制">Redis-Module-Bloom-<strong>白名单</strong>机制</h1>
+<p>位图的最常见场景之一: 大数据下去重过滤功能.</p>
+<h2 id="1-why">1. Why</h2>
+<p>你有啥？有的数据都拿到一个集合里，把用户搜索的和你已有的做一个比对，如果没找到就不用去数据库了。</p>
+<p>但是像淘宝这种网站，本身数据库的数据就已经需要分而治之了，内存数据库更难以实现了，所以诞生了布隆控制器。</p>
+<p>（有点类似于<strong>白名单</strong>）</p>
 <p>解决<strong>缓存穿透</strong>问题</p>
-<p>小空间解决大量数据匹配问题</p>
+<h2 id="2-what">2. What</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png" /></p>
+<h3 id="原理">原理：</h3>
+<p>布隆过滤器原理是通过多个 hash 函数, 将结果对应的位设为1, 所以它能做到 100%的去重. 虽然会误判, 但是在合理的设计的前提下, 误判率是可以接受的.</p>
+<p>实现代码：</p>
+<p><img src="/Users/mr.x/Library/Application Support/typora-user-images/image-20210425192612228.png" alt="image-20210425192612228" style="zoom:50%;" /></p>
+<p><strong>牺牲数据的精度，换取空间效率</strong>。会出现不同的值算出来的值是一样的情况。</p>
+<h3 id="缺点">缺点：</h3>
+<ol>
+<li>首先它的<strong>查询性能相对较弱</strong>, 它是用 hash 函数在位图上不同的点跳跃探测, <strong>很难利用 cpu 缓存</strong>.</li>
+<li>第二它<strong>不支持删除</strong>, 假如邮箱a 的 hash 结果分别是 1 3 7, 邮箱 b 的结果是 2 6 7. 那么在删除邮箱a 的结果之后, 邮箱 b 也会被重新认为是不存在, 因为第 7 位的值是 0. 这一点布隆过滤器也很无奈.当位图拥挤到一定程度, 只能选择<strong>重建整个位图</strong>.</li>
+<li>存在<strong>误判</strong>概率</li>
+</ol>
+<h2 id="3-how">3. How</h2>
+<h3 id="1-下载编译并加载布隆过滤器">1. 下载，编译，并加载布隆过滤器</h3>
+<h4 id="heading"></h4>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8.jpg" style="zoom:33%;" /></p>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom1.jpg" style="zoom:30%;" /></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 下载bloom模块并编译</span>
+wget https://github.com/RedisBloom/RedisBloom/archive/refs/heads/master.zip
+unzip master.zip
+make生成redisbloom.so扩展库
+
+
+<span class="c1"># 启动redis服务</span>
+service redis_6379 stop
+<span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># ./redis-server /etc/redis/6379.conf --loadmodule /opt/soft/redis/redisbloom.so</span>
+<span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># ps -ef |grep redis</span>
+root     <span class="m">29460</span>     <span class="m">1</span>  <span class="m">0</span> 00:10 ?        00:00:00 ./redis-server 127.0.0.1:6379
+
+<span class="c1"># 连接</span>
+<span class="o">[</span>root@localhost bin<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; BF.LOADCHUNK key ...options...
+可显示bf扩展关键字
+</code></pre></td></tr></table>
+</div>
+</div><p>注意加载模块时配置<strong>绝对路径</strong></p>
+<h3 id="2-布隆过滤器的思路小空间解决大量数据匹配问题">2. 布隆过滤器的思路：小空间解决大量数据匹配问题</h3>
+<ol>
+<li></li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom%E6%A0%B8%E5%BF%83.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom%E6%A0%B8%E5%BF%83.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom%E6%A0%B8%E5%BF%83.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom%E6%A0%B8%E5%BF%83.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom%E6%A0%B8%E5%BF%83.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/bloom%E6%A0%B8%E5%BF%83.jpg" /></p>
+<p>bitmap二进制位进行代表，会使得<strong>体积变得很小</strong></p>
+<p><code>**所有映射函数的值都是1则进行穿透，有一个映射函数遇到0就不往下查询了</code>**</p>
+<p><strong>运算的复杂度 + 空间 换取 查询成本</strong></p>
+<ol start="2">
+<li><strong>概率解决问题</strong>，不可能百分百阻挡，未阻挡&lt;1%。函数的数量和bitmap数组的宽度需要调整。</li>
+</ol>
+<h2 id="4-补充知识点">4. 补充知识点</h2>
+<ol>
+<li>
+<p>查询穿透缓存了，但是查询数据库不存在值，client，增加redis中的key，value标记</p>
+</li>
+<li>
+<p>数据库增加了新元素，需完成元素对bloom的添加 涉及到<strong>双写问题</strong></p>
+</li>
+</ol>
+<h2 id="5-发展">5. 发展</h2>
+<ul>
+<li>
+<p>bloom -&gt; counting bloom -&gt; cuckoo <strong>布谷鸟过滤器</strong></p>
+<p>bloom过滤器问题：</p>
+</li>
+</ul>
+<ol>
+<li>首先它的<strong>查询性能相对较弱</strong>, 它是用 hash 函数在位图上不同的点跳跃探测, <strong>很难利用 cpu 缓存</strong>.</li>
+<li>第二它<strong>不支持删除</strong>, 假如邮箱a 的 hash 结果分别是 1 3 7, 邮箱 b 的结果是 2 6 7. 那么在删除邮箱a 的结果之后, 邮箱 b 也会被重新认为是不存在, 因为第 7 位的值是 0. 这一点布隆过滤器也很无奈.当位图拥挤到一定程度, 只能选择<strong>重建整个位图</strong>.</li>
+</ol>
+<h3 id="counting-bloom">counting bloom：</h3>
+<p>原理：把<strong>位图</strong>的位 升级为<strong>计数器(Counter)</strong>. 添加元素, 就给对应的Counter分别+1; 删除元素, 就给对应的Counter分别减一. 用多出几倍存储空间的代价, 来实现删除功能. 虽然实现了功能, 但是不够完美.</p>
+<h3 id="cuckoo-filter">Cuckoo filter:</h3>
+<p><a href="https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf" target="_blank" rel="noopener noreffer">论文地址</a></p>
+<blockquote>
+<p>首先要说明布谷鸟过滤器并不是使用位图实现的, 而是<strong>一维数组.</strong> 它所存储的是数据的指纹(fingerprint).
+布谷鸟过滤器使用两个 hash 算法将新来的元素映射到数组的两个位置. 如果两个位置中有一个位置位空, 那么就可以将元素直接放进去. 但是如果这两个位置都满了, 它就会随机踢走一个, 然后自己霸占了这个位置.
+正如布谷鸟那样, 把蛋下到其它鸟的窝里. 这也是得名的由来. 但它并不是像布谷鸟那样, 管杀不管埋, 还会为这个被踢走的数据, 找一个新家.
+这里看一下它的公式, Cuckoo filter中只采用两个哈希映射函数 H1 和 H2，H3用于计算数据的 fingerprint. 他们的关系如下</p>
+<p>H3(key) = key’s fingerprint = hash(key)
+H1(key) = hash1(key)
+H2(key) = H1(key) ^ H1(key’s fingerprint) // 异或</p>
+<p>从上面的公式中可以看出，当我们知道 fingerprint 和 H1(key)，就可以直接算出 H2(key)。同样如果我们知道 H2(key) 和 fpfingerprint 也可以直接算出H1(key) &mdash;- 对偶性.
+通过 fingerprint 和当前位置, 算出对应的另一个巢, 然后安放这个可怜的数据. 如果另一个巢仍然有数据, 那就为受害者继续寻找下一个巢.
+但也有问题, 假如数组太过拥挤, 踢了几十次仍然没有找到空缺的巢, 那就需要为数组扩容了.
+不过原生的布谷鸟过滤器空间利用率并不高, 大约 50%. 改良的方案之一是增加 hash 函数, 让每个元素不止有两个巢, 这样可以大大降低碰撞的概率, 将空间利用率提高到 95% 左右.
+还有个方案是给每个位置上挂多个巢, 这样不会马上就挤来挤去. 也能大大降低碰撞概率, 空间利用率虽然比第一种改良方案稍低(约为 85%), 但cpu 缓存的利用率会提高不少.
+甚至还可以将两种方案结合, 据说空间利用率高达99%. 了不起的数字.
+要删除也很简单, 找到对应位置的指纹信息删除即可.
+但布谷鸟过滤器有一个明显的弱点, 无法对同一个数据连续插入!
+刚才也说到了, 假如数组太拥挤, 碰撞多次仍然未找到空缺的巢, 那就需要扩容了. 那么连续插入同一个数据, 马上就触发了扩容.
+而且因为存储的只是一个字节的指纹信息, 也很难判断插入的数据和位置上的数据, 是不是同一个数据. 算法论文上也有说明, 支持删除, 不支持同一个数据多次插入. 要确保每一个元素不会被插入多次(kb+1). k 是指 hash 函数的个数 2，b是指单个位置上的座位数. 也就是说原生布谷鸟过滤器, 不能超过 3.</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E8%B0%B7%E9%B8%9Fhash.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E8%B0%B7%E9%B8%9Fhash.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E8%B0%B7%E9%B8%9Fhash.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E8%B0%B7%E9%B8%9Fhash.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E8%B0%B7%E9%B8%9Fhash.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E5%B8%83%E8%B0%B7%E9%B8%9Fhash.jpg" /></p>
+<ul>
+<li>
+<p>布谷鸟问题：</p>
+<ol>
+<li>
+<p><strong>循环挤兑</strong>问题；插入重复数据不能超过 <code>hash函数个数</code> * <code>每个数组包含的子数组个数</code> + <code>1</code>次，想实现这点还需要另外一层数据结构来进行<strong>维护次数</strong>，增加了开销。而且如果一个指纹使用一个字节，只有256种可能性，会出现不同数据相同指纹的情况，也会出现一定概率的<strong>误判情况</strong>。</p>
+</li>
+<li>
+<p>鸠占鹊巢的次数有限制，到一定次数后，会进行<strong>数组扩容</strong>；类似于hashmap，达到0.75的时候进行扩容</p>
+</li>
+<li>
+<p>删除功能缺陷：一个指纹使用一个字节，只有256种可能性，也有不同数据相同指纹的情况，会有<strong>误删除</strong>其他数据的情况发生。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>优化方法：</p>
+<ol>
+<li>
+<p><strong>hash函数个数</strong>，可以有多个位置可以选择</p>
+</li>
+<li>
+<p><strong>1嵌套内部子数组</strong></p>
+</li>
+<li>
+<p>以通过<strong>调整指纹信息的保存量</strong>来降低误判情况，如在上面的实现中，指纹信息是 1byte 保存8位信息误判概率是0.03，当指纹信息增加到 2bytes 保存16位信息误判概率会降低至 0.0001。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="6-缓存雪崩">6. 缓存雪崩：</h2>
+<p>​	方法：缓存不设置相同的超时时间，使用定时任务定期进行更新。</p>
+<h2 id="7-黑名单">7. 黑名单</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png" /></p>
+<h2 id="8-使用场景">8. 使用场景</h2>
+<h3 id="黑名单">黑名单：</h3>
+<ul>
+<li>视频网站推送视频</li>
+<li><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425173746.png" style="zoom:50%;" /></li>
+</ul>
+<h3 id="白名单">白名单：</h3>
+<ul>
+<li>允许转载</li>
+<li><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425174042.png" style="zoom:50%;" /></li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 0001-01-01</span>
+                <span>更新于 2021-04-25</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -153,20 +370,20 @@
                             <a class="link-to-markdown" href="/redis-module-redisbloom/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis-module-redisbloom/" data-title=""><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis-module-redisbloom/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis-module-redisbloom/" data-title=""><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis-module-redisbloom/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis-module-redisbloom/" data-title="" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis-module-redisbloom/" data-title="Redis-Module-Bloom-白名单机制" data-hashtags="Redis,Bloom,布谷鸟,过滤器"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis-module-redisbloom/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis-module-redisbloom/" data-title="Redis-Module-Bloom-白名单机制"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis-module-redisbloom/" data-title="Redis-Module-Bloom-白名单机制"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis-module-redisbloom/" data-title="Redis-Module-Bloom-白名单机制" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a>,&nbsp;<a href="/tags/bloom/">Bloom</a>,&nbsp;<a href="/tags/%E5%B8%83%E8%B0%B7%E9%B8%9F/">布谷鸟</a>,&nbsp;<a href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/">过滤器</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/redis-pipe/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw"></i></a>
-            <a href="/loveit/" class="next" rel="next" title="关于 LoveIt">关于 LoveIt<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/awk/" class="prev" rel="prev" title="awk命令"><i class="fas fa-angle-left fa-fw"></i>awk命令</a>
+            <a href="/redis-linux%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93-fork-copyonwrite/" class="next" rel="next" title="Redis-fork-cow-引申linux系统管道">Redis-fork-cow-引申linux系统管道<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
@@ -181,5 +398,5 @@
             </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

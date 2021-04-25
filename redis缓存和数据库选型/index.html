@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Redis缓存和数据库区别 - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="Redis缓存和数据库区别"><meta property="og:title" content="Redis缓存和数据库区别" />
+<meta property="og:description" content="Redis缓存和数据库区别" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-25T09:58:02&#43;08:00" />
+<meta property="article:modified_time" content="2021-04-25T09:58:02&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/logo.png"/>
+
+<meta name="twitter:title" content="Redis缓存和数据库区别"/>
+<meta name="twitter:description" content="Redis缓存和数据库区别"/>
+<meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
+<meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" /><link rel="prev" href="https://github.com/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/" /><link rel="next" href="https://github.com/redis%E6%8C%81%E4%B9%85%E5%8C%96/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis缓存和数据库区别",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/github.com\/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "缓存","wordcount":  1527 ,
+        "url": "https:\/\/github.com\/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B\/","datePublished": "2021-04-25T09:58:02+08:00","dateModified": "2021-04-25T09:58:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/github.com\/images\/avatar.png",
+                    "width":  790 ,
+                    "height":  792 
+                }},"author": {
+                "@type": "Person",
+                "name": "SeaSoonKeun"
+            },"description": "Redis缓存和数据库区别"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 文档分类 </a><a class="menu-item" href="/categories/route/">🚦 路线 </a><a class="menu-item" href="/about/">🤙 关于我 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚文档分类</a><a class="menu-item" href="/categories/route/" title="">🚦路线</a><a class="menu-item" href="/about/" title="">🤙关于我</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis缓存和数据库区别</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-25">2021-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1527 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" class="leancloud_visitors" data-flag-title="Redis缓存和数据库区别">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是缓存">什么是缓存：</a></li>
+    <li><a href="#问题怎么随着业务变化只保留热数据因为内存大小是有限的瓶颈">问题：怎么随着业务变化，只保留热数据，因为内存大小是有限的（瓶颈）？</a>
+      <ul>
+        <li><a href="#1-页面置换算法解决淘汰冷数据问题">1. 页面置换算法解决淘汰冷数据问题</a></li>
+        <li><a href="#2-过期时间如何设置">2. 过期时间如何设置</a></li>
+        <li><a href="#1倒计时set-key-value-ex-secondspx-milliseconds-nxxx-keepttl">1）倒计时：set key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]</a></li>
+        <li><a href="#2定时expireat-key-timestamp">2）定时：EXPIREAT key timestamp</a></li>
+        <li><a href="#3-过期淘汰的方式">3. 过期淘汰的方式</a></li>
+        <li><a href="#heading"></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis-作为缓存和数据库区别">Redis 作为缓存和数据库区别</h1>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/redis%E7%BC%93%E5%AD%98.jpg"
+        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/redis%E7%BC%93%E5%AD%98.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/redis%E7%BC%93%E5%AD%98.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/redis%E7%BC%93%E5%AD%98.jpg 2x"
+        data-sizes="auto"
+        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/redis%E7%BC%93%E5%AD%98.jpg"
+        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/redis%E7%BC%93%E5%AD%98.jpg" /></p>
+<h2 id="什么是缓存">什么是缓存：</h2>
+<pre><code>1. 数据“不重要”，**不是全量数据**
+2. 应该随着访问变化，**热数据**
+</code></pre>
+<p>缓存常见问题：</p>
+<blockquote>
+<p>击穿</p>
+<p>雪崩</p>
+<p>穿透</p>
+<p>一致性（双写）</p>
+<p>技术是易于人的使用！</p>
+<p>理论是极其复杂！</p>
+</blockquote>
+<blockquote>
+<p>缓存：数据可以丢 急速！</p>
+<p>数据库：数据绝对不能丢的 速度+持久性 掉电易失！</p>
+</blockquote>
+<h2 id="问题怎么随着业务变化只保留热数据因为内存大小是有限的瓶颈">问题：怎么随着业务变化，只保留热数据，因为内存大小是有限的（瓶颈）？</h2>
+<ul>
+<li>
+<p>业务逻辑 —&gt; 有限期 expire</p>
+</li>
+<li>
+<p>业务运转 —&gt; 业务的变化，淘汰冷数据 —&gt; 置换算法</p>
+</li>
+</ul>
+<p>内存多大呢？如何限制？</p>
+<blockquote>
+<p>Redis 配置文件：</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># cat /etc/redis/6379.conf |egrep &#39;^[a-zA-Z]|##&#39;</span>
+<span class="c1">## Generated by install_server.sh ##</span>
+导入基础配置
+<span class="c1">################################## INCLUDES ###################################</span>
+
+<span class="c1">################################## MODULES #####################################</span>
+加载绝对路径下的扩展库文件，也可以手动加在启动命令后面 --loadmodule
+loadmodule /opt/soft/redis/redisbloom.so
+<span class="c1">################################## NETWORK #####################################</span>
+绑定端口
+<span class="nb">bind</span> 127.0.0.1
+protected-mode yes
+port <span class="m">6379</span>
+tcp-backlog <span class="m">511</span>
+timeout <span class="m">0</span>
+tcp-keepalive <span class="m">300</span>
+<span class="c1">################################# TLS/SSL #####################################</span>
+<span class="c1">################################# GENERAL 全局 #####################################</span>
+是否为后台守护模式
+daemonize yes
+
+supervised no
+进程pid文件，判断程序是否在运行
+pidfile /var/run/redis_6379.pid
+日志级别
+loglevel notice
+日志目录
+logfile /var/log/redis_6379.log
+默认库
+databases <span class="m">16</span>
+always-show-logo yes
+<span class="c1">################################ SNAPSHOTTING  RDP ################################</span>
+save <span class="m">900</span> <span class="m">1</span>
+save <span class="m">300</span> <span class="m">10</span>
+save <span class="m">60</span> <span class="m">10000</span>
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+rdb-del-sync-files no
+dir /var/lib/redis/6379
+<span class="c1">################################# REPLICATION 主从复制 #################################</span>
+replica-serve-stale-data yes
+replica-read-only yes
+repl-diskless-sync no
+repl-diskless-sync-delay <span class="m">5</span>
+repl-diskless-load disabled
+repl-disable-tcp-nodelay no
+replica-priority <span class="m">100</span>
+<span class="c1">############################### KEYS TRACKING #################################</span>
+<span class="c1">################################## SECURITY 安全 ###################################</span>
+添加ACL users
+重命名命令flushdb/flushall
+rename-command CONFIG <span class="s2">&#34;&#34;</span>
+acllog-max-len <span class="m">128</span>
+<span class="c1">################################### CLIENTS ####################################</span>
+最大允许链接数
+<span class="c1"># maxclients 10000</span>
+<span class="c1">############################## MEMORY MANAGEMENT 内存管理 ################################</span>
+最大内存1-10G范围，太大后面数据持久化存储迁移成本很大
+<span class="c1"># MAXMEMORY POLICY</span>
+<span class="c1"># maxmemory &lt;bytes&gt;</span>
+LRU Least Recently Used 最近最少使用算法
+volatile（只针对有有效期的key）
+<span class="c1"># volatile-lru -&gt; Evict using approximated LRU, only keys with an expire set.</span>
+<span class="c1"># allkeys-lru -&gt; Evict any key using approximated LRU.</span>
+LFU Least Frequency Used 最少使用置换算法
+<span class="c1"># volatile-lfu -&gt; Evict using approximated LFU, only keys with an expire set.</span>
+<span class="c1"># allkeys-lfu -&gt; Evict any key using approximated LFU.</span>
+随机
+<span class="c1"># volatile-random -&gt; Remove a random key having an expire set.</span>
+<span class="c1"># allkeys-random -&gt; Remove a random key, any key.</span>
+比较时间成本，复杂度太高
+<span class="c1"># volatile-ttl -&gt; Remove the key with the nearest expire time (minor TTL)</span>
+
+<span class="c1"># noeviction -&gt; Don&#39;t evict anything, just return an error on write operations.</span>
+<span class="c1">############################# LAZY FREEING ####################################</span>
+lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+replica-lazy-flush no
+lazyfree-lazy-user-del no
+<span class="c1">################################ THREADED I/O #################################</span>
+<span class="c1">############################## APPEND ONLY MODE ###############################</span>
+appendonly no
+appendfilename <span class="s2">&#34;appendonly.aof&#34;</span>
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage <span class="m">100</span>
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+aof-use-rdb-preamble yes
+<span class="c1">################################ LUA SCRIPTING  ###############################</span>
+lua-time-limit <span class="m">5000</span>
+<span class="c1">################################ REDIS CLUSTER  ###############################</span>
+<span class="c1">########################## CLUSTER DOCKER/NAT support  ########################</span>
+<span class="c1">################################## SLOW LOG ###################################</span>
+slowlog-log-slower-than <span class="m">10000</span>
+slowlog-max-len <span class="m">128</span>
+<span class="c1">################################ LATENCY MONITOR ##############################</span>
+latency-monitor-threshold <span class="m">0</span>
+<span class="c1">############################# EVENT NOTIFICATION ##############################</span>
+notify-keyspace-events <span class="s2">&#34;&#34;</span>
+<span class="c1">############################### GOPHER SERVER #################################</span>
+<span class="c1">############################### ADVANCED CONFIG ###############################</span>
+hash-max-ziplist-entries <span class="m">512</span>
+hash-max-ziplist-value <span class="m">64</span>
+list-max-ziplist-size -2
+list-compress-depth <span class="m">0</span>
+set-max-intset-entries <span class="m">512</span>
+zset-max-ziplist-entries <span class="m">128</span>
+zset-max-ziplist-value <span class="m">64</span>
+hll-sparse-max-bytes <span class="m">3000</span>
+stream-node-max-bytes <span class="m">4096</span>
+stream-node-max-entries <span class="m">100</span>
+activerehashing yes
+client-output-buffer-limit normal <span class="m">0</span> <span class="m">0</span> <span class="m">0</span>
+client-output-buffer-limit replica 256mb 64mb <span class="m">60</span>
+client-output-buffer-limit pubsub 32mb 8mb <span class="m">60</span>
+hz <span class="m">10</span>
+dynamic-hz yes
+aof-rewrite-incremental-fsync yes
+rdb-save-incremental-fsync yes
+<span class="c1">########################### ACTIVE DEFRAGMENTATION #######################</span>
+jemalloc-bg-thread yes
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="1-页面置换算法解决淘汰冷数据问题">1. 页面置换算法解决淘汰冷数据问题</h3>
+<p>evict 驱逐 noeviction 不进行置换的</p>
+<ul>
+<li>
+<p>LRU（Recently）最近时间</p>
+</li>
+<li>
+<p>LFU（Frequency）次数</p>
+</li>
+<li>
+<p>如何选择看栈底，如果有大量配置了有效期，优先使用volatile，否则使用allkeys</p>
+</li>
+</ul>
+<h3 id="2-过期时间如何设置">2. 过期时间如何设置</h3>
+<h3 id="1倒计时set-key-value-ex-secondspx-milliseconds-nxxx-keepttl">1）倒计时：set key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">set</span> k1 <span class="m">111</span> ex <span class="m">10</span>
+OK
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;111&#34;</span>
+127.0.0.1:6379&gt; ttl k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span>
+127.0.0.1:6379&gt; ttl k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; ttl k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; ttl k1
+<span class="o">(</span>integer<span class="o">)</span> -2
+127.0.0.1:6379&gt; get k1
+<span class="o">(</span>nil<span class="o">)</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> k1 <span class="m">111</span>
+OK
+127.0.0.1:6379&gt; ttl k1
+<span class="o">(</span>integer<span class="o">)</span> -1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2定时expireat-key-timestamp">2）定时：EXPIREAT key timestamp</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">127.0.0.1:6379&gt; <span class="nb">set</span> k1 <span class="m">111</span>
+OK
+127.0.0.1:6379&gt; EXPIREAT k1 <span class="m">1619379999</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; get k1
+<span class="s2">&#34;111&#34;</span>
+127.0.0.1:6379&gt; ttl k1
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">17591</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>ttl</code>值的三个状态：-1 持久 -2 超时</p>
+<ul>
+<li>不会随着访问而延长有效期</li>
+<li>重新写会重置有效期</li>
+</ul>
+<p><strong>需要业务逻辑进行补全</strong></p>
+<h3 id="3-过期淘汰的方式">3. 过期淘汰的方式</h3>
+<p>Redis 的 key 有两种过期淘汰的方式：<strong>被动方式、主动方式</strong>。</p>
+<p>被动过期：用户访问某个 key 的时候，key 被发现过期。</p>
+<p>当然，被动方式过期对于那些永远也不会再次被访问的 key 并没有效果。不管怎么，这些 key 都应被过期淘汰，所以 Redis 周期性主动随机检查一部分被设置生存时间的 key，那些已经过期的 key 会被从 key 空间中删除。</p>
+<p>Redis每秒执行10次下面的操作：</p>
+<ol>
+<li>从带有生存时间的 key 的集合中随机选 20 进行检查。</li>
+<li>删除所有过期的key。</li>
+<li>如20里面有超过25%的key过期，立刻继续执行步骤1。</li>
+</ol>
+<p>这是一个狭义概率算法，我们假设我们选出来的样本 key 代表整个 key 空间，我们继续过期检查直到过期 key 的比例降到 25% 以下。</p>
+<p>这意味着在任意时刻已经过期但还占用内存的 key 的数量，最多等于每秒最多写操作的四分之一。</p>
+<p><strong>牺牲一部分内存，保证redis性能为王！！！</strong></p>
+<h3 id="heading"></h3>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" data-title="Redis缓存和数据库区别" data-hashtags="缓存"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" data-hashtag="缓存"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" data-title="Redis缓存和数据库区别"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" data-title="Redis缓存和数据库区别"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E9%80%89%E5%9E%8B/" data-title="Redis缓存和数据库区别" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E7%BC%93%E5%AD%98/">缓存</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/redis%E7%9A%84%E4%BD%BF%E7%94%A8value-hash%E7%B1%BB%E5%9E%8B/" class="prev" rel="prev" title="Redis-Value-Hash类型"><i class="fas fa-angle-left fa-fw"></i>Redis-Value-Hash类型</a>
+            <a href="/redis%E6%8C%81%E4%B9%85%E5%8C%96/" class="next" rel="next" title="Redis持久化-RDB-AOF">Redis持久化-RDB-AOF<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">SeaSoonKeun</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me your code!","id-2":"Talk is cheap, Show me your code!"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
