@@ -34,7 +34,7 @@
                             "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "Redis, Bloom, 布谷鸟, 过滤器","wordcount":  2416 ,
+                        }],"genre": "posts","keywords": "Redis, Bloom, 布谷鸟, 过滤器","wordcount":  2404 ,
         "url": "https:\/\/github.com\/redis-module-redisbloom\/","datePublished": "2021-04-25T17:30:02+08:00","dateModified": "2021-04-25T17:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -120,7 +120,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis-Module-Bloom-白名单机制</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-25">2021-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2416 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-25">2021-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2404 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/redis-module-redisbloom/" class="leancloud_visitors" data-flag-title="Redis-Module-Bloom-白名单机制">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -148,16 +148,13 @@
         <li><a href="#2-布隆过滤器的思路小空间解决大量数据匹配问题">2. 布隆过滤器的思路：小空间解决大量数据匹配问题</a></li>
       </ul>
     </li>
-    <li><a href="#4-补充知识点">4. 补充知识点</a></li>
-    <li><a href="#5-发展">5. 发展</a>
+    <li><a href="#4-发展">4. 发展</a>
       <ul>
         <li><a href="#counting-bloom">counting bloom：</a></li>
         <li><a href="#cuckoo-filter">Cuckoo filter:</a></li>
       </ul>
     </li>
-    <li><a href="#6-缓存雪崩">6. 缓存雪崩：</a></li>
-    <li><a href="#7-黑名单">7. 黑名单</a></li>
-    <li><a href="#8-使用场景">8. 使用场景</a>
+    <li><a href="#5-使用场景">5. 使用场景</a>
       <ul>
         <li><a href="#黑名单">黑名单：</a></li>
         <li><a href="#白名单">白名单：</a></li>
@@ -184,7 +181,7 @@
 <h3 id="原理">原理：</h3>
 <p>布隆过滤器原理是通过多个 hash 函数, 将结果对应的位设为1, 所以它能做到 100%的去重. 虽然会误判, 但是在合理的设计的前提下, 误判率是可以接受的.</p>
 <p>实现代码：</p>
-<p><img src="/Users/mr.x/Library/Application Support/typora-user-images/image-20210425192612228.png" alt="image-20210425192612228" style="zoom:50%;" /></p>
+<p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210426011423.png" style="zoom:50%;" /></p>
 <p><strong>牺牲数据的精度，换取空间效率</strong>。会出现不同的值算出来的值是一样的情况。</p>
 <h3 id="缺点">缺点：</h3>
 <ol>
@@ -254,16 +251,14 @@ root     <span class="m">29460</span>     <span class="m">1</span>  <span class=
 <ol start="2">
 <li><strong>概率解决问题</strong>，不可能百分百阻挡，未阻挡&lt;1%。函数的数量和bitmap数组的宽度需要调整。</li>
 </ol>
-<h2 id="4-补充知识点">4. 补充知识点</h2>
-<ol>
-<li>
-<p>查询穿透缓存了，但是查询数据库不存在值，client，增加redis中的key，value标记</p>
-</li>
-<li>
+<p>引申两点：</p>
+<blockquote>
 <p>数据库增加了新元素，需完成元素对bloom的添加 涉及到<strong>双写问题</strong></p>
-</li>
-</ol>
-<h2 id="5-发展">5. 发展</h2>
+</blockquote>
+<blockquote>
+<p>缓存雪崩解决方法：缓存不设置相同的超时时间，使用定时任务定期进行更新。</p>
+</blockquote>
+<h2 id="4-发展">4. 发展</h2>
 <ul>
 <li>
 <p>bloom -&gt; counting bloom -&gt; cuckoo <strong>布谷鸟过滤器</strong></p>
@@ -335,9 +330,8 @@ H2(key) = H1(key) ^ H1(key’s fingerprint) // 异或</p>
 </ol>
 </li>
 </ul>
-<h2 id="6-缓存雪崩">6. 缓存雪崩：</h2>
-<p>​	方法：缓存不设置相同的超时时间，使用定时任务定期进行更新。</p>
-<h2 id="7-黑名单">7. 黑名单</h2>
+<h2 id="5-使用场景">5. 使用场景</h2>
+<h3 id="黑名单">黑名单：</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -346,8 +340,6 @@ H2(key) = H1(key) ^ H1(key’s fingerprint) // 异或</p>
         data-sizes="auto"
         alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png"
         title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png" /></p>
-<h2 id="8-使用场景">8. 使用场景</h2>
-<h3 id="黑名单">黑名单：</h3>
 <ul>
 <li>视频网站推送视频</li>
 <li><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425173746.png" style="zoom:50%;" /></li>
@@ -357,6 +349,7 @@ H2(key) = H1(key) ^ H1(key’s fingerprint) // 异或</p>
 <li>允许转载</li>
 <li><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425174042.png" style="zoom:50%;" /></li>
 </ul>
+<p><strong>没有最好的技术，只有最适合的技术，需要根据技术的优缺点结合现有的使用场景进行选型。</strong></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

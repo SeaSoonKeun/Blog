@@ -29,7 +29,7 @@
 
 实现代码：
 
-<img src="/Users/mr.x/Library/Application Support/typora-user-images/image-20210425192612228.png" alt="image-20210425192612228" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210426011423.png" style="zoom:50%;" />
 
 
 
@@ -88,13 +88,13 @@ root     29460     1  0 00:10 ?        00:00:00 ./redis-server 127.0.0.1:6379
 
 2. **概率解决问题**，不可能百分百阻挡，未阻挡<1%。函数的数量和bitmap数组的宽度需要调整。
 
-## 4. 补充知识点
+引申两点：
 
-1. 查询穿透缓存了，但是查询数据库不存在值，client，增加redis中的key，value标记
+> 数据库增加了新元素，需完成元素对bloom的添加 涉及到**双写问题**
 
-2. 数据库增加了新元素，需完成元素对bloom的添加 涉及到**双写问题**
+> 缓存雪崩解决方法：缓存不设置相同的超时时间，使用定时任务定期进行更新。
 
-## 5. 发展
+## 4. 发展
 
 - bloom -> counting bloom -> cuckoo **布谷鸟过滤器**
 
@@ -153,21 +153,11 @@ root     29460     1  0 00:10 ?        00:00:00 ./redis-server 127.0.0.1:6379
 
 
 
-## 6. 缓存雪崩：
-
-​	方法：缓存不设置相同的超时时间，使用定时任务定期进行更新。
-
-## 7. 黑名单
-
-![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png)
-
-
-
-
-
-## 8. 使用场景
+## 5. 使用场景
 
 ### 黑名单：
+
+![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425171702.png)
 
 - 视频网站推送视频
 - <img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425173746.png" style="zoom:50%;" />
@@ -178,5 +168,7 @@ root     29460     1  0 00:10 ?        00:00:00 ./redis-server 127.0.0.1:6379
 - <img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210425174042.png" style="zoom:50%;" />
 
 
+
+**没有最好的技术，只有最适合的技术，需要根据技术的优缺点结合现有的使用场景进行选型。**
 
 

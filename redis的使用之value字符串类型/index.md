@@ -200,7 +200,7 @@ Set your preferences in ~/.redisclirc
 
 #### Set 
 
-> #### 设置值
+> 设置值
 
 ```bash
 # 查看set帮助
@@ -273,7 +273,7 @@ Set your preferences in ~/.redisclirc
 
 #### mset/mget 
 
-> #### 批量设置，读取
+> 批量设置，读取
 
 ```shell
 127.0.0.1:6379> mset k3 a k4 b
@@ -286,7 +286,7 @@ OK
 
 #### append 
 
-> #### 追加字符串的值
+> 追加字符串的值
 
 ```shell
 127.0.0.1:6379> get k1
@@ -299,7 +299,7 @@ OK
 
 #### getrange 
 
-> #### 获取范围内的字符串
+> 获取范围内的字符串
 
 ```shell
 127.0.0.1:6379> get k1
@@ -321,7 +321,7 @@ OK
 
 #### setrange 
 
-> #### 从指定位置开始set string值
+> 从指定位置开始set string值
 
 ```shell
 127.0.0.1:6379> setrange k1 6 SeaSoonKeun
@@ -332,7 +332,7 @@ OK
 
 #### strlen 
 
-> #### 返回字符串长度
+> 返回字符串长度
 
 ```shell
 127.0.0.1:6379> setrange k1 6 SeaSoonKeun
