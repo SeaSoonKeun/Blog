@@ -42,12 +42,12 @@
     <guid>https://github.com/emoji-support/</guid>
     <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
 </item><item>
-    <title>Redis-AFK原理</title>
+    <title>Redis-AKF/CAP原理</title>
     <link>https://github.com/redis-afk%E5%8E%9F%E7%90%86/</link>
     <pubDate>Tue, 27 Apr 2021 09:58:02 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://github.com/redis-afk%E5%8E%9F%E7%90%86/</guid>
-    <description><![CDATA[Redis-AFK原理 之前讨论的情况都是单机版单进程下的情况]]></description>
+    <description><![CDATA[Redis-AKF/CAP原则 1. AKF 扩展立方体理论 之前讨论的情况都是单机版单进程下的情况 AKF扩展立方体（Scalability Cube），是]]></description>
 </item><item>
     <title>Redis持久化-RDB/AOF</title>
     <link>https://github.com/redis%E6%8C%81%E4%B9%85%E5%8C%96/</link>
