@@ -4,7 +4,7 @@
         <link>https://github.com/posts/</link>
         <description>所有文章 | The Record &amp; Share by SeaSoonKeun</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xucg0912@gmail.com (SeaSoonKeun)</managingEditor>
-            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 27 Apr 2021 09:58:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>xucg0912@gmail.com (SeaSoonKeun)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 28 Apr 2021 09:58:02 &#43;0800</lastBuildDate><atom:link href="https://github.com/posts/" rel="self" type="application/rss+xml" /><item>
     <title>主题文档 - 基本概念</title>
     <link>https://github.com/theme-documentation-basics/</link>
     <pubDate>Fri, 06 Mar 2020 21:40:32 &#43;0800</pubDate>
@@ -40,6 +40,13 @@
     <guid>https://github.com/emoji-support/</guid>
     <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
 </item><item>
+    <title>Redis-主从复制实操</title>
+    <link>https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/</link>
+    <pubDate>Wed, 28 Apr 2021 09:58:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/</guid>
+    <description><![CDATA[Redis-主从复制实操（手动触发） 1. 正常环境： 环境配置： 6380请求6379 1 2 127.0.0.1:6380&gt; REPLICAOF 127.0.0.1 6379 OK 6380前台日志发送连接请求 1 2 3 4 5 6 7 8 9 10]]></description>
+</item><item>
     <title>Redis-AKF/CAP原理</title>
     <link>https://github.com/redis-afk%E5%8E%9F%E7%90%86/</link>
     <pubDate>Tue, 27 Apr 2021 09:58:02 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://github.com/redis-module-redisbloom/</guid>
     <description><![CDATA[Redis-Module-Bloom-白名单机制 位图的最常见场景之一: 大数据下去重过滤功能. 1. Why 你有啥？有的数据都拿到一个集合里，把用户搜索]]></description>
-</item><item>
-    <title>awk命令</title>
-    <link>https://github.com/awk/</link>
-    <pubDate>Sun, 25 Apr 2021 09:58:02 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://github.com/awk/</guid>
-    <description><![CDATA[AWK awk是处理文本文件的一个应用程序，几乎所有 Linux 系统都自带这个程序。 它依次处理文件的每一行，并读取里面的每一个字段。对于日志、CSV 那样的每]]></description>
 </item></channel>
 </rss>

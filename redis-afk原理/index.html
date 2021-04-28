@@ -20,7 +20,7 @@
 <meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
 <meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-afk%E5%8E%9F%E7%90%86/" /><link rel="prev" href="https://github.com/redis%E6%8C%81%E4%B9%85%E5%8C%96/" /><link rel="next" href="https://github.com/emoji-support/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-afk%E5%8E%9F%E7%90%86/" /><link rel="prev" href="https://github.com/redis%E6%8C%81%E4%B9%85%E5%8C%96/" /><link rel="next" href="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -256,8 +256,10 @@
 </li>
 <li>
 <p><code>repl-diskless-sync</code> no</p>
-<p>主Redis发送<code>RDB</code>有两种方式，第一种方式是通过落到磁盘，从Redis再去<code>load</code>，第二种方式是直接通过网络发送<code>RDB</code>传给从Redis。这就取决于磁盘<code>IO</code>和网络<code>IO</code>哪个更快一些。配置no的话默认是走磁盘方式。
-<img
+<p>主Redis发送<code>RDB</code>有两种方式，第一种方式是通过落到磁盘，从Redis再去<code>load</code>，第二种方式是直接通过网络发送<code>RDB</code>传给从Redis。这就取决于磁盘<code>IO</code>和网络<code>IO</code>哪个更快一些。配置no的话默认是走磁盘方式。</p>
+</li>
+</ul>
+<p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B61.png"
@@ -265,11 +267,13 @@
         data-sizes="auto"
         alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B61.png"
         title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B61.png" /></p>
-</li>
+<ul>
 <li>
 <p><code>repl-backlog-size</code> 1mb</p>
-<p>主从复制，增量复制。在Redis中，除了写入<code>RDB</code>文件外，还维护一个小的队列。当从Redis <code>load</code>完<code>RDB</code>之后，突然挂掉了，然后服务又好了，这时候又需要去同步数据，但是此时的<code>RDB</code>文件已经过时，可以把<code>RDB</code>文件重新覆盖一遍，但是如果此时文件很大的话，又需要浪费时间。此时可以把一个偏移量给到主Redis，然后根据偏移量去获取增量数据，但是这时候取决于队列大小，默认为1MB，如果写的速度非常慢，在这期间没有超过设置的大小，那么是可以的，但是如果写的数据非常多，超过了设置的大小，那么又会走全量复制，所以要根据实际写入的数据设置合适的队列大小。
-<img
+<p>主从复制，增量复制。在Redis中，除了写入<code>RDB</code>文件外，还维护一个小的队列。当从Redis <code>load</code>完<code>RDB</code>之后，突然挂掉了，然后服务又好了，这时候又需要去同步数据，但是此时的<code>RDB</code>文件已经过时，可以把<code>RDB</code>文件重新覆盖一遍，但是如果此时文件很大的话，又需要浪费时间。此时可以把一个偏移量给到主Redis，然后根据偏移量去获取增量数据，但是这时候取决于队列大小，默认为1MB，如果写的速度非常慢，在这期间没有超过设置的大小，那么是可以的，但是如果写的数据非常多，超过了设置的大小，那么又会走全量复制，所以要根据实际写入的数据设置合适的队列大小。</p>
+</li>
+</ul>
+<p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B62.png"
@@ -277,7 +281,7 @@
         data-sizes="auto"
         alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B62.png"
         title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B62.png" /></p>
-</li>
+<ul>
 <li>
 <p><code>min-replicas-to-write</code> 3 <code>min-replicas-max-lag</code> 10</p>
 <p>可以设置最少写几个写成功，当关心数据一致性的时候，可以设置。默认是注释掉的，如果设置的话其实是在向强一致性靠拢，所以需根据实际应用场景配置。</p>
@@ -309,7 +313,7 @@
     </div>
 
     <div class="post-nav"><a href="/redis%E6%8C%81%E4%B9%85%E5%8C%96/" class="prev" rel="prev" title="Redis持久化-RDB/AOF"><i class="fas fa-angle-left fa-fw"></i>Redis持久化-RDB/AOF</a>
-            <a href="/emoji-support/" class="next" rel="next" title="Emoji 支持">Emoji 支持<i class="fas fa-angle-right fa-fw"></i></a></div>
+            <a href="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/" class="next" rel="next" title="Redis-主从复制实操">Redis-主从复制实操<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
