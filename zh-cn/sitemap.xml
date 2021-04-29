@@ -47,7 +47,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/emoji-support/"
                     /></url><url>
-            <loc>https://github.com/categories/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/categories/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/categories/"
@@ -56,7 +56,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/categories/"
                     /></url><url>
-            <loc>https://github.com/posts/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/posts/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/posts/"
@@ -65,10 +65,11 @@
                     hreflang="zh-cn"
                     href="https://github.com/posts/"
                     /></url><url>
-            <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/categories/redis/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://github.com/tags/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/tags/redis/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/categories/redis/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/sentinel/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/tags/"
@@ -77,7 +78,7 @@
                     hreflang="zh-cn"
                     href="https://github.com/tags/"
                     /></url><url>
-            <loc>https://github.com/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://github.com/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://github.com/en/"
@@ -86,7 +87,9 @@
                     hreflang="zh-cn"
                     href="https://github.com/"
                     /></url><url>
-            <loc>https://github.com/tags/%E5%AE%9E%E6%93%8D/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/%E5%93%A8%E5%85%B5/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/tags/%E5%AE%9E%E6%93%8D/</loc><lastmod>2021-04-29T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/</loc><lastmod>2021-04-28T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/akf/</loc><lastmod>2021-04-27T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/tags/cap/</loc><lastmod>2021-04-27T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://github.com/redis-afk%E5%8E%9F%E7%90%86/</loc><lastmod>2021-04-27T09:58:02&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -214,7 +217,6 @@
             <loc>https://github.com/redis-pipe/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/redis-pubsub/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/redis-transactions/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/%E6%89%8B%E6%9C%BA%E8%8F%9C%E5%8D%95%E5%BA%94%E7%94%A8%E5%88%86%E7%B1%BB/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/about/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://github.com/categories/documentation/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
