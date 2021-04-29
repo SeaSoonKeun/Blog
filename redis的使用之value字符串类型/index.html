@@ -34,7 +34,7 @@
                             "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "Redis","wordcount":  3578 ,
+                        }],"genre": "posts","keywords": "Redis","wordcount":  3711 ,
         "url": "https:\/\/github.com\/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B\/","datePublished": "2021-04-23T01:30:02+08:00","dateModified": "2021-04-23T01:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -120,7 +120,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis的使用&amp;redis-Value-string类型</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3578 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-23">2021-04-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3711 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/redis%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B9%8Bvalue%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B/" class="leancloud_visitors" data-flag-title="Redis的使用&amp;redis-Value-string类型">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -136,13 +136,17 @@
     <li><a href="#help-命令组">help @命令组</a></li>
     <li><a href="#value--5种基本类型之字符串">Value- 5种基本类型之字符串</a>
       <ul>
-        <li><a href="#1-字符串">1. 字符串</a>
+        <li><a href="#1-通用命令">1. 通用命令</a>
           <ul>
             <li><a href="#set">Set</a></li>
             <li><a href="#del">del</a></li>
             <li><a href="#flushdb">flushdb</a></li>
             <li><a href="#flushall">flushall</a></li>
             <li><a href="#msetmget">mset/mget</a></li>
+          </ul>
+        </li>
+        <li><a href="#1字符型">1).字符型</a>
+          <ul>
             <li><a href="#append">append</a></li>
             <li><a href="#getrange">getrange</a></li>
             <li><a href="#setrange">setrange</a></li>
@@ -154,7 +158,12 @@
             <li><a href="#getset">getset</a></li>
             <li><a href="#引申原子性操作">引申：原子性操作。</a></li>
             <li><a href="#引申内存">引申：内存</a></li>
-            <li><a href="#bitmap-">bitmap ：</a>
+          </ul>
+        </li>
+        <li><a href="#2数值型">2).数值型：</a></li>
+        <li><a href="#3-bitmap-">3). bitmap ：</a>
+          <ul>
+            <li>
               <ul>
                 <li><a href="#bitmap-的-offset-值上限">BitMap 的 offset 值上限</a></li>
                 <li><a href="#bitmap-占用的空间">BitMap 占用的空间，</a></li>
@@ -536,7 +545,7 @@ OK
 </div></li>
 </ul>
 <h2 id="value--5种基本类型之字符串">Value- 5种基本类型之字符串</h2>
-<h3 id="1-字符串">1. 字符串</h3>
+<h3 id="1-通用命令">1. 通用命令</h3>
 <blockquote>
 <p>help @<code>string</code>命令组</p>
 </blockquote>
@@ -696,7 +705,8 @@ OK
 127.0.0.1:6379&gt;
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="append">append</h4>
+</div><h3 id="1字符型">1).字符型</h3>
+<h4 id="append">append</h4>
 <blockquote>
 <p>追加字符串的值</p>
 </blockquote>
@@ -1176,9 +1186,55 @@ OK
 </blockquote>
 <h4 id="引申内存">引申：内存</h4>
 <blockquote>
-<p>线性地址空间，</p>
+<p>线性地址空间</p>
 </blockquote>
-<h4 id="bitmap-">bitmap ：</h4>
+<h3 id="2数值型">2).数值型：</h3>
+<p>集成了对数据类型常见的增减操作，如下所示。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">	INCR key
+  summary: Increment the integer value of a key by one
+  since: 1.0.0
+
+  INCRBY key increment
+  summary: Increment the integer value of a key by the given amount
+  since: 1.0.0
+
+  INCRBYFLOAT key increment
+  summary: Increment the float value of a key by the given amount
+  since: 2.6.0
+  
+  DECR key
+  summary: Decrement the integer value of a key by one
+  since: 1.0.0
+
+  DECRBY key decrement
+  summary: Decrement the integer value of a key by the given number
+  since: 1.0.0
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="3-bitmap-">3). bitmap ：</h3>
 <blockquote>
 <p>位图。BitMap 原本的含义是用<strong>一个比特位来映射某个元素的状态</strong>。由于一个比特位只能表示 0 和 1 两种状态，所以 BitMap 能映射的状态有限，但是使用比特位的优势是能<strong>大量的节省内存空间</strong>。</p>
 <p>Redis 其实只支持 5 种数据类型，并没有 BitMap 这种类型，<strong>BitMap 底层是基于 Redis 的字符串类型实现的</strong>。</p>

@@ -2,7 +2,7 @@
 
 # linux系统管道
 
-![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork()%E5%85%B3%E7%B3%BB.jpg)
+![](/Users/mr.x/Desktop/linux 系统管道引申父子进程的fork()关系.jpg)
 
 ## 1. 管道符
 

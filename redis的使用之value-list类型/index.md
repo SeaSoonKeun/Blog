@@ -4,7 +4,7 @@
 
 ## 1. 框架图：
 
-## ![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg)2. help @LIST
+![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/Redis_List.jpg)2. help @LIST
 
 ```bash
 127.0.0.1:6379> help @list

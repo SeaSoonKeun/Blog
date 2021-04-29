@@ -194,7 +194,7 @@ Set your preferences in ~/.redisclirc
 
 ## Value- 5种基本类型之字符串
 
-### 1. 字符串
+### 1. 通用命令
 
  > help @`string`命令组
 
@@ -283,6 +283,8 @@ OK
 2) "b"
 127.0.0.1:6379>
 ```
+
+### 1).字符型
 
 #### append 
 
@@ -549,9 +551,37 @@ OK
 
 #### 引申：内存
 
-> 线性地址空间，
+> 线性地址空间
 
-#### bitmap ：
+### 2).数值型：
+
+集成了对数据类型常见的增减操作，如下所示。
+
+```bash
+	INCR key
+  summary: Increment the integer value of a key by one
+  since: 1.0.0
+
+  INCRBY key increment
+  summary: Increment the integer value of a key by the given amount
+  since: 1.0.0
+
+  INCRBYFLOAT key increment
+  summary: Increment the float value of a key by the given amount
+  since: 2.6.0
+  
+  DECR key
+  summary: Decrement the integer value of a key by one
+  since: 1.0.0
+
+  DECRBY key decrement
+  summary: Decrement the integer value of a key by the given number
+  since: 1.0.0
+```
+
+
+
+### 3). bitmap ：
 
 > 位图。BitMap 原本的含义是用**一个比特位来映射某个元素的状态**。由于一个比特位只能表示 0 和 1 两种状态，所以 BitMap 能映射的状态有限，但是使用比特位的优势是能**大量的节省内存空间**。
 >

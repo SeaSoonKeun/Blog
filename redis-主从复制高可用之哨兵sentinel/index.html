@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title> - The Record &amp; Share by SeaSoonKeun</title><meta name="Description" content="个人学习心得"><meta property="og:title" content="" />
+<meta property="og:description" content="Redis-主从复制高可用之哨兵（Sentinel） 1. 基本知识 1). 哨兵的功能 监控（Monitoring）： Sentinel 会不断地检查你的主服务器和从服务器" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" /><meta property="og:image" content="https://github.com/logo.png"/><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://github.com/logo.png"/>
+
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Redis-主从复制高可用之哨兵（Sentinel） 1. 基本知识 1). 哨兵的功能 监控（Monitoring）： Sentinel 会不断地检查你的主服务器和从服务器"/>
+<meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
+<meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" /><link rel="prev" href="https://github.com/%E6%89%8B%E6%9C%BA%E8%8F%9C%E5%8D%95%E5%BA%94%E7%94%A8%E5%88%86%E7%B1%BB/" /><link rel="next" href="https://github.com/redis-transactions/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/github.com\/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","wordcount":  3353 ,
+        "url": "https:\/\/github.com\/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel\/","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/github.com\/images\/avatar.png",
+                    "width":  790 ,
+                    "height":  792 
+                }},"author": {
+                "@type": "Person",
+                "name": "SeaSoonKeun"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-1" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">✏️ 所有文章 </a><a class="menu-item" href="/tags/">📌 标签 </a><a class="menu-item" href="/categories/">📚 文档分类 </a><a class="menu-item" href="/categories/route/">🚦 路线 </a><a class="menu-item" href="/about/">🤙 关于我 </a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="The Record &amp; Share by SeaSoonKeun"><span class="header-title-pre"><i class='fas fa-terminal'></i></span><span id="id-2" class="typeit"></span><span class="header-title-post"><i class='fas fa-code'></i></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">✏️所有文章</a><a class="menu-item" href="/tags/" title="">📌标签</a><a class="menu-item" href="/categories/" title="">📚文档分类</a><a class="menu-item" href="/categories/route/" title="">🚦路线</a><a class="menu-item" href="/about/" title="">🤙关于我</a><a class="menu-item" href="/SeaSoonKeun" title="GitHub"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3353 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" class="leancloud_visitors" data-flag-title="">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-基本知识">1. 基本知识</a>
+      <ul>
+        <li><a href="#1-哨兵的功能">1). 哨兵的功能</a></li>
+        <li><a href="#2-启动哨兵的两种方式">2). 启动哨兵的两种方式</a></li>
+        <li><a href="#3-哨兵的配置文件解释">3). 哨兵的配置文件解释</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-实操">2. 实操</a>
+      <ul>
+        <li><a href="#主观下线和客观下线状态">主观下线和客观下线状态</a></li>
+        <li><a href="#故障转移过程">故障转移过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-通过spublished观察sentinal订阅发布信息">3. 通过spublished观察sentinal订阅发布信息</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis-主从复制高可用之哨兵sentinel">Redis-主从复制高可用之哨兵（Sentinel）</h1>
+<h2 id="1-基本知识">1. 基本知识</h2>
+<h3 id="1-哨兵的功能">1). 哨兵的功能</h3>
+<ul>
+<li><strong>监控（Monitoring</strong>）： Sentinel 会不断地检查你的主服务器和从服务器是否运作正常。</li>
+<li><strong>提醒（Notification）</strong>： 当被监控的某个 Redis 服务器出现问题时， Sentinel 可以通过 API 向管理员或者其他应用程序发送通知。</li>
+<li><strong>自动故障迁移（Automatic failover）</strong>： 当一个主服务器不能正常工作时， Sentinel 会开始一次自动故障迁移操作， 它会将失效主服务器的其中一个从服务器升级为新的主服务器， 并让失效主服务器的其他从服务器改为复制新的主服务器； 当客户端试图连接失效的主服务器时， 集群也会向客户端返回新主服务器的地址， 使得集群可以使用新主服务器代替失效服务器。</li>
+</ul>
+<h3 id="2-启动哨兵的两种方式">2). 启动哨兵的两种方式</h3>
+<p>​	对于 redis-sentinel 程序， 你可以用以下命令来启动 Sentinel 系统：</p>
+<p>​	对于 redis-server 程序， 你可以用以下命令来启动一个运行在 Sentinel 模式下的 Redis 服务器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">redis-server /path/to/sentinel.conf --sentinel
+</code></pre></td></tr></table>
+</div>
+</div><p>运行配置文件，sentinel自带配置文件</p>
+<h3 id="3-哨兵的配置文件解释">3). 哨兵的配置文件解释</h3>
+<p>路径：<code>/opt/soft/redis/redis-6.0.6/sentinel.conf</code> 	# 前面为安装路径</p>
+<p>默认配置如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">port <span class="m">26379</span>
+daemonize no
+pidfile /var/run/redis-sentinel.pid
+logfile <span class="s2">&#34;&#34;</span>
+dir /tmp
+sentinel monitor mymaster 127.0.0.1 <span class="m">6379</span> <span class="m">2</span>
+sentinel down-after-milliseconds mymaster <span class="m">30000</span>
+sentinel parallel-syncs mymaster <span class="m">1</span>
+sentinel failover-timeout mymaster <span class="m">180000</span>
+sentinel deny-scripts-reconfig yes
+</code></pre></td></tr></table>
+</div>
+</div><p>第一行配置指示 Sentinel 去监视一个名为 mymaster 的主服务器， 这个主服务器的 IP 地址为 127.0.0.1 ， 端口号为 6379 ， 而将这个主服务器判断为失效至少需要 2 个 Sentinel 同意 （只要同意 Sentinel 的数量不达标，自动故障迁移就不会执行）。</p>
+<ul>
+<li>down-after-milliseconds 选项指定了 Sentinel 认为服务器已经断线所需的毫秒数。</li>
+</ul>
+<p>如果服务器在给定的毫秒数之内， 没有返回 Sentinel 发送的 PING 命令的回复， 或者返回一个错误， 那么 Sentinel 将这个服务器标记为<strong>主观下线</strong>（subjectively down，简称 SDOWN ）。</p>
+<p>不过只有一个 Sentinel 将服务器标记为主观下线并不一定会引起服务器的自动故障迁移： 只有在足够数量的 Sentinel 都将一个服务器标记为主观下线之后， 服务器才会被标记为<strong>客观下线</strong>（objectively down， 简称 ODOWN ）， 这时自动故障迁移才会执行。</p>
+<ul>
+<li>parallel-syncs 选项指定了在执行故障转移时， 最多可以有多少个从服务器同时对新的主服务器进行同步， 这个数字越小， 完成故障转移所需的时间就越长。</li>
+</ul>
+<p>如果从服务器被设置为允许使用过期数据集（参见对 redis.conf 文件中对 slave-serve-stale-data 选项的说明）， 那么你可能不希望所有从服务器都在同一时间向新的主服务器发送同步请求， 因为尽管复制过程的绝大部分步骤都不会阻塞从服务器， 但从服务器在载入主服务器发来的 RDB 文件时， 仍然会造成从服务器在一段时间内不能处理命令请求： 如果全部从服务器一起对新的主服务器进行同步， 那么就可能会造成所有从服务器在短时间内全部不可用的情况出现。</p>
+<p>你可以通过将这个值设为 1 来保证每次只有一个从服务器处于不能处理命令请求的状态。</p>
+<h2 id="2-实操">2. 实操</h2>
+<p>​	模拟主节点下线，sentinel选举过程</p>
+<p>搭建redis主从集群</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># redis-cli</span>
+127.0.0.1:6379&gt; role
+1<span class="o">)</span> <span class="s2">&#34;master&#34;</span>
+2<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">21919</span>
+3<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;6380&#34;</span>
+      3<span class="o">)</span> <span class="s2">&#34;21905&#34;</span>
+   2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+      2<span class="o">)</span> <span class="s2">&#34;6381&#34;</span>
+      3<span class="o">)</span> <span class="s2">&#34;21919&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6379主节点哨兵</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:35:03.333 <span class="c1"># WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span>
+29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:35:03.335 <span class="c1"># Sentinel ID is 750b231a6bc075f3c26e9778ad571a2c871014a5</span>
+29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:35:03.335 <span class="c1"># +monitor master mymaster 127.0.0.1 6379 quorum 2</span>
+29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:35:03.337 * +slave slave 127.0.0.1:6380 127.0.0.1 <span class="m">6380</span> @ mymaster 127.0.0.1 <span class="m">6379</span>
+29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:35:03.338 * +slave slave 127.0.0.1:6381 127.0.0.1 <span class="m">6381</span> @ mymaster 127.0.0.1 <span class="m">6379</span>
+29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:14.644 * +sentinel sentinel b56fe20283d8772e11d6abbccc23b74ee36336c9 127.0.0.1 <span class="m">26380</span> @ mymaster 127.0.0.1 <span class="m">6379</span>
+29686:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:46.501 * +sentinel sentinel 80c8279952d73d0aae6254a024c05facdbdf7efb 127.0.0.1 <span class="m">26381</span> @ mymaster 127.0.0.1 <span class="m">6379</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6380从节点哨兵</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">
+29783:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:12.596 <span class="c1"># WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span>
+29783:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:12.598 <span class="c1"># Sentinel ID is b56fe20283d8772e11d6abbccc23b74ee36336c9</span>
+29783:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:12.598 <span class="c1"># +monitor master mymaster 127.0.0.1 6380 quorum 2</span>
+29783:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:12.623 * +sentinel sentinel 750b231a6bc075f3c26e9778ad571a2c871014a5 127.0.0.1 <span class="m">26379</span> @ mymaster 127.0.0.1 <span class="m">6380</span>
+29783:X <span class="m">29</span> Apr <span class="m">2021</span> 11:37:02.646 <span class="c1"># +sdown master mymaster 127.0.0.1 6380</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>6381从节点哨兵</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">29857:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:44.502 <span class="c1"># WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span>
+29857:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:44.504 <span class="c1"># Sentinel ID is 80c8279952d73d0aae6254a024c05facdbdf7efb</span>
+29857:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:44.504 <span class="c1"># +monitor master mymaster 127.0.0.1 6381 quorum 2</span>
+29857:X <span class="m">29</span> Apr <span class="m">2021</span> 11:36:45.264 * +sentinel sentinel 750b231a6bc075f3c26e9778ad571a2c871014a5 127.0.0.1 <span class="m">26379</span> @ mymaster 127.0.0.1 <span class="m">6381</span>
+
+
+29857:X <span class="m">29</span> Apr <span class="m">2021</span> 11:37:34.562 <span class="c1"># +sdown master mymaster 127.0.0.1 6381</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="主观下线和客观下线状态">主观下线和客观下线状态</h3>
+<ul>
+<li>主观下线（Subjectively Down， 简称 SDOWN）指的是单个 Sentinel 实例对服务器做出的下线判断。</li>
+<li>客观下线（Objectively Down， 简称 ODOWN）指的是多个 Sentinel 实例在对同一个服务器做出 SDOWN 判断， 并且通过 SENTINEL is-master-down-by-addr 命令互相交流之后， 得出的服务器下线判断。 （一个 Sentinel 可以通过向另一个 Sentinel 发送 SENTINEL is-master-down-by-addr 命令来询问对方是否认为给定的服务器已下线。）</li>
+</ul>
+<p>如果一个服务器没有在 master-down-after-milliseconds 选项所指定的时间内， 对向它发送 PING 命令的 Sentinel 返回一个有效回复（valid reply）， 那么 Sentinel 就会将这个服务器标记为主观下线。</p>
+<p>服务器对 PING 命令的有效回复可以是以下三种回复的其中一种：</p>
+<ul>
+<li>返回 +PONG 。</li>
+<li>返回 -LOADING 错误。</li>
+<li>返回 -MASTERDOWN 错误。</li>
+</ul>
+<p>如果服务器返回除以上三种回复之外的其他回复， 又或者在指定时间内没有回复 PING 命令， 那么 Sentinel 认为服务器返回的回复无效（non-valid）。</p>
+<h3 id="故障转移过程">故障转移过程</h3>
+<p>一次故障转移操作由以下步骤组成：</p>
+<ul>
+<li>发现主服务器已经进入客观下线状态。</li>
+<li>对我们的当前纪元进行自增（详情请参考 Raft leader election ）， 并尝试在这个纪元中当选。</li>
+<li>如果当选失败， 那么在设定的故障迁移超时时间的两倍之后， 重新尝试当选。 如果当选成功， 那么执行以下步骤。</li>
+<li>选出一个从服务器，并将它升级为主服务器。</li>
+<li>向被选中的从服务器发送 <code>SLAVEOF NO ONE</code> 命令，让它转变为主服务器。</li>
+<li>通过发布与订阅功能， 将更新后的配置传播给所有其他 Sentinel ， 其他 Sentinel 对它们自己的配置进行更新。</li>
+<li>向已下线主服务器的从服务器发送 <a href="http://redis.cn/commands/slaveof.html" target="_blank" rel="noopener noreffer">SLAVEOF</a> 命令， 让它们去复制新的主服务器。</li>
+<li>当所有从服务器都已经开始复制新的主服务器时， 领头 Sentinel 终止这次故障迁移操作。</li>
+</ul>
+<p>Sentinel 使用以下规则来选择<strong>新的主服务器</strong>：</p>
+<ul>
+<li>在失效主服务器属下的从服务器当中， 那些被标记为主观下线、已断线、或者最后一次回复 <a href="http://redis.cn/commands/ping.html" target="_blank" rel="noopener noreffer">PING</a> 命令的时间大于五秒钟的从服务器都会被淘汰。</li>
+<li>在失效主服务器属下的从服务器当中， 那些与失效主服务器连接断开的时长超过 down-after 选项指定的时长十倍的从服务器都会被淘汰。</li>
+<li>在经历了以上两轮淘汰之后剩下来的从服务器中， 我们选出复制偏移量（replication offset）最大的那个从服务器作为新的主服务器； 如果复制偏移量不可用， 或者从服务器的复制偏移量相同， 那么带有最小运行 ID 的那个从服务器成为新的主服务器。</li>
+</ul>
+<h2 id="3-通过spublished观察sentinal订阅发布信息">3. 通过spublished观察sentinal订阅发布信息</h2>
+<p>客户端可以将 Sentinel 看作是一个只提供了订阅功能的 Redis 服务器： 你不可以使用 <a href="http://redis.cn/commands/publish.html" target="_blank" rel="noopener noreffer">PUBLISH</a> 命令向这个服务器发送信息， 但你可以用 <a href="http://redis.cn/commands/subscribe.html" target="_blank" rel="noopener noreffer">SUBSCRIBE</a> 命令或者 <a href="http://redis.cn/commands/psubscribe.html" target="_blank" rel="noopener noreffer">PSUBSCRIBE</a> 命令， 通过订阅给定的频道来获取相应的事件提醒。</p>
+<p>一个频道能够接收和这个频道的名字相同的事件。 比如说， 名为 +sdown 的频道就可以接收所有实例进入主观下线（SDOWN）状态的事件。</p>
+<p>通过执行 PSUBSCRIBE * 命令可以接收所有事件信息。</p>
+<blockquote>
+<p>@ 字符之后的内容用于指定主服务器， 这些内容是可选的， 它们仅在 @ 字符之前的内容指定的实例不是主服务器时使用。</p>
+<ul>
+<li>+reset-master ：主服务器已被重置。</li>
+<li>+slave ：一个新的从服务器已经被 Sentinel 识别并关联。</li>
+<li>+failover-state-reconf-slaves ：故障转移状态切换到了 reconf-slaves 状态。</li>
+<li>+failover-detected ：另一个 Sentinel 开始了一次故障转移操作，或者一个从服务器转换成了主服务器。</li>
+<li>+slave-reconf-sent ：领头（leader）的 Sentinel 向实例发送了 <a href="/commands/slaveof.html" rel="">SLAVEOF</a> 命令，为实例设置新的主服务器。</li>
+<li>+slave-reconf-inprog ：实例正在将自己设置为指定主服务器的从服务器，但相应的同步过程仍未完成。</li>
+<li>+slave-reconf-done ：从服务器已经成功完成对新主服务器的同步。</li>
+<li>-dup-sentinel ：对给定主服务器进行监视的一个或多个 Sentinel 已经因为重复出现而被移除 —— 当 Sentinel 实例重启的时候，就会出现这种情况。</li>
+<li>+sentinel ：一个监视给定主服务器的新 Sentinel 已经被识别并添加。</li>
+<li>+sdown ：给定的实例现在处于主观下线状态。</li>
+<li>-sdown ：给定的实例已经不再处于主观下线状态。</li>
+<li>+odown ：给定的实例现在处于客观下线状态。</li>
+<li>-odown ：给定的实例已经不再处于客观下线状态。</li>
+<li>+new-epoch ：当前的纪元（epoch）已经被更新。</li>
+<li>+try-failover ：一个新的故障迁移操作正在执行中，等待被大多数 Sentinel 选中（waiting to be elected by the majority）。</li>
+<li>+elected-leader ：赢得指定纪元的选举，可以进行故障迁移操作了。</li>
+<li>+failover-state-select-slave ：故障转移操作现在处于 select-slave 状态 —— Sentinel 正在寻找可以升级为主服务器的从服务器。</li>
+<li>no-good-slave ：Sentinel 操作未能找到适合进行升级的从服务器。Sentinel 会在一段时间之后再次尝试寻找合适的从服务器来进行升级，又或者直接放弃执行故障转移操作。</li>
+<li>selected-slave ：Sentinel 顺利找到适合进行升级的从服务器。</li>
+<li>failover-state-send-slaveof-noone ：Sentinel 正在将指定的从服务器升级为主服务器，等待升级功能完成。</li>
+<li>failover-end-for-timeout ：故障转移因为超时而中止，不过最终所有从服务器都会开始复制新的主服务器（slaves will eventually be configured to replicate with the new master anyway）。</li>
+<li>failover-end ：故障转移操作顺利完成。所有从服务器都开始复制新的主服务器了。</li>
+<li>+switch-master ：配置变更，主服务器的 IP 和地址已经改变。 这是绝大多数外部用户都关心的信息。</li>
+<li>+tilt ：进入 tilt 模式。</li>
+<li>-tilt ：退出 tilt 模式。</li>
+</ul>
+</blockquote>
+<p>​</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 0001-01-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" data-title=""><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" data-title=""><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" data-title="" data-ralateuid="2319326164"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/%E6%89%8B%E6%9C%BA%E8%8F%9C%E5%8D%95%E5%BA%94%E7%94%A8%E5%88%86%E7%B1%BB/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw"></i></a>
+            <a href="/redis-transactions/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">SeaSoonKeun</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"bTrPhKoXvFsaJ5T4TFRSFqPl-9Nh9j0Va","appKey":"CEaJqdeqSh8yAUcaPPYiFzA8","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://btrphkox.lc-cn-e1-shared.com","visitor":true}},"data":{"id-1":"Talk is cheap, Show me The code!","id-2":"Talk is cheap, Show me The code!"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

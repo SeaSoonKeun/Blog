@@ -132,14 +132,13 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#什么是缓存">什么是缓存：</a></li>
-    <li><a href="#问题怎么随着业务变化只保留热数据因为内存大小是有限的瓶颈">问题：怎么随着业务变化，只保留热数据，因为内存大小是有限的（瓶颈）？</a>
+    <li><a href="#问题">问题：</a>
       <ul>
         <li><a href="#1-页面置换算法解决淘汰冷数据问题">1. 页面置换算法解决淘汰冷数据问题</a></li>
         <li><a href="#2-过期时间如何设置">2. 过期时间如何设置</a></li>
         <li><a href="#1倒计时set-key-value-ex-secondspx-milliseconds-nxxx-keepttl">1）倒计时：set key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]</a></li>
         <li><a href="#2定时expireat-key-timestamp">2）定时：EXPIREAT key timestamp</a></li>
         <li><a href="#3-过期淘汰的方式">3. 过期淘汰的方式</a></li>
-        <li><a href="#heading"></a></li>
       </ul>
     </li>
   </ul>
@@ -170,7 +169,10 @@
 <p>缓存：数据可以丢 急速！</p>
 <p>数据库：数据绝对不能丢的 速度+持久性 掉电易失！</p>
 </blockquote>
-<h2 id="问题怎么随着业务变化只保留热数据因为内存大小是有限的瓶颈">问题：怎么随着业务变化，只保留热数据，因为内存大小是有限的（瓶颈）？</h2>
+<h2 id="问题">问题：</h2>
+<blockquote>
+<p>怎么随着业务变化，只保留热数据，因为内存大小是有限的（瓶颈）？</p>
+</blockquote>
 <ul>
 <li>
 <p>业务逻辑 —&gt; 有限期 expire</p>
@@ -538,7 +540,6 @@ OK
 <p>这是一个狭义概率算法，我们假设我们选出来的样本 key 代表整个 key 空间，我们继续过期检查直到过期 key 的比例降到 25% 以下。</p>
 <p>这意味着在任意时刻已经过期但还占用内存的 key 的数量，最多等于每秒最多写操作的四分之一。</p>
 <p><strong>牺牲一部分内存，保证redis性能为王！！！</strong></p>
-<h3 id="heading"></h3>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

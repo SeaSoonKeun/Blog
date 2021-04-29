@@ -34,7 +34,7 @@
                             "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "Redis, linux, 管道, fork","wordcount":  249 ,
+                        }],"genre": "posts","keywords": "Redis, linux, 管道, fork","wordcount":  274 ,
         "url": "https:\/\/github.com\/redis-linux%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93-fork-copyonwrite\/","datePublished": "2021-04-25T17:30:02+08:00","dateModified": "2021-04-25T17:30:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -120,7 +120,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis-fork-cow-引申linux系统管道</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-25">2021-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 249 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-25">2021-04-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 274 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/redis-linux%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93-fork-copyonwrite/" class="leancloud_visitors" data-flag-title="Redis-fork-cow-引申linux系统管道">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -138,14 +138,7 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h1 id="linux系统管道">linux系统管道</h1>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork%28%29%E5%85%B3%E7%B3%BB.jpg"
-        data-srcset="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork%28%29%E5%85%B3%E7%B3%BB.jpg, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork%28%29%E5%85%B3%E7%B3%BB.jpg 1.5x, https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork%28%29%E5%85%B3%E7%B3%BB.jpg 2x"
-        data-sizes="auto"
-        alt="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork()%E5%85%B3%E7%B3%BB.jpg"
-        title="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/linux%20%E7%B3%BB%E7%BB%9F%E7%AE%A1%E9%81%93%E5%BC%95%E7%94%B3%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84fork()%E5%85%B3%E7%B3%BB.jpg" /></p>
+<p>![](/Users/mr.x/Desktop/linux 系统管道引申父子进程的fork()关系.jpg)</p>
 <h2 id="1-管道符">1. 管道符</h2>
 <p>1，衔接，前一个命令的输出作为后一个命令的输入</p>
 <p>2，管道会触发创建【子进程】</p>

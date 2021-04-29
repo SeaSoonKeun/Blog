@@ -139,13 +139,12 @@
     </li>
     <li><a href="#2-cap理论">2. CAP理论</a>
       <ul>
-        <li>
+        <li><a href="#对主做ha高可用">对主做HA高可用：</a>
           <ul>
-            <li><a href="#对主做ha高可用">对主做HA高可用：</a></li>
             <li><a href="#推导过程">推导过程：</a></li>
-            <li><a href="#主从复制配置">主从复制配置：</a></li>
           </ul>
         </li>
+        <li><a href="#主从复制配置">主从复制配置：</a></li>
       </ul>
     </li>
   </ul>
@@ -213,7 +212,7 @@
 </blockquote>
 <p><em><strong>Redis一般使用主从复制的模式，但是此时主自己又是一个单点。</strong></em></p>
 <p><img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210428004010.png" style="zoom:30%;" /></p>
-<h4 id="对主做ha高可用">对主做HA高可用：</h4>
+<h3 id="对主做ha高可用">对主做HA高可用：</h3>
 <p>对主做高可用并不是说不让主出现问题，而是对外表现为没有出现问题。人工可以去把其中一个从机设置为主，让另一个从去追随它。但是人往往是不可靠的，所以需要技术或程序来实现，主要是一个程序就会有<strong>单点故障</strong>的问题，所以程序也必须是一个集群。</p>
 <p>假如说有三个监控程序监控一个主Redis的存活状态，那么也就是说Redis的存活状态由三个监控程序说了算。</p>
 <ul>
@@ -244,7 +243,7 @@
 </blockquote>
 </li>
 </ul>
-<h4 id="主从复制配置">主从复制配置：</h4>
+<h3 id="主从复制配置">主从复制配置：</h3>
 <ul>
 <li>
 <p><code>replica-serve-stale-data</code> yes</p>

@@ -81,7 +81,7 @@
 
 <img src="https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/20210428004010.png" style="zoom:30%;" />
 
-#### 对主做HA高可用：
+### 对主做HA高可用：
 
 对主做高可用并不是说不让主出现问题，而是对外表现为没有出现问题。人工可以去把其中一个从机设置为主，让另一个从去追随它。但是人往往是不可靠的，所以需要技术或程序来实现，主要是一个程序就会有**单点故障**的问题，所以程序也必须是一个集群。
 
@@ -106,7 +106,7 @@
   > 1. 3台、4台能承受的风险都是只允许1台出现问题，4台的成本更高。
   > 2. 4台的时候比3台更容易出现问题，即1台出现问题的概率更大。
 
-####  主从复制配置：
+###  主从复制配置：
 
 - `replica-serve-stale-data` yes
 
@@ -119,14 +119,12 @@
 - `repl-diskless-sync` no
 
   主Redis发送`RDB`有两种方式，第一种方式是通过落到磁盘，从Redis再去`load`，第二种方式是直接通过网络发送`RDB`传给从Redis。这就取决于磁盘`IO`和网络`IO`哪个更快一些。配置no的话默认是走磁盘方式。
-  
 
 ![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B61.png)
 
 - `repl-backlog-size` 1mb
 
   主从复制，增量复制。在Redis中，除了写入`RDB`文件外，还维护一个小的队列。当从Redis `load`完`RDB`之后，突然挂掉了，然后服务又好了，这时候又需要去同步数据，但是此时的`RDB`文件已经过时，可以把`RDB`文件重新覆盖一遍，但是如果此时文件很大的话，又需要浪费时间。此时可以把一个偏移量给到主Redis，然后根据偏移量去获取增量数据，但是这时候取决于队列大小，默认为1MB，如果写的速度非常慢，在这期间没有超过设置的大小，那么是可以的，但是如果写的数据非常多，超过了设置的大小，那么又会走全量复制，所以要根据实际写入的数据设置合适的队列大小。
-  
 
 ![](https://raw.githubusercontent.com/SeaSoonKeun/Picture/main/Blog_Pic/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B62.png)
 
