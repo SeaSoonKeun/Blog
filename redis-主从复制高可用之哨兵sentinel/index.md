@@ -218,25 +218,25 @@ redis-cli -p 6379 DEBUG sleep 80
 2) "6381"
 ```
 
-- 睡眠时间到，6379节点重新上线，发现角色已经被切换
+### 3）睡眠时间到，6379节点重新上线，发现角色已经被切换
 
-  哨兵日志：
+哨兵日志：
 
-  ```bash
-  29686:X 29 Apr 2021 11:56:10.803 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6381
-  ```
+```bash
+29686:X 29 Apr 2021 11:56:10.803 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6381
+```
 
-  6379节点ROLE输出：
+6379节点ROLE输出：
 
-	```bash
-	[root@localhost ~]# redis-cli -p 6379
-	127.0.0.1:6379> ROLE
-	1) "slave"
-	2) "127.0.0.1"
-	3) (integer) 6381
-	4) "connected"
-	5) (integer) 180039
-	```
+```bash
+[root@localhost ~]# redis-cli -p 6379
+127.0.0.1:6379> ROLE
+1) "slave"
+2) "127.0.0.1"
+3) (integer) 6381
+4) "connected"
+5) (integer) 180039
+```
 
 - 查看哨兵配置文件
 

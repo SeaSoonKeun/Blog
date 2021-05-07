@@ -20,7 +20,7 @@
 <meta name="application-name" content="The Record &amp; Share by SeaSoonKeun">
 <meta name="apple-mobile-web-app-title" content="The Record &amp; Share by SeaSoonKeun"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" /><link rel="prev" href="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/" /><link rel="next" href="https://github.com/emoji-support/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" /><link rel="prev" href="https://github.com/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/" /><link rel="next" href="https://github.com/linux7-firewalld%E9%85%8D%E7%BD%AE/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -34,7 +34,7 @@
                             "url": "https:\/\/github.com\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "Redis, 实操, 哨兵, sentinel","wordcount":  3904 ,
+                        }],"genre": "posts","keywords": "Redis, 实操, 哨兵, sentinel","wordcount":  3905 ,
         "url": "https:\/\/github.com\/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel\/","datePublished": "2021-04-29T09:58:02+08:00","dateModified": "2021-04-29T09:58:02+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
@@ -120,7 +120,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis-主从复制高可用之哨兵（Sentinel）</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>SeaSoonKeun</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>Redis</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-29">2021-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3904 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-29">2021-04-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3905 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%AB%98%E5%8F%AF%E7%94%A8%E4%B9%8B%E5%93%A8%E5%85%B5sentinel/" class="leancloud_visitors" data-flag-title="Redis-主从复制高可用之哨兵（Sentinel）">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -145,6 +145,7 @@
       <ul>
         <li><a href="#1正常状态">1）正常状态：</a></li>
         <li><a href="#2模拟主节点下线状态">2）模拟主节点下线状态</a></li>
+        <li><a href="#3睡眠时间到6379节点重新上线发现角色已经被切换">3）睡眠时间到，6379节点重新上线，发现角色已经被切换</a></li>
       </ul>
     </li>
   </ul>
@@ -422,9 +423,7 @@ sentinel deny-scripts-reconfig yes
 2<span class="o">)</span> <span class="s2">&#34;6381&#34;</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>
-<p>睡眠时间到，6379节点重新上线，发现角色已经被切换</p>
+</div><h3 id="3睡眠时间到6379节点重新上线发现角色已经被切换">3）睡眠时间到，6379节点重新上线，发现角色已经被切换</h3>
 <p>哨兵日志：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -455,15 +454,7 @@ sentinel deny-scripts-reconfig yes
 5<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">180039</span>
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-</code></pre></td></tr></table>
-</div>
-</div></li>
+</div><ul>
 <li>
 <p>查看哨兵配置文件</p>
 <div class="highlight"><div class="chroma">
@@ -584,7 +575,7 @@ Reading messages... <span class="o">(</span>press Ctrl-C to quit<span class="o">
     </div>
 
     <div class="post-nav"><a href="/redis-%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%9E%E6%93%8D/" class="prev" rel="prev" title="Redis-主从复制实操"><i class="fas fa-angle-left fa-fw"></i>Redis-主从复制实操</a>
-            <a href="/emoji-support/" class="next" rel="next" title="Emoji 支持">Emoji 支持<i class="fas fa-angle-right fa-fw"></i></a></div>
+            <a href="/linux7-firewalld%E9%85%8D%E7%BD%AE/" class="next" rel="next" title="Linux7-firewalld配置">Linux7-firewalld配置<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
